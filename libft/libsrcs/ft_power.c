@@ -6,11 +6,11 @@
 /*   By: tshimoda <tshimoda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/29 18:32:34 by tshimoda          #+#    #+#             */
-/*   Updated: 2022/01/29 19:27:54 by tshimoda         ###   ########.fr       */
+/*   Updated: 2022/02/16 11:03:50 by tshimoda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "math_utils.h"
+#include "libft.h"
 
 double	ft_power(double nb, int exponent)
 {

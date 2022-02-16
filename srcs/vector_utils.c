@@ -1,29 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_absolute.c                                      :+:      :+:    :+:   */
+/*   vector_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tshimoda <tshimoda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/29 19:32:57 by tshimoda          #+#    #+#             */
-/*   Updated: 2022/02/16 11:03:55 by tshimoda         ###   ########.fr       */
+/*   Created: 2022/01/29 12:04:58 by tshimoda          #+#    #+#             */
+/*   Updated: 2022/02/16 10:52:57 by tshimoda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../incls/vector_array.h"
 
-int	ft_absolute_int(int nb)
+void	vector_free_elements(t_vector *v)
 {
-	if ((double)nb > 2147483647 || (double)nb < -2147483748)
-		return (-1);
-	if (nb < 0)
-		nb *= -1;
-	return (nb);
-}
-
-double	ft_absolute_decimal(double nb)
-{
-	if (nb < 0)
-		nb *= -1;
-	return (nb);
+	free(v->elements);
+	v->elements = NULL;
 }

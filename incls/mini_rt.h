@@ -6,7 +6,7 @@
 /*   By: tshimoda <tshimoda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 20:00:37 by tshimoda          #+#    #+#             */
-/*   Updated: 2022/02/15 20:53:26 by tshimoda         ###   ########.fr       */
+/*   Updated: 2022/02/16 11:00:48 by tshimoda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,10 @@
 # include "scene.h"
 # include "vector_3d.h"
 # include "vector_array.h"
+# include "../libft/libsrcs/libft.h"
+# include "../libft/libsrcs/ft_printf.h"
+# include "../libft/libsrcs/get_next_line.h"
+# include "../minilibx_opengl/mlx.h"
 
 typedef struct s_mlx
 {

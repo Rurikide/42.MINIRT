@@ -6,11 +6,11 @@
 /*   By: tshimoda <tshimoda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 15:24:14 by tshimoda          #+#    #+#             */
-/*   Updated: 2022/02/15 20:56:22 by tshimoda         ###   ########.fr       */
+/*   Updated: 2022/02/16 10:52:30 by tshimoda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../incls/vector_3d.h"
+#include "../incls/vector_3d.h"
 
 t_vec3	new_vector(double x, double y, double z)
 {

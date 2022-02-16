@@ -6,11 +6,11 @@
 /*   By: tshimoda <tshimoda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/28 23:50:49 by tshimoda          #+#    #+#             */
-/*   Updated: 2022/01/29 19:44:59 by tshimoda         ###   ########.fr       */
+/*   Updated: 2022/02/16 11:03:42 by tshimoda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "math_utils.h"
+#include "libft.h"
 
 double	ft_square_root(double nb)
 {

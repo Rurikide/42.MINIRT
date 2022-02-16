@@ -6,7 +6,7 @@
 #    By: tshimoda <tshimoda@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/06 15:46:15 by tshimoda          #+#    #+#              #
-#    Updated: 2022/02/15 21:08:19 by tshimoda         ###   ########.fr        #
+#    Updated: 2022/02/15 21:57:22 by tshimoda         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ MFLAGS= -Lminilibx_opengl -lmlx -framework OpenGL -framework Appkit
 SDIR= srcs
 ODIR= objs
 
-SRCS=	main_test_jour_3.c \
+SRCS=	main.c \
 
 OBJS= $(SRCS:.c=.o)
 

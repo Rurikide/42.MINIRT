@@ -1,19 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   vector_utils.c                                     :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tshimoda <tshimoda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/29 12:04:58 by tshimoda          #+#    #+#             */
-/*   Updated: 2022/02/15 20:32:05 by tshimoda         ###   ########.fr       */
+/*   Created: 2022/02/15 21:57:36 by tshimoda          #+#    #+#             */
+/*   Updated: 2022/02/16 11:11:57 by tshimoda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../incls/vector_array.h"
+#include "../incls/mini_rt.h"
+#include "../libft/libsrcs/libft.h"
+#include "../libft/libsrcs/ft_printf.h"
+#include "../libft/libsrcs/get_next_line.h"
+#include "../minilibx_opengl/mlx.h"
 
-void	vector_free_elements(t_vector *v)
+#include <stdio.h>
+
+int main    (void)
 {
-	free(v->elements);
-	v->elements = NULL;
+    // char *str = "40.42123";
+    // char c = '2';
+
+    // printf("%d\n", ft_atoi(c));
+    // printf("%f\n", ft_atod(str));
+    
+    return (0);
 }
