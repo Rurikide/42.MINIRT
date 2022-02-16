@@ -6,7 +6,7 @@
 /*   By: tshimoda <tshimoda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/06 16:30:59 by tshimoda          #+#    #+#             */
-/*   Updated: 2022/02/15 20:52:59 by tshimoda         ###   ########.fr       */
+/*   Updated: 2022/02/16 11:25:01 by tshimoda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,6 @@
 
 # include <math.h>
 # include <unistd.h>
-# include "vector_3d.h"
-# include "vector_array.h"
 
 typedef struct s_vec3
 {
