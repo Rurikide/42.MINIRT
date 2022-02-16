@@ -6,11 +6,11 @@
 /*   By: tshimoda <tshimoda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/29 12:04:58 by tshimoda          #+#    #+#             */
-/*   Updated: 2022/02/16 10:52:57 by tshimoda         ###   ########.fr       */
+/*   Updated: 2022/02/16 12:23:52 by tshimoda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../incls/vector_array.h"
+#include "../../incls/vector_array.h"
 
 void	vector_free_elements(t_vector *v)
 {
