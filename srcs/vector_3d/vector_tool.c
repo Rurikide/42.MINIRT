@@ -6,11 +6,11 @@
 /*   By: tshimoda <tshimoda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/06 16:34:02 by tshimoda          #+#    #+#             */
-/*   Updated: 2022/02/16 10:52:39 by tshimoda         ###   ########.fr       */
+/*   Updated: 2022/02/16 15:11:15 by tshimoda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../incls/vector_3d.h"
+#include "../../incls/vector_3d.h"
 
 // reçoit le pointeur du vecteur v et modifie ses composantes (x;y;z) 
 // afin de le normaliser ainsi simplifier les prochains calculs
