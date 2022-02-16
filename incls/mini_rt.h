@@ -6,7 +6,7 @@
 /*   By: tshimoda <tshimoda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 20:00:37 by tshimoda          #+#    #+#             */
-/*   Updated: 2022/02/16 11:27:08 by tshimoda         ###   ########.fr       */
+/*   Updated: 2022/02/16 15:01:10 by tshimoda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 
 # include "color.h"
 # include "parsing.h"
-# include "scene.h"
 # include "vector_3d.h"
+# include "scene.h"
 # include "vector_array.h"
 
 # include "../libft/libsrcs/libft.h"
