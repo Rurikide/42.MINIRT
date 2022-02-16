@@ -6,14 +6,14 @@
 /*   By: tshimoda <tshimoda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 20:17:17 by tshimoda          #+#    #+#             */
-/*   Updated: 2022/02/15 20:54:38 by tshimoda         ###   ########.fr       */
+/*   Updated: 2022/02/16 11:27:35 by tshimoda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SCENE_H
 # define SCENE_H
 
-# include "vector_3d.h"
+# include "mini_rt.h"
 
 typedef struct s_circle
 {
