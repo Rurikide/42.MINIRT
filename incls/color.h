@@ -8,7 +8,12 @@ typedef struct s_rgb
 	int	b;
 }				t_rgb;
 
-int	rgb_to_int(t_rgb rgb);
 int	check_rgb (int color);
+int	rgb_to_int(t_rgb rgb);
+int	add_color(int color_a, int color_b);
+
+int    get_r(int color);
+int    get_g(int color);
+int    get_b(int color);
 
 #endif

@@ -43,11 +43,17 @@ typedef struct s_mlx
 	int		w_len;
 }			t_mlx;
 
+typedef struct s_ray
+{
+	t_vec3	origin;
+	t_vec3	dir;
+}				t_ray;
+
 typedef struct s_rt
 {
 	int	height;
 	int	width;
-	t_scene	*scene;
+//	t_scene	*scene;
 	
 }				t_rt;
 

@@ -22,25 +22,31 @@ int color_test(t_rt *rt)
 {
 	t_mlx	*mlx;
 	t_rgb rgb;
+	t_rgb	c2;
 	int i;
 	int	j;
 	int color;
+	int color2;
 
 	rgb.r = 255;
 	rgb.g = 0;
 	rgb.b = 0;
 
+	c2.r = 0;
+	c2.g = 0;
+	c2.b = 255;
+
 	mlx = get_mlx();
 	i = 0;
-	color = rgb_to_int(rgb);
+	color = add_color(rgb_to_int(rgb), rgb_to_int(c2));
+	color2 = rgb_to_int(rgb) + rgb_to_int(c2);
 	while (i < mlx->height)
 	{
 		j = 0;
 		while (j < mlx->width)
 		{
-			my_mlx_pixel_put(mlx, j, i, color);
+			my_mlx_pixel_put(mlx, j, i, color2);
 			j++;
-			color--;
 		}
 		i++;
 	}

@@ -19,7 +19,6 @@ t_mlx	*get_mlx(void)
 
 void	init_rt(t_rt *rt)
 {
-	rt->mlx = ft_calloc(1, sizeof(t_mlx));
-	rt->i = 0;
-	rt->mlx = get_mlx();
+	rt->height = 1080;
+	rt->width = 1024;
 }

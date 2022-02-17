@@ -27,15 +27,15 @@ typedef struct s_sphere
     t_vec3  norm;
 }	            t_sphere;
 
-typedef struct s_scene 
-{
-    t_amb	    *amb;
-    t_cam       *cam;
-    t_lit       *light;
-	t_sphere	*sp;
-	t_plan	    *pl;
-	t_cy	    *cy;
-}           t_scene;
+// typedef struct s_scene 
+// {
+//     t_amb	    *amb;
+//     t_cam       *cam;
+//     t_lit       *light;
+// 	t_sphere	*sp;
+// 	t_plan	    *pl;
+// 	t_cy	    *cy;
+// }           t_scene;
 
 
 #endif
