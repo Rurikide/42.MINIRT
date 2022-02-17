@@ -17,7 +17,6 @@
 # include "color.h"
 # include "parsing.h"
 # include "vector_3d.h"
-# include "vector_array.h"
 
 typedef struct s_sphere
 {

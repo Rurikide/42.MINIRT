@@ -6,7 +6,11 @@
 #    By: jbadia <jbadia@student.42quebec.com>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/06 15:46:15 by tshimoda          #+#    #+#              #
+<<<<<<< HEAD
 #    Updated: 2022/02/16 15:17:14 by jbadia           ###   ########.fr        #
+=======
+#    Updated: 2022/02/16 15:09:47 by tshimoda         ###   ########.fr        #
+>>>>>>> master
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,21 +25,32 @@ MFLAGS= -Lminilibx_opengl -lmlx -framework OpenGL -framework Appkit
 
 
 SDIR= srcs
-
 ADIR= srcs/vector_array
-
+#CDIR= srcs/color
+PDIR= srcs/parse
+VDIR= srcs/vector_3d
 ODIR= objs
 
+<<<<<<< HEAD
 SRCS=	main.c color.c init.c mlx_utils.c 
+=======
+SRCS= main.c
+>>>>>>> master
 ARRAY= vector_array.c vector_utils.c
+#COLOR= color.c
+PARSE= parse.c
+VEC3D= vector_new.c vector_tool.c
 
-OBJS= $(SRCS:.c=.o) $(ARRAY:.c=.o)
+OBJS= $(SRCS:.c=.o) $(ARRAY:.c=.o) $(VEC3D:.c=.o)
 
 SFIX= $(addprefix $(SDIR)/, $(SRCS))
 AFIX= $(addprefix $(ADIR)/, $(ARRAY))
+#CFIX= $(addprefix $(CDIR)/, $(COLOR))
+PIX= $(addprefix $(PDIR)/, $(PARSE))
+VFIX= $(addprefix $(VDIR)/, $(VEC3D))
 OFIX= $(addprefix $(ODIR)/, $(OBJS)) 
 
-VPATH= $(SDIR) $(ADIR)
+VPATH= $(SDIR) $(ADIR) $(PDIR) $(VDIR) #$(CDIR)
 
 $(NAME): $(ODIR) $(OFIX)
 	$(MAKE) -C ./libft

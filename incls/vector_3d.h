@@ -6,14 +6,13 @@
 /*   By: tshimoda <tshimoda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/06 16:30:59 by tshimoda          #+#    #+#             */
-/*   Updated: 2022/02/16 11:27:47 by tshimoda         ###   ########.fr       */
+/*   Updated: 2022/02/16 15:03:14 by tshimoda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef VECTOR_3D_H
 # define VECTOR_3D_H
 
-# include "mini_rt.h"
 # include <math.h>
 # include <unistd.h>
 
