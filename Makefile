@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tshimoda <tshimoda@student.42.fr>          +#+  +:+       +#+         #
+#    By: jbadia <jbadia@student.42quebec.com>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/06 15:46:15 by tshimoda          #+#    #+#              #
-#    Updated: 2022/02/16 12:38:17 by tshimoda         ###   ########.fr        #
+#    Updated: 2022/02/16 15:17:14 by jbadia           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ ADIR= srcs/vector_array
 
 ODIR= objs
 
-SRCS=	main.c
+SRCS=	main.c color.c init.c mlx_utils.c 
 ARRAY= vector_array.c vector_utils.c
 
 OBJS= $(SRCS:.c=.o) $(ARRAY:.c=.o)

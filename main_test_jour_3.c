@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_test_jour_3.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tshimoda <tshimoda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jbadia <jbadia@student.42quebec.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/06 15:44:38 by tshimoda          #+#    #+#             */
-/*   Updated: 2022/02/15 20:53:55 by tshimoda         ###   ########.fr       */
+/*   Updated: 2022/02/16 14:15:32 by jbadia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,14 +129,6 @@ void	hook_collection(t_mlx *mlx)
 	// void mlx_hook(mlx_win_list_t *win_ptr, int x_event, int x_mask, int (*f)(), void *param)
 	mlx_hook(mlx->win, 17, 0, click_close_window, mlx);
 
-}
-
-void	init_circle(t_circle *circle)
-{
-	circle->radius = 100;
-	circle->x = 600/2;
-	circle->y = 600/2;
-	circle->z = 0;
 }
 
 void    my_mlx_pixel_put(t_mlx *mlx, int x, int y, int color)
