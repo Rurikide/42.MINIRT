@@ -6,7 +6,7 @@
 /*   By: tshimoda <tshimoda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 15:10:51 by tshimoda          #+#    #+#             */
-/*   Updated: 2022/02/16 17:44:53 by tshimoda         ###   ########.fr       */
+/*   Updated: 2022/02/17 11:02:18 by tshimoda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,11 +98,14 @@ void    ft_scan_line(t_parse *data, char *line)
 	if (line[0] == 'p' && line[1] == 'l' && ft_isspace(line[2]))
 		parse_plane(data, line);
 	if (line[0] == 'c' && line[1] == 'y' && ft_isspace(line[2]))
-		parse_cylinder(data, line);
-		
-		
+		parse_cylinder(data, line);		
 }
 
 //WORK IN PROGRESS
 
 //  If any misconfiguration of any kind is encountered in the file the program must exit properly and return "Error\n" followed by an explicit error message of your choice.
+
+void parse_ambient(t_parse *data, char *line)
+{
+
+}
