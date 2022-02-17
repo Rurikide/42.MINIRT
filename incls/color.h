@@ -6,6 +6,9 @@ typedef struct s_rgb
 	int	r;
 	int	g;
 	int	b;
-}	t_rgb;
+}				t_rgb;
+
+int	rgb_to_int(t_rgb rgb);
+int	check_rgb (int color);
 
 #endif

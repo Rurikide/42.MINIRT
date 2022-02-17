@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tshimoda <tshimoda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jbadia <jbadia@student.42quebec.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 21:57:36 by tshimoda          #+#    #+#             */
-/*   Updated: 2022/02/16 12:26:23 by tshimoda         ###   ########.fr       */
+/*   Updated: 2022/02/16 15:30:07 by jbadia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,48 @@
 
 #include <stdio.h>
 
-int main    (void)
+int color_test(t_rt *rt)
 {
-    char *str = "40.42123";
-    char c = '2';
+	t_mlx	*mlx;
+	t_rgb rgb;
+	int i;
+	int	j;
+	int color;
 
-    printf("%d\n", ft_atoi(c));
-    // printf("%f\n", ft_atod(str));
+	rgb.r = 255;
+	rgb.g = 0;
+	rgb.b = 0;
+
+	mlx = get_mlx();
+	i = 0;
+	color = rgb_to_int(rgb);
+	while (i < mlx->height)
+	{
+		j = 0;
+		while (j < mlx->width)
+		{
+			my_mlx_pixel_put(mlx, j, i, color);
+			j++;
+			color--;
+		}
+		i++;
+	}
+	mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->img, 0, 0);
+	return (1);
+}
+
+int main (int argc, char **argv)
+{
+   	t_rt *m_rt;
+   	t_mlx *mlx;
+	
+	mlx = get_mlx();
+	m_rt = calloc(1, sizeof(t_rt));
+	init_rt(m_rt);
+	hook_collection(mlx);
+	mlx_loop_hook(mlx->mlx, color_test, m_rt);
+	mlx_loop(mlx->mlx);
+
     
     return (0);
 }
