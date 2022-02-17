@@ -6,7 +6,7 @@
 /*   By: tshimoda <tshimoda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 15:10:51 by tshimoda          #+#    #+#             */
-/*   Updated: 2022/02/17 11:02:18 by tshimoda         ###   ########.fr       */
+/*   Updated: 2022/02/17 15:10:59 by tshimoda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,13 @@
 /*
 DANS LE INT MAIN
 {
-	regarder si argc == 2 : ./miniRT fichier.rt
-	sinon error #:
-
-	t_parse *data
-	init et malloc(data à NULL)
-	fonction pour parser argv[1] (envoyer data)
+typedef struct T_SCENE
+    t_amb	    *amb;
+    t_cam       *cam;
+    t_lit       *light;
+	t_sphere	*sp;
+	t_plan	    *pl;
+	t_cy	    *cy;
 }
 */
 
@@ -33,8 +34,7 @@ void    parse_machine(t_parse *data, char *file)
 	//step 2 : utiliser GNL et parser ligne par ligne et remplir la struct t_parse data
 	ft_read_file(data, file)
 	//step 3 : vérifier si AMBIENT, CAMERA, LIGHT sont null
-		
-		
+
 }
 
 int    ft_is_valid_file(char *file)
@@ -89,15 +89,15 @@ void    ft_scan_line(t_parse *data, char *line)
 	
 	if (line[0] == 'A' && ft_isspace(line[1]))
 		parse_ambient(data, line);
-	if (line[0] == 'C' && ft_isspace(line[1]))
+	else if (line[0] == 'C' && ft_isspace(line[1]))
 		parse_camera(data, line);
-	if (line[0] == 'L' && ft_isspace(line[1]))
+	else if (line[0] == 'L' && ft_isspace(line[1]))
 		parse_light(data, line);
-	if (line[0] == 's' && line[1] == 'p' && ft_isspace(line[2]))
+	else if (line[0] == 's' && line[1] == 'p' && ft_isspace(line[2]))
 		parse_sphere(data, line);
-	if (line[0] == 'p' && line[1] == 'l' && ft_isspace(line[2]))
+	else if (line[0] == 'p' && line[1] == 'l' && ft_isspace(line[2]))
 		parse_plane(data, line);
-	if (line[0] == 'c' && line[1] == 'y' && ft_isspace(line[2]))
+	else if (line[0] == 'c' && line[1] == 'y' && ft_isspace(line[2]))
 		parse_cylinder(data, line);		
 }
 
@@ -107,5 +107,33 @@ void    ft_scan_line(t_parse *data, char *line)
 
 void parse_ambient(t_parse *data, char *line)
 {
+    // on sait que line[0] == 'A' et line[1] == ' ' 
+    static int ambiant_on;
+	char **tab;
+	int i = 1;
+	tab = NULL;
+    if (ambiant_on == NULL)
+    {
+		ambiant_on = 1;
+    	tab = ft_split(line, ' ');
+		while (ft_valid_char(line[i])
+		{
+			
+		}
+    }
+    else
+        return (error);
+}
 
+int	ft_valid_char(char *line)
+{
+	int i = 0;
+
+	while (line[i])
+	{
+		if (!ft_isspace(line[i]) || !ft_isalnum(line[i]))
+			return(-1);
+		i++;
+	}
+	return(1);
 }
