@@ -33,13 +33,13 @@ int	rgb_to_int(t_rgb rgb)
 	return (color);
 }
 
-t_rgb int_to_rgb(int color)
-{
-	t_rgb rgb;
+// t_rgb int_to_rgb(int color)
+// {
+// 	t_rgb rgb;
 
-	rgb.r = get_r(color);
-	rgb.g = get_g(color);
-	rgb.b = get_b(colo);
-	return (rgb);
-}
+// 	rgb.r = get_r(color);
+// 	rgb.g = get_g(color);
+// 	rgb.b = get_b(color);
+// 	return (rgb);
+// }
 

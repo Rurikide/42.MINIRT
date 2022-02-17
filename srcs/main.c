@@ -21,18 +21,26 @@
 int color_test(t_rt *rt)
 {
 	t_mlx	*mlx;
+	t_rgb rgb;
 	int i;
 	int	j;
+	int color;
+
+	rgb.r = 255;
+	rgb.g = 0;
+	rgb.b = 0;
 
 	mlx = get_mlx();
 	i = 0;
+	color = rgb_to_int(rgb);
 	while (i < mlx->height)
 	{
 		j = 0;
 		while (j < mlx->width)
 		{
-			my_mlx_pixel_put(mlx, j, i, 0xFF0000);
+			my_mlx_pixel_put(mlx, j, i, color);
 			j++;
+			color--;
 		}
 		i++;
 	}

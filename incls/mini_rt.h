@@ -45,8 +45,10 @@ typedef struct s_mlx
 
 typedef struct s_rt
 {
-	t_mlx *mlx;
-	int i;
+	int	height;
+	int	width;
+	t_scene	*scene;
+	
 }				t_rt;
 
 t_mlx	*get_mlx(void);
