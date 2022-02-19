@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   scene.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbadia <jbadia@student.42quebec.com>       +#+  +:+       +#+        */
+/*   By: tshimoda <tshimoda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 20:17:17 by tshimoda          #+#    #+#             */
-/*   Updated: 2022/02/16 15:34:09 by jbadia           ###   ########.fr       */
+/*   Updated: 2022/02/19 14:18:51 by tshimoda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,12 @@ typedef struct s_sphere
     t_vec3  hit;
     t_vec3  norm;
 }	            t_sphere;
+
+typedef struct s_amb
+{
+	double	ratio;
+	t_rgb color;
+}	t_amb;
 
 typedef struct s_scene 
 {

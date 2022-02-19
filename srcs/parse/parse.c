@@ -6,7 +6,7 @@
 /*   By: tshimoda <tshimoda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 15:10:51 by tshimoda          #+#    #+#             */
-/*   Updated: 2022/02/19 16:17:25 by tshimoda         ###   ########.fr       */
+/*   Updated: 2022/02/19 17:03:25 by tshimoda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,35 +16,22 @@
 void	parse_ambient(t_scene *scene, char *line)
 {
 	static int	ambiant_on;
-	char		**tab;
 	int			i;
 
 	i = 1;
 	tab = NULL;
 	if (ambiant_on == NULL)
 	{
-		ambiant_on = 1;
-		tab = ft_split(line, ' ');
-		while (ft_valid_char(line[i]))
-			return ;
+		
 	}
 	else
 		return (-1);
+	// On retourne une erreur si ambiant_on != NULL car cela signifie qu'on a déja parsé une lumiere ambiante
 }
 
-// int	ft_valid_char(char *line)
-// {
-// 	int	i;
 
-// 	i = 0;
-// 	while (line[i])
-// 	{
-// 		if (!ft_isspace(line[i]) || !ft_isalnum(line[i]))
-// 			return (-1);
-// 		i++;
-// 	}
-// 	return (1);
-// }
+
+
 
 int	check_parsing_type(t_scene *scene, char *line)
 {
@@ -99,7 +86,7 @@ int	check_valid_ascii(char *line)
 	return (valid);
 }
 
-int	ft_read_file(t_scene *scene, char *file)
+int	gnl_preparsing(t_scene *scene, char *file)
 {
 	int		fd;
 	char	*line;
@@ -147,6 +134,38 @@ int	check_rt_file(char *file)
 	return (1);
 }
 
+void	free_scene_exit(t_scene *scene)
+{
+	if (scene->amb != NULL)
+		free(scene->amb);
+	if (scene->cam != NULL)
+		free(scene->cam);
+   	if (scene->light != NULL)
+		free(scene->light);
+	if (scene->sp != NULL)
+		free(scene->sp);
+	if (scene->pl != NULL)
+		free(scene->pl);	
+	if (scene->cy != NULL)
+		free(scene->cy);
+	free(scene);
+	exit(0);
+}
+
+int	init_scene(t_scene *scene)
+{
+	scene = calloc(1, sizeof(t_scene));
+	if (!scene)
+		return (-1); 
+	scene->amb = NULL;
+    scene->cam = NULL;
+    scene->light = NULL;
+	scene->sp = NULL;
+	scene->pl = NULL;
+	scene->cy = NULL;
+	return (0);
+}
+ 
 void	parse_machine(t_scene *scene, char *file)
 {
 	// check si l'extension est .rt et si le fichier existe. return -1 en cas d'erreur
@@ -155,9 +174,9 @@ void	parse_machine(t_scene *scene, char *file)
 	// 
 	// ft_read effectue open, GNL pour récupérer une ligne à la fois et ensuite appelle d'autres fonctions pour parser
 	// note la fonction check_rt_file verifie déjà si le open fd est valide. 
-	ft_read_file(scene, file); 
+	gnl_preparsing(scene, file); 
 	// check_valid_ascii, check_parsing_type;
-	// DANS LE FT_READ_FILE, on appelle check_parsing_type et selon le identifier (A, C, L, et), on parse line avec la bonne fonction de parsing.
+	// DANS LE gnl_parsing, on appelle check_parsing_type et selon le identifier (A, C, L, et), on parse line avec la bonne fonction de parsing.
 
 	return ;
 }

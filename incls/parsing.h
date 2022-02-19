@@ -6,7 +6,7 @@
 /*   By: tshimoda <tshimoda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 11:18:44 by tshimoda          #+#    #+#             */
-/*   Updated: 2022/02/16 17:18:13 by tshimoda         ###   ########.fr       */
+/*   Updated: 2022/02/19 16:58:04 by tshimoda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,18 @@
 
 # include "color.h"
 
-typedef struct s_amb
-{
-	double	ratio;
-	t_rgb color;
-}	t_amb;
+#define SPACES " \t"
+#define WHITESPACES " \t\n\v\f\r"
+#define CHARACTERS ".,ACLclpsy"
 
-typedef struct s_parse
-{
-	t_amb	*amb;
-}	t_parse;
 
-void	parse_machine(t_parse *data, char *file);
-int		ft_is_valid_file(char *file);
-void    ft_read_file(t_parse *data, char *file);
-void    ft_scan_line(t_parse *data, char *line);
+int		check_parsing_type(t_scene *scene, char *line);
+int		ft_is_space_tab(char c);
+int		check_valid_ascii(char *line);
+int		gnl_preparsing(t_scene *scene, char *file);
+int		check_rt_file(char *file);
+void	parse_machine(t_scene *scene, char *file);
+void	free_scene_exit(t_scene *scene);
+int		init_scene(t_scene *scene);
+
 #endif
