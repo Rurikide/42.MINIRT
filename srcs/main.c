@@ -6,7 +6,7 @@
 /*   By: jbadia <jbadia@student.42quebec.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 21:57:36 by tshimoda          #+#    #+#             */
-/*   Updated: 2022/02/16 15:30:07 by jbadia           ###   ########.fr       */
+/*   Updated: 2022/02/20 18:44:34 by jbadia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,40 +18,52 @@
 
 #include <stdio.h>
 
-int color_test(t_rt *rt)
+t_vec3	get_ray_dir(t_scene *scene, t_mlx *mlx, int x, int y)
 {
+	t_vec3	direction;
+	double	fov;
+
+	fov = scene->cam->fov * M_PI / 180;
+	direction.x =  y - mlx->width / 2;
+	direction.y = x - mlx->height / 2;
+	direction.z = - mlx->width / (2 * tan(fov / 2));
+	new_vector(direction.x, direction.y, direction.z);
+	return(vec_normalize(direction));
+}
+
+void	ray_tracing(t_scene *scene)
+{
+	int	x;
+	int	y;
+	int	color;
 	t_mlx	*mlx;
-	t_rgb rgb;
-	t_rgb	c2;
-	int i;
-	int	j;
-	int color;
-	int color2;
+	t_vec3	dir;
+	
+	x = 0;
+	mlx = get_mlx();
+	while(x < mlx->height)
+	{
+		y = 0;
+		while (y < mlx->width)
+		{
+			dir = get_ray_dir(scene, mlx, x, y);
+			color = intersection(&scene->sp, dir, scene); //faire une struct obj ou ou tab döbj
+			my_mlx_pixel_put(mlx, y, x, color);
+			y++;
+		}
+		x++;
+	}
+}
 
-	rgb.r = 255;
-	rgb.g = 0;
-	rgb.b = 0;
-
-	c2.r = 0;
-	c2.g = 0;
-	c2.b = 255;
+void	make_scene(t_scene *scene)
+{
+	t_mlx *mlx;
 
 	mlx = get_mlx();
-	i = 0;
-	color = add_color(rgb_to_int(rgb), rgb_to_int(c2));
-	color2 = rgb_to_int(rgb) + rgb_to_int(c2);
-	while (i < mlx->height)
-	{
-		j = 0;
-		while (j < mlx->width)
-		{
-			my_mlx_pixel_put(mlx, j, i, color2);
-			j++;
-		}
-		i++;
-	}
+	ray_tracing(scene);
 	mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->img, 0, 0);
-	return (1);
+	hook_collection(mlx);
+	mlx_loop(mlx->mlx);
 }
 
 int main (int argc, char **argv)
@@ -62,9 +74,11 @@ int main (int argc, char **argv)
 	mlx = get_mlx();
 	m_rt = calloc(1, sizeof(t_rt));
 	init_rt(m_rt);
-	hook_collection(mlx);
-	mlx_loop_hook(mlx->mlx, color_test, m_rt);
-	mlx_loop(mlx->mlx);
+	make_scene(m_rt->scene);
+	//check_args and error
+	//parsing
+	//if(!amb_light | !camera ! |light)
+	//	exit_error
 
     
     return (0);

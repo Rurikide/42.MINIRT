@@ -15,5 +15,8 @@ int	add_color(int color_a, int color_b);
 int    get_r(int color);
 int    get_g(int color);
 int    get_b(int color);
+t_rgb	new_color(int r, int g, int b);
+
+
 
 #endif
