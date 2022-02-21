@@ -6,7 +6,7 @@
 /*   By: tshimoda <tshimoda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 20:17:17 by tshimoda          #+#    #+#             */
-/*   Updated: 2022/02/19 14:18:51 by tshimoda         ###   ########.fr       */
+/*   Updated: 2022/02/20 13:59:46 by tshimoda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,10 @@ typedef struct s_scene
     t_amb	    *amb;
     t_cam       *cam;
     t_lit       *light;
-	t_sphere	*sp;
-	t_plan	    *pl;
-	t_cy	    *cy;
+	t_vector	*sp;
+	t_vector	*pl;
+	t_vector	*cy;
+	//t_vector	*shape;
 }           t_scene;
 
 

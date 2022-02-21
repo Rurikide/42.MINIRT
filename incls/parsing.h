@@ -6,7 +6,7 @@
 /*   By: tshimoda <tshimoda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 11:18:44 by tshimoda          #+#    #+#             */
-/*   Updated: 2022/02/19 16:58:04 by tshimoda         ###   ########.fr       */
+/*   Updated: 2022/02/20 13:21:56 by tshimoda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 
 #define SPACES " \t"
 #define WHITESPACES " \t\n\v\f\r"
-#define CHARACTERS ".,ACLclpsy"
+#define CHARACTERS ".,-ACLclpsy"
 
 
 int		check_parsing_type(t_scene *scene, char *line);
