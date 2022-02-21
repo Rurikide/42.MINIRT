@@ -6,12 +6,11 @@
 /*   By: tshimoda <tshimoda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 15:10:51 by tshimoda          #+#    #+#             */
-/*   Updated: 2022/02/20 19:10:33 by tshimoda         ###   ########.fr       */
+/*   Updated: 2022/02/21 17:58:59 by tshimoda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incls/mini_rt.h"
-#include "../../incls/parsing.h"
 
 int	ft_table_len(char **tab)
 {
@@ -23,40 +22,17 @@ int	ft_table_len(char **tab)
 	return (len);
 }
 
-int	check_rgb_input(char *line, int i)
+int	get_float_len(char *line, int i)
 {
-	int rgb_len;
-	int comma;
-	
-	comma = 0;
-	rgb_len = 0;
-	while (ft_isdigit(line[i]) || line[i] == ',')
-	{
-		if (line[i] == ',')
-			comma++;
-		
-		i++;
-		rgb_len++;
-
-		if (comma == 2 && !ft_isdigit(line[i]))
-			return (-1);
-	}
-	if (comma != 2 || (!ft_isspace(line[i]) && line[i] != '\0'))
-		return (-1);
-	return (rgb_len);
-}
-
-int	check_light_ratio_input(char *line, int i)
-{
-	int ratio_len;
+	int float_len;
 	int dot;
 
 	dot = 0;
-	ratio_len = 0;
+	float_len = 0;
 	if (line[i] == '-')
 	{
 		i++;
-		ratio_len++;
+		float_len++;
 	}
 	if (ft_isdigit(line[i]))
 	{
@@ -65,43 +41,14 @@ int	check_light_ratio_input(char *line, int i)
 			if (line[i] == '.')
 				dot++;
 			i++;
-			ratio_len++;
+			float_len++;
 		}
 	}
 	else
 		return (-1);
-	if (dot > 1 || (!ft_isspace(line[i]) && line[i] != '\0'))
+	if (dot > 1)
 		return (-1);
-	return(ratio_len);
-}
-
-int	check_unit_vec_input(char *line, int i)
-{
-	int ratio_len;
-	int dot;
-
-	dot = 0;
-	ratio_len = 0;
-	if (line[i] == '-')
-	{
-		i++;
-		ratio_len++;
-	}
-	if (ft_isdigit(line[i]))
-	{
-		while (ft_isdigit(line[i]) || line[i] == '.')
-		{
-			if (line[i] == '.')
-				dot++;
-			i++;
-			ratio_len++;
-		}
-	}
-	else
-		return (-1);
-	if (dot > 1 || (!ft_isspace(line[i]) && line[i] != '\0'))
-		return (-1);
-	return(ratio_len);
+	return(float_len);
 }
 
 double	parse_light_ratio(char *line, int *i)
@@ -113,45 +60,105 @@ double	parse_light_ratio(char *line, int *i)
 
 	index = (int)i;
 	ratio = 0;
-	float_len = ft_isfloat(line, index);
+	float_len = get_float_len(line, index);
 	ratio = ft_atod(&line[index]);
 	if (ratio < 0.0 || ratio > 1.0)
 		return (-1);
 	// apres avoir parser le double, je modifiel'indice i que je recois par addresse.
-	i += float_len;
+	*i += float_len;
 	return (ratio);	
+}
+
+int	get_int_len(char *line, int i)
+{
+	int int_len;
+
+	int_len = 0;
+	// if (line[i] == '-')
+	// {
+	// 	i++;
+	// 	int_len++;
+	// }
+	// on veut un nombre entier positif
+	if (ft_isdigit(line[i]))
+	{
+		while (ft_isdigit(line[i]))
+		{
+			i++;
+			int_len++;
+		}
+	}
+	else
+		return (-1);
+	return (int_len);
 }
 
 int	parse_color_rgb(t_scene *scene, char *line, int *i)
 {
-	char **tab_rgb;
 	int	rgb_len;
-	int tab_len;
 	int	index;
 
 	index = (int)i;
-	tab_len = 0;
-	rgb_len = 0;
 
-	tab_rgb = ft_split(&line[index], ',');
-	if (!tab_rgb)
+	rgb_len = get_int_len(line, index);
+
+	scene->amb->color.r = ft_atoi(&line[index]);
+
+	if (line[index + rgb_len] != ',')
 		return (-1);
-	tab_len = ft_table_len(tab_rgb);
-	if (tab_len != 3);
+	else
+		index += rgb_len + 1;
+
+	rgb_len = get_int_len(line, index);
+	scene->amb->color.g = ft_atoi(&line[index]);
+
+	if (line[index + rgb_len] != ',')
 		return (-1);
-	scene->amb->color.r = ft_atoi(tab_rgb[0]);
-	scene->amb->color.g = ft_atoi(tab_rgb[1]);
-	scene->amb->color.b = ft_atoi(tab_rgb[2]);
+	else
+		index += rgb_len + 1;
+
+	rgb_len = get_int_len(line, index);
+	scene->amb->color.b = ft_atoi(&line[index]);
+
+	*i = (index + rgb_len);
 	
 	
+	// tab_rgb = ft_split(&line[index], ',');
+	// if (!tab_rgb)
+	// 	return (-1);
+	// tab_len = ft_table_len(tab_rgb);
+	// if (tab_len != 3);
+	// 	return (-1);
+	// scene->amb->color.r = ft_atoi(tab_rgb[0]);
+	// scene->amb->color.g = ft_atoi(tab_rgb[1]);
+	// scene->amb->color.b = ft_atoi(tab_rgb[2]);
+	return (0);
 }
 
 int	parse_ambient(t_scene *scene, char *line)
 {
 	int			i;
 
-	if (scene->amb != NULL)
-		return (-1);
+	scene->amb = calloc(1, sizeof(t_amb));
+	printf("parse ambient HERE\n");
+	
+	// if (scene->amb != NULL)
+	// {
+	// 	printf("yoy yoyoyoyoyo \n");
+	// 	return (-1);
+	// }
+	
+	printf("before ambiant malloc\n");
+
+	// scene->amb = calloc(1, sizeof(t_amb));
+	
+
+	
+	// if (!scene->amb)
+	// 	return (-1);
+
+	printf("after ambiant malloc\n");
+	
 	// on sait que line[0] == 'A', donc je mets i = 1;
 	i = 1;
 	while (ft_is_space_tab(line[i]))
@@ -159,13 +166,18 @@ int	parse_ambient(t_scene *scene, char *line)
 
 	// ensuite dans l'ordre, on doit parser le ratio qui est un double.
 
+	printf("before parse light ratio\n");
+
 	scene->amb->ratio = parse_light_ratio(line, &i);
 
+	printf("after parse light ratio\n");
+	// ensuite verifier qu'il y a un space_tab apres le light ratio
+	// l'indice i a été déplacé dans parse_light_ratio
+	if (!ft_is_space_tab(line[i]))
+		return (-1);
 	while (ft_is_space_tab(line[i]))
 		i++;
-
 	parse_color_rgb(scene, line, &i);
-
 	// il n'y a rien d'autre a parser pour scene->amb, donc si on trouve autre chose que '\0' c'est une erreur
 	while (ft_isspace(line[i]))
 		i++;
@@ -174,25 +186,21 @@ int	parse_ambient(t_scene *scene, char *line)
 	return (0);
 }
 
-
-
-
-
 int	check_parsing_type(t_scene *scene, char *line)
 {
 	// int error = 0;
 	if (line[0] == 'A' && ft_is_space_tab(line[1]))
 		parse_ambient(scene, line);
-	else if (line[0] == 'C' && ft_is_space_tab(line[1]))
-		parse_camera(scene, line);
-	else if (line[0] == 'L' && ft_is_space_tab(line[1]))
-		parse_light(scene, line);
-	else if (line[0] == 's' && line[1] == 'p' && ft_is_space_tab(line[2]))
-		parse_sphere(scene, line);
-	else if (line[0] == 'p' && line[1] == 'l' && ft_is_space_tab(line[2]))
-		parse_plane(scene, line);
-	else if (line[0] == 'c' && line[1] == 'y' && ft_is_space_tab(line[2]))
-		parse_cylinder(scene, line);
+	// else if (line[0] == 'C' && ft_is_space_tab(line[1]))
+	// 	parse_camera(scene, line);
+	// else if (line[0] == 'L' && ft_is_space_tab(line[1]))
+	// 	parse_spotlight(scene, line);
+	// else if (line[0] == 's' && line[1] == 'p' && ft_is_space_tab(line[2]))
+	// 	parse_sphere(scene, line);
+	// else if (line[0] == 'p' && line[1] == 'l' && ft_is_space_tab(line[2]))
+	// 	parse_plane(scene, line);
+	// else if (line[0] == 'c' && line[1] == 'y' && ft_is_space_tab(line[2]))
+	// 	parse_cylinder(scene, line);
 	else if (line[0] == '\n')
 		return (0);
 	else
@@ -235,7 +243,11 @@ int	check_valid_ascii(char *line)
 			j++;
 		}
 		if (valid == 0)
+		{
+			//
+			printf("invalid ascii\n");
 			return (-1);
+		}
 		i++;
 	}
 	return (valid);
@@ -255,10 +267,14 @@ int	gnl_preparsing(t_scene *scene, char *file)
 		if (line == NULL)
 			break ;
 		error = check_valid_ascii(line);
-		if (error == 0)
+
+		//check parsing type renvoi 1 on success
+		printf("check parsing type\n");
+		if (error == 1)
 			error = check_parsing_type(scene, line);
 		free(line);
 	}
+	close(fd);
 	return (error);
 	// return (ft_err_msg(error));
 }
@@ -311,7 +327,13 @@ int	init_scene(t_scene *scene)
 	scene = calloc(1, sizeof(t_scene));
 	if (!scene)
 		return (-1); 
+
+
 	scene->amb = NULL;
+
+	// scene->amb = calloc(1, sizeof(t_amb));
+	// scene->cam = calloc(1, sizeof(t_cam));
+	// scene->light = calloc(1, sizeof(t_lit));
 	scene->cam = NULL;
 	scene->light = NULL;
 	scene->sp = NULL;
@@ -322,11 +344,12 @@ int	init_scene(t_scene *scene)
  
 void	parse_machine(t_scene *scene, char *file)
 {
-	// check si l'extension est .rt et si le fichier existe. return -1 en cas d'erreur
+	// // check si l'extension est .rt et si le fichier existe. return -1 en cas d'erreur
 	check_rt_file(file);
 
-	// ft_read effectue open, GNL pour récupérer une ligne à la fois et ensuite appelle d'autres fonctions pour parser
-	// note la fonction check_rt_file verifie déjà si le open fd est valide. 
+	// // ft_read effectue open, GNL pour récupérer une ligne à la fois et ensuite appelle d'autres fonctions pour parser
+	// // note la fonction check_rt_file verifie déjà si le open fd est valide. 
+	printf("parse machine\n");
 	gnl_preparsing(scene, file); 
 	
 	return ;

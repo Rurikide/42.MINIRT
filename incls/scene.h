@@ -6,17 +6,15 @@
 /*   By: tshimoda <tshimoda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 20:17:17 by tshimoda          #+#    #+#             */
-/*   Updated: 2022/02/20 13:59:46 by tshimoda         ###   ########.fr       */
+/*   Updated: 2022/02/21 16:55:14 by tshimoda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SCENE_H
 # define SCENE_H
 
-# include "mini_rt.h"
-# include "color.h"
-# include "parsing.h"
 # include "vector_3d.h"
+# include "vector_array.h"
 
 typedef struct s_sphere
 {
@@ -32,6 +30,21 @@ typedef struct s_amb
 	double	ratio;
 	t_rgb color;
 }	t_amb;
+
+
+typedef struct s_cam
+{
+	double	ratio;
+	t_rgb color;
+}	t_cam;
+
+
+typedef struct s_lit
+{
+	double	ratio;
+	t_rgb color;
+}	t_lit;
+
 
 typedef struct s_scene 
 {
