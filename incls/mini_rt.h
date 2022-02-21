@@ -6,7 +6,7 @@
 /*   By: jbadia <jbadia@student.42quebec.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 20:00:37 by tshimoda          #+#    #+#             */
-/*   Updated: 2022/02/20 18:35:32 by jbadia           ###   ########.fr       */
+/*   Updated: 2022/02/21 08:56:17 by jbadia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ double	get_root(double disc, double b);
 double hit_sphere(t_vec3 cam, t_vec3	direction, t_sphere *sphere);
 
 double	find_dist(t_sphere *sphere, t_vec3 cam, t_vec3 direction);
-int	intersection(t_sphere **sp, t_vec3 direction, t_scene *scene);
+int	intersection(t_scene *scene, t_vec3 direction);
 int	get_color(t_sphere *sphere, t_vec3 direction, t_scene *scene, double distance);
 
 

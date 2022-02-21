@@ -6,7 +6,7 @@
 /*   By: jbadia <jbadia@student.42quebec.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 20:17:17 by tshimoda          #+#    #+#             */
-/*   Updated: 2022/02/20 18:26:50 by jbadia           ###   ########.fr       */
+/*   Updated: 2022/02/21 16:55:20 by jbadia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ typedef struct s_scene
 	t_sphere	*sp;
 	//t_plan	    *pl;
 	//t_cy	    *cy;
+
 }           t_scene;
 
 

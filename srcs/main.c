@@ -6,7 +6,7 @@
 /*   By: jbadia <jbadia@student.42quebec.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 21:57:36 by tshimoda          #+#    #+#             */
-/*   Updated: 2022/02/20 18:44:34 by jbadia           ###   ########.fr       */
+/*   Updated: 2022/02/21 16:54:44 by jbadia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,17 +18,49 @@
 
 #include <stdio.h>
 
-t_vec3	get_ray_dir(t_scene *scene, t_mlx *mlx, int x, int y)
+t_vec3	add_3_vec(t_vec3 a, t_vec3 b, t_vec3 c)
 {
-	t_vec3	direction;
-	double	fov;
+	t_vec3 resultante;
 
-	fov = scene->cam->fov * M_PI / 180;
-	direction.x =  y - mlx->width / 2;
-	direction.y = x - mlx->height / 2;
-	direction.z = - mlx->width / (2 * tan(fov / 2));
-	new_vector(direction.x, direction.y, direction.z);
-	return(vec_normalize(direction));
+	resultante.x = a.x + b.x + c.x;
+	resultante.y = a.y + b.y + c.y;
+	resultante.z = a.z + b.z + c.z;
+	return (resultante);
+}
+
+t_vec3 rotate_dir(t_vec3 direction, t_scene *scene)
+{
+	double x;
+	double y;
+	double z;
+	double	a;
+
+	a = 0;
+	x = direction.x * cos(a) - direction.z * sin(a);
+	z = direction.x	* sin(a) + direction.z * cos(a);
+	direction = vec_normalize(new_vector(x, direction.y, z));
+	x = direction.x * cos(a) - direction.y * sin(a);
+	z = direction.x	* sin(a) + direction.y * cos(a);
+	direction = vec_normalize(new_vector(x, y, direction.z));
+	return (direction);
+
+}
+
+t_vec3	get_ray_dir(t_scene *scene, t_mlx *mlx, int x, int y, t_vec3 cam_norm)
+{
+	double	fov;
+	t_vec3	direction;
+	t_vec3	a;
+	t_vec3	b;
+	t_vec3	c;
+
+	fov = mlx->width / (2 * tanf(scene->cam->fov * M_PI / 360));
+	a = new_vector(fov, y - mlx->width / 2, -(x - mlx->height / 2));
+	b = new_vector(- (y - mlx->width /2), fov, -(x - mlx->height / 2));
+	c = new_vector(-(x - mlx->height / 2), y - mlx->width /2, fov);
+	direction = add_3_vec(vec_multiply(a, cam_norm.x), 
+		vec_multiply(b, cam_norm.y), vec_multiply(c, cam_norm.z));
+	return(direction);
 }
 
 void	ray_tracing(t_scene *scene)
@@ -46,8 +78,9 @@ void	ray_tracing(t_scene *scene)
 		y = 0;
 		while (y < mlx->width)
 		{
-			dir = get_ray_dir(scene, mlx, x, y);
-			color = intersection(&scene->sp, dir, scene); //faire une struct obj ou ou tab döbj
+			dir = get_ray_dir(scene, mlx, x, y, vec_normalize(scene->cam->dir));
+			dir = rotate_dir(dir, scene);
+			color = intersection(scene, dir); //faire une struct obj ou ou tab döbj
 			my_mlx_pixel_put(mlx, y, x, color);
 			y++;
 		}
