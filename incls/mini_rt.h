@@ -52,7 +52,7 @@ void	my_mlx_pixel_put(t_mlx *mlx, int x, int y, int color);
 
 t_sphere	*init_sphere();
 t_cam	*init_cam();
-t_scene *init_scene();
+// t_scene *jinit_scene();
 t_vec3	get_norm_sphere(t_scene *scene, t_vec3	hit_p);
 t_vec3	get_hit_point_sp(t_scene *scene, t_vec3 direction, double distance);
 double	get_root(double disc, double b);

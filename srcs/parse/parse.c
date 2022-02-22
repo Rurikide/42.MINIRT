@@ -1,44 +1,5 @@
 #include "../../incls/mini_rt.h"
 
-int	ft_table_len(char **tab)
-{
-	int len;
-
-	len = 0;
-	while (tab[len])
-		len++;
-	return (len);
-}
-
-int	get_float_len(char *line, int i)
-{
-	int float_len;
-	int dot;
-	
-	dot = 0;
-	float_len = 0;
-	if (line[i] == '-')
-	{
-		i++;
-		float_len++;
-	}
-	if (ft_isdigit(line[i]))
-	{
-		while (ft_isdigit(line[i]) || line[i] == '.')
-		{
-			if (line[i] == '.')
-				dot++;
-			i++;
-			float_len++;
-		}
-	}
-	else
-		return (-1);
-	if (dot > 1)
-		return (-1);
-	return(float_len);
-}
-
 double	parse_light_ratio(char *line, int *i)
 {
 	double ratio;
@@ -50,33 +11,97 @@ double	parse_light_ratio(char *line, int *i)
 	float_len = get_float_len(line, index);
 	ratio = ft_atod(&line[index]);
 	if (ratio < 0.0 || ratio > 1.0)
-		return (-1);	
+	{
+		printf("\vERROR LIGHT VALUE\v\n");
+		return (-100);
+	}
 	*i = index + float_len;
 	return (ratio);	
 }
 
-int	get_int_len(char *line, int i)
+int	parse_field_of_view(t_scene *scene, char *line, int *i)
 {
-	int int_len;
+	int	index;
+	int	fov_len;
 
-	int_len = 0;
-	if (ft_isdigit(line[i]))
+	index = *i;
+	fov_len = get_int_len(line, index);
+	scene->cam->fov = ft_atoi(&line[index]);
+	if (scene->cam->fov < 0 || scene->cam->fov > 180)
 	{
-		while (ft_isdigit(line[i]))
-		{
-			i++;
-			int_len++;
-		}
-	}
-	else
-	{
-		printf("extra space or non-digit after virgule\n");
+		printf("\vERROR FOV VALUE\v\n");
 		return (-100);
 	}
-	return (int_len);
+	*i = index + fov_len;
+	return (0);	
 }
 
-int	parse_color_rgb(t_scene *scene, char *line, int *i)
+int	check_unit_range(double x, double y, double z)
+{
+	if (x < -1.0 || x  > 1.0)
+	{
+		printf("\vERROR UNIT DIR X \v\n");
+		return (-1);
+	}
+	if (y < -1.0 || y  > 1.0)
+	{
+		printf("\vERROR UNIT DIR Y\v\n");
+		return (-1);
+	}
+	if (z < -1.0 || z  > 1.0)
+	{
+		printf("\vERROR UNIT DIR Z\v\n");
+		return (-1);
+	}
+	return (0);
+}
+
+int	parse_3unit_ratio(t_scene *scene, char *line, int *i)
+{
+	int	unit_len;
+	int	index;
+
+	index = *i;
+	unit_len = get_float_len(line, index);
+	scene->cam->dir.x = ft_atod(&line[index]);
+	if (line[index + unit_len] != ',')
+		return (-1);
+	else
+		index += unit_len + 1;
+	unit_len = get_float_len(line, index);
+	scene->cam->dir.y = ft_atod(&line[index]);
+	if (line[index + unit_len] != ',')
+		return (-1);
+	else
+		index += unit_len + 1;
+	unit_len = get_float_len(line, index);
+	scene->cam->dir.z = ft_atod(&line[index]);
+	*i = index + unit_len;
+	// check_unit_range(scene);
+	return (0);
+}
+
+int	check_rgb_range(int r, int g, int b)
+{
+	if (r < 0 || r  > 255)
+	{
+		printf("\vERROR RED VALUE \v\n");
+		return (-1);
+	}
+	if (g < 0 || g  > 255)
+	{
+		printf("\vERROR GREEN VALUE\v\n");
+		return (-1);
+	}
+	if (b < 0 || b  > 255)
+	{
+		printf("\vERROR BLUE VALUE\v\n");
+		return (-1);
+	}
+	return (0);
+}
+
+int	parse_3color_rgb(t_scene *scene, char *line, int *i)
 {
 	int	rgb_len;
 	int	index;
@@ -97,50 +122,84 @@ int	parse_color_rgb(t_scene *scene, char *line, int *i)
 	rgb_len = get_int_len(line, index);
 	scene->amb->color.b = ft_atoi(&line[index]);
 	*i = index + rgb_len;
-	if (scene->amb->color.r < 0 || scene->amb->color.r  > 255)
-	{
-		printf("\vERROR RED VALUE \v\n");
-		return (-1);
-	}
-	if (scene->amb->color.g < 0 || scene->amb->color.g  > 255)
-	{
-		printf("\vERROR GREEN VALUE\v\n");
-		return (-1);
-	}
-	if (scene->amb->color.b < 0 || scene->amb->color.b  > 255)
-	{
-		printf("\vERROR BLUE VALUE\v\n");
-		return (-1);
-	}
+	// check_rgb_range(scene);
 	return (0);
 }
 
-int	parse_ambient(t_scene *scene, char *line)
+int	parse_1color_rgb(char *line, int *i)
+{
+	int	rgb_len;
+	int	value;
+	int	index;
+
+	index = *i;
+
+	if (!ft_isdigit(line[index]))
+	{
+		printf("parse1color, not a digit\n");
+		return (-1000);
+	}
+	rgb_len = get_int_len(line, index);
+	value = ft_atoi(&line[index]);
+	*i = index + rgb_len;
+	return (value);
+}
+
+
+int	parse_3coord_xyz(t_scene *scene, char *line, int *i)
+{
+	int	coord_len;
+	int	index;
+
+	index = *i;
+	coord_len = get_float_len(line, index);
+	scene->cam->origin.x = ft_atod(&line[index]);
+	if (line[index + coord_len] != ',')
+		return (-1);
+	else
+		index += coord_len + 1;
+	coord_len = get_float_len(line, index);
+	scene->cam->origin.y = ft_atod(&line[index]);
+	if (line[index + coord_len] != ',')
+		return (-1);
+	else
+		index += coord_len + 1;
+	coord_len = get_float_len(line, index);
+	scene->cam->origin.z = ft_atod(&line[index]);
+	*i = index + coord_len;
+	// check window width heigth ???
+	return (0);
+}
+
+
+int	parse_camera(t_scene *scene, char *line)
 {
 	int			i;
 
-	if (scene->amb != NULL)
+	if (scene->cam != NULL)
 	{
-		printf("IL Y A DEJA UNE AMBIANT LIGHT\n");
+		printf("IL Y A DEJA UNE CAMERA\n");
 		return (-1);
 	}
-	scene->amb = (t_amb *)malloc(sizeof(t_amb));
-	// on sait que line[0] == 'A', donc je mets i = 1;
+	scene->cam= (t_cam *)malloc(sizeof(t_cam));
+	// on sait que line[0] == 'C', donc je mets i = 1;
 	i = 1;
 	while (ft_is_space_tab(line[i]))
 		i++;
-	scene->amb->ratio = parse_light_ratio(line, &i);
-
+	parse_3coord_xyz(scene, line, &i);
 	if (!ft_is_space_tab(line[i]))
 		return (-1);
 	while (ft_is_space_tab(line[i]))
 		i++;
-	parse_color_rgb(scene, line, &i);
+	parse_3unit_ratio(scene, line, &i);
 	// printf("RED VALUE = %d\n", scene->amb->color.r);
 	// printf("GREN VALUE = %d\n", scene->amb->color.g);
 	// printf("BLUE VALUE = %d\n", scene->amb->color.b);
 	while (ft_is_space_tab(line[i]))
 		i++;
+
+	// parse_fov(scene, line, &i);
+
 	if (line[i] != '\n' && line[i] != '\0')
 	{
 		printf("ERROR TOO MANY INFO\n");
@@ -155,8 +214,8 @@ int	check_parsing_type(t_scene *scene, char *line)
 	// int error = 0;
 	if (line[0] == 'A' && ft_is_space_tab(line[1]))
 		parse_ambient(scene, line);
-	// else if (line[0] == 'C' && ft_is_space_tab(line[1]))
-	// 	parse_camera(scene, line);
+	else if (line[0] == 'C' && ft_is_space_tab(line[1]))
+		parse_camera(scene, line);
 	// else if (line[0] == 'L' && ft_is_space_tab(line[1]))
 	// 	parse_spotlight(scene, line);
 	// else if (line[0] == 's' && line[1] == 'p' && ft_is_space_tab(line[2]))
@@ -171,50 +230,6 @@ int	check_parsing_type(t_scene *scene, char *line)
 		return (-1); // message derreur 
 	return (0);
 	// return (error);
-}
-
-int	ft_is_space_tab(char c)
-{
-	if (c == ' ' || c == '\t')
-		return (1);
-	return (0);
-	// return message à faire
-}
-
-// check_valid_ascii() vérifie que la ligne ne contient que les caractères valides dans le fichier .rt
-// par exemple ascii 65 = 'A' et 9 = '\n' 
-int	check_valid_ascii(char *line)
-{
-	char	*charset;
-	char	*numbers;
-	char	*wspaces;
-	int		i;
-	int		j;
-	int		valid;
-
-	charset = (char [10]){48, 65, 67, 76, 99, 108, 112, 116, 121};
-	numbers = (char [10]){49, 50, 51, 52, 53, 54, 55, 56, 57};
-	wspaces = (char [10]){9, 10, 11, 12, 13, 32, 44, 45, 46};
-	i = 0;
-	while (line[i])
-	{
-		valid = 0;
-		j = 0;
-		while (charset[j])
-		{
-			if (line[i] == charset[j] || line[i] == numbers[j] || line[i] == wspaces[j])
-				valid = 1;
-			j++;
-		}
-		if (valid == 0)
-		{
-			//
-			printf("invalid ascii\n");
-			return (-1);
-		}
-		i++;
-	}
-	return (valid);
 }
 
 int	gnl_preparsing(t_scene *scene, char *file)
@@ -240,31 +255,6 @@ int	gnl_preparsing(t_scene *scene, char *file)
 	close(fd);
 	return (error);
 	// return (ft_err_msg(error));
-}
-
-int	check_rt_file(char *file)
-{
-	int		fd;
-	int		len;
-	int		v_len;
-	char	*valid;
-
-	fd = 0;
-	v_len = 2;
-	valid = ".rt";
-	len = ft_strlen(file) - 1;
-	while (valid[v_len])
-	{
-		if (len < 1 || valid[v_len] != file[len])
-			return (-1);
-		v_len--;
-		len--;
-	}
-	fd = open(file, O_RDONLY);
-	if (fd < 0)
-		return (-1);
-	close (fd);
-	return (1);
 }
 
 void	free_scene_exit(t_scene *scene)

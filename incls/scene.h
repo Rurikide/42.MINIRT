@@ -6,7 +6,7 @@
 /*   By: tshimoda <tshimoda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 20:17:17 by tshimoda          #+#    #+#             */
-/*   Updated: 2022/02/21 16:55:20 by jbadia           ###   ########.fr       */
+/*   Updated: 2022/02/22 11:55:13 by tshimoda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ typedef struct s_sphere
 	t_vec3	center;
 	t_rgb	color;
 	double	rad;
-    t_vec3  norm;
+	t_vec3  norm;
 	t_type	type;
 }	            t_sphere;
 
@@ -42,8 +42,6 @@ typedef struct s_amb
 
 typedef struct s_cam
 {
-	double	ratio;
-	t_rgb color;
 	t_vec3	origin;
 	t_vec3	dir;
 	double	fov;
@@ -53,17 +51,18 @@ typedef struct s_cam
 typedef struct s_lit
 {
 	double	ratio;
-	t_rgb color;
+	t_rgb 	color;
 }	t_lit;
 
 
 typedef struct s_scene 
 {
-	int		nb_obj;
-    t_cam       *cam;
-	t_sphere	*sp;
+	int			nb_obj;
+	t_amb		*amb;
+	t_cam       *cam;
+	// 
 
-    t_lit       *light;
+	t_lit       *light;
 	t_vector	*sp;
 	t_vector	*pl;
 	t_vector	*cy;
