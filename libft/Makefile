@@ -57,6 +57,8 @@ SRCS	=	ft_memset.c \
 			ft_square_root.c \
 			ft_atod.c \
 			ft_isspace.c \
+			ft_table_len.c \
+
 
 
 
