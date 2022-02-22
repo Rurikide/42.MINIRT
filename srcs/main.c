@@ -54,7 +54,7 @@ t_vec3	get_ray_dir(t_scene *scene, t_mlx *mlx, int x, int y, t_vec3 cam_norm)
 	t_vec3	b;
 	t_vec3	c;
 
-	fov = mlx->width / (2 * tanf(scene->cam->fov * M_PI / 360));
+	fov = mlx->width / (2 * tanf(scene->cam->fov * M_PI / 180));
 	a = new_vector(fov, y - mlx->width / 2, -(x - mlx->height / 2));
 	b = new_vector(- (y - mlx->width /2), fov, -(x - mlx->height / 2));
 	c = new_vector(-(x - mlx->height / 2), y - mlx->width /2, fov);

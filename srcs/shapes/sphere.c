@@ -6,7 +6,7 @@ t_sphere	*init_sphere()
 
 	sphere = ft_calloc(1, sizeof(t_sphere));
 	sphere->color = new_color(100, 0, 255);
-	sphere->center = new_vector(0, 0, 0);
+	sphere->center = new_vector(500, 0, 0);
 	sphere->rad = 30;
 	sphere->type = SPHERE;
 
