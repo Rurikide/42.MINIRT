@@ -38,19 +38,27 @@ t_vec3 rotate_dir(t_vec3 direction, t_scene *scene)
 
 t_vec3	get_ray_dir(t_scene *scene, t_mlx *mlx, int x, int y, t_vec3 cam_norm)
 {
-	double	fov;
+	double	dst;
 	t_vec3	direction;
 	t_vec3	a;
 	t_vec3	b;
 	t_vec3	c;
 
-	fov = mlx->width / (2 * tanf(scene->cam->fov * M_PI / 180));
-	a = new_vector(fov, y - mlx->width / 2, -(x - mlx->height / 2));
-	b = new_vector(- (y - mlx->width /2), fov, -(x - mlx->height / 2));
-	c = new_vector(-(x - mlx->height / 2), y - mlx->width /2, fov);
+	dst = mlx->width / (2 * tanf(scene->cam->fov * M_PI / 360));
+	a = new_vector(dst, y - mlx->width / 2, -(x - mlx->height / 2));
+	b = new_vector(- (y - mlx->width /2), dst, -(x - mlx->height / 2));
+	c = new_vector(-(x - mlx->height / 2), y - mlx->width /2, dst);
 	direction = add_3_vec(vec_multiply(a, cam_norm.x), 
 		vec_multiply(b, cam_norm.y), vec_multiply(c, cam_norm.z));
-	return(direction);
+
+	// double a = y + mlx->width/2;
+	// double b = x + mlx->height/2;
+	// double max = fmax(mlx->height, mlx->width);
+	// double c = max / ((2 * tanf(scene->cam->fov * M_PI / 360)));
+	// direction.x = 1 * a + 0 * b + 0 * c;
+	// direction.y = 0 * a + 1 * b + 0 * c;
+	// direction.z = 0 * a + 0 * b + 1 * c;
+	return((direction));
 }
 
 void	ray_tracing(t_scene *scene)
@@ -92,20 +100,18 @@ void	make_scene(t_scene *scene)
 int main (int argc, char **argv)
 {
 	t_scene *scene;
-	t_mlx	*mlx;
 	t_rt 	*m_rt; 
 
-	scene = (t_scene *)malloc(sizeof(t_scene));
-	init_scene(scene);
+	// scene = (t_scene *)malloc(sizeof(t_scene));
+	// init_scene(scene);
 	
-	mlx = get_mlx();
 	m_rt = calloc(1, sizeof(t_rt));
 	init_rt(m_rt);
 	make_scene(m_rt->scene);
-	if (argc != 2)
-		return (-1);
+	// if (argc != 2)
+	// 	return (-1);
 
-	parse_machine(scene, argv[1]);
+	//parse_machine(scene, argv[1]);
 	// printf("%d\n", scene->amb->color.r);
     return (0);
 }

@@ -64,7 +64,7 @@ typedef struct s_scene
 	t_sphere	*sp;
 
     t_lit       *light;
-	t_vector	*sp;
+//	t_vector	*sp;
 	t_vector	*pl;
 	t_vector	*cy;
 	//t_vector	*shape;

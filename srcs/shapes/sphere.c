@@ -19,7 +19,7 @@ t_cam	*init_cam()
 
 	cam = ft_calloc(1, sizeof(t_cam));
 	cam->dir = new_vector(1, 0, 0);
-	cam->origin = new_vector(-200, 0, 0);
+	cam->origin = new_vector(-200, 0, -100);
 	cam->fov = 70;
 
 	return (cam);
@@ -60,8 +60,8 @@ double	get_root(double disc, double b)
 	double	min;
 	double	max;
 	
-	t1 = -b + sqrt(disc);
-	t2 = -b - sqrt(disc);
+	t1 = -b + sqrt(disc)/2;
+	t2 = -b - sqrt(disc)/2;
 	min = fmin(t1, t2);
 	max = fmax(t1, t2);
 	if (min >= 0)
@@ -73,17 +73,15 @@ double	get_root(double disc, double b)
 
 double hit_sphere(t_vec3 cam, t_vec3 direction, t_sphere *sphere)
 {
-	double	a;
 	double	b;
 	double	c;
 	double	disc;
 	t_vec3	v;
 
 	v = vec_sub(cam, sphere->center);
-	a = vec_dot(direction, direction);
-	b = vec_dot(direction, v);
+	b = 2 * vec_dot(direction, v);
 	c = vec_dot(v, v) - sphere->rad * sphere->rad;
-	disc = b * b - c;
+	disc = b * b - 4*c;
 	if (disc >= 0)
 		return (get_root(disc, b));
 	else

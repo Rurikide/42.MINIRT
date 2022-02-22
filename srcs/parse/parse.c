@@ -1,3 +1,4 @@
+/*
 #include "../../incls/mini_rt.h"
 
 int	ft_table_len(char **tab)
@@ -307,3 +308,5 @@ void	parse_machine(t_scene *scene, char *file)
 	
 	return ;
 }
+
+*/

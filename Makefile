@@ -17,7 +17,7 @@ RDIR = srcs/ray_hit
 ODIR= objs
 
 SRCS=	main.c init.c mlx_utils.c 
-SRCS= main.c
+
 
 ARRAY= vector_array.c vector_utils.c
 PARSE= parse.c

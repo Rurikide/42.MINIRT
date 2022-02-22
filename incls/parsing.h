@@ -31,7 +31,7 @@ int		check_valid_ascii(char *line);
 int		gnl_preparsing(t_scene *scene, char *file);
 int		check_rt_file(char *file);
 void	free_scene_exit(t_scene *scene);
-int		init_scene(t_scene *scene);
+//int		init_scene(t_scene *scene);
 void	parse_machine(t_scene *scene, char *file);
 
 #endif
