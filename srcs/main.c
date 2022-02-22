@@ -6,7 +6,7 @@
 /*   By: tshimoda <tshimoda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 21:57:36 by tshimoda          #+#    #+#             */
-/*   Updated: 2022/02/21 17:33:06 by tshimoda         ###   ########.fr       */
+/*   Updated: 2022/02/21 19:28:05 by tshimoda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int main (int argc, char **argv)
 {
 	t_scene *scene;
 
-	scene = NULL;
+	scene = (t_scene *)malloc(sizeof(t_scene));
 	init_scene(scene);
 	
 	if (argc != 2)

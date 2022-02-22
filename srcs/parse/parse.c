@@ -6,7 +6,7 @@
 /*   By: tshimoda <tshimoda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 15:10:51 by tshimoda          #+#    #+#             */
-/*   Updated: 2022/02/21 17:58:59 by tshimoda         ###   ########.fr       */
+/*   Updated: 2022/02/21 21:01:37 by tshimoda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	get_float_len(char *line, int i)
 {
 	int float_len;
 	int dot;
-
+	
 	dot = 0;
 	float_len = 0;
 	if (line[i] == '-')
@@ -53,19 +53,17 @@ int	get_float_len(char *line, int i)
 
 double	parse_light_ratio(char *line, int *i)
 {
-	// positive ratio range is 0.0 to 1.0, donc line[i + 1] doit absolument être '.'
 	double ratio;
 	int	index;
 	int	float_len;
 
-	index = (int)i;
+	index = *i;
 	ratio = 0;
 	float_len = get_float_len(line, index);
 	ratio = ft_atod(&line[index]);
 	if (ratio < 0.0 || ratio > 1.0)
-		return (-1);
-	// apres avoir parser le double, je modifiel'indice i que je recois par addresse.
-	*i += float_len;
+		return (-1);	
+	*i = index + float_len;
 	return (ratio);	
 }
 
@@ -74,12 +72,6 @@ int	get_int_len(char *line, int i)
 	int int_len;
 
 	int_len = 0;
-	// if (line[i] == '-')
-	// {
-	// 	i++;
-	// 	int_len++;
-	// }
-	// on veut un nombre entier positif
 	if (ft_isdigit(line[i]))
 	{
 		while (ft_isdigit(line[i]))
@@ -89,7 +81,10 @@ int	get_int_len(char *line, int i)
 		}
 	}
 	else
-		return (-1);
+	{
+		printf("extra space or non-digit after virgule\n");
+		return (-100);
+	}
 	return (int_len);
 }
 
@@ -98,40 +93,37 @@ int	parse_color_rgb(t_scene *scene, char *line, int *i)
 	int	rgb_len;
 	int	index;
 
-	index = (int)i;
-
+	index = *i;
 	rgb_len = get_int_len(line, index);
-
 	scene->amb->color.r = ft_atoi(&line[index]);
-
 	if (line[index + rgb_len] != ',')
 		return (-1);
 	else
 		index += rgb_len + 1;
-
 	rgb_len = get_int_len(line, index);
 	scene->amb->color.g = ft_atoi(&line[index]);
-
 	if (line[index + rgb_len] != ',')
 		return (-1);
 	else
 		index += rgb_len + 1;
-
 	rgb_len = get_int_len(line, index);
 	scene->amb->color.b = ft_atoi(&line[index]);
-
-	*i = (index + rgb_len);
-	
-	
-	// tab_rgb = ft_split(&line[index], ',');
-	// if (!tab_rgb)
-	// 	return (-1);
-	// tab_len = ft_table_len(tab_rgb);
-	// if (tab_len != 3);
-	// 	return (-1);
-	// scene->amb->color.r = ft_atoi(tab_rgb[0]);
-	// scene->amb->color.g = ft_atoi(tab_rgb[1]);
-	// scene->amb->color.b = ft_atoi(tab_rgb[2]);
+	*i = index + rgb_len;
+	if (scene->amb->color.r < 0 || scene->amb->color.r  > 255)
+	{
+		printf("\vERROR RED VALUE \v\n");
+		return (-1);
+	}
+	if (scene->amb->color.g < 0 || scene->amb->color.g  > 255)
+	{
+		printf("\vERROR GREEN VALUE\v\n");
+		return (-1);
+	}
+	if (scene->amb->color.b < 0 || scene->amb->color.b  > 255)
+	{
+		printf("\vERROR BLUE VALUE\v\n");
+		return (-1);
+	}
 	return (0);
 }
 
@@ -139,50 +131,34 @@ int	parse_ambient(t_scene *scene, char *line)
 {
 	int			i;
 
-	scene->amb = calloc(1, sizeof(t_amb));
-	printf("parse ambient HERE\n");
-	
-	// if (scene->amb != NULL)
-	// {
-	// 	printf("yoy yoyoyoyoyo \n");
-	// 	return (-1);
-	// }
-	
-	printf("before ambiant malloc\n");
-
-	// scene->amb = calloc(1, sizeof(t_amb));
-	
-
-	
-	// if (!scene->amb)
-	// 	return (-1);
-
-	printf("after ambiant malloc\n");
-	
+	if (scene->amb != NULL)
+	{
+		printf("IL Y A DEJA UNE AMBIANT LIGHT\n");
+		return (-1);
+	}
+	scene->amb = (t_amb *)malloc(sizeof(t_amb));
 	// on sait que line[0] == 'A', donc je mets i = 1;
 	i = 1;
 	while (ft_is_space_tab(line[i]))
 		i++;
-
-	// ensuite dans l'ordre, on doit parser le ratio qui est un double.
-
-	printf("before parse light ratio\n");
-
 	scene->amb->ratio = parse_light_ratio(line, &i);
 
-	printf("after parse light ratio\n");
-	// ensuite verifier qu'il y a un space_tab apres le light ratio
-	// l'indice i a été déplacé dans parse_light_ratio
 	if (!ft_is_space_tab(line[i]))
 		return (-1);
 	while (ft_is_space_tab(line[i]))
 		i++;
 	parse_color_rgb(scene, line, &i);
-	// il n'y a rien d'autre a parser pour scene->amb, donc si on trouve autre chose que '\0' c'est une erreur
-	while (ft_isspace(line[i]))
+	// printf("RED VALUE = %d\n", scene->amb->color.r);
+	// printf("GREN VALUE = %d\n", scene->amb->color.g);
+	// printf("BLUE VALUE = %d\n", scene->amb->color.b);
+	while (ft_is_space_tab(line[i]))
 		i++;
 	if (line[i] != '\0')
+	{
+		printf("ERROR TOO MANY INFO\n");
+		printf("FOUND %c\n", line[i]);
 		return (-1);
+	}
 	return (0);
 }
 
@@ -269,7 +245,6 @@ int	gnl_preparsing(t_scene *scene, char *file)
 		error = check_valid_ascii(line);
 
 		//check parsing type renvoi 1 on success
-		printf("check parsing type\n");
 		if (error == 1)
 			error = check_parsing_type(scene, line);
 		free(line);
@@ -324,16 +299,7 @@ void	free_scene_exit(t_scene *scene)
 
 int	init_scene(t_scene *scene)
 {
-	scene = calloc(1, sizeof(t_scene));
-	if (!scene)
-		return (-1); 
-
-
 	scene->amb = NULL;
-
-	// scene->amb = calloc(1, sizeof(t_amb));
-	// scene->cam = calloc(1, sizeof(t_cam));
-	// scene->light = calloc(1, sizeof(t_lit));
 	scene->cam = NULL;
 	scene->light = NULL;
 	scene->sp = NULL;
@@ -349,7 +315,6 @@ void	parse_machine(t_scene *scene, char *file)
 
 	// // ft_read effectue open, GNL pour récupérer une ligne à la fois et ensuite appelle d'autres fonctions pour parser
 	// // note la fonction check_rt_file verifie déjà si le open fd est valide. 
-	printf("parse machine\n");
 	gnl_preparsing(scene, file); 
 	
 	return ;
