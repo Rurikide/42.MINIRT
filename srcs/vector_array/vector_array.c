@@ -6,11 +6,12 @@
 /*   By: tshimoda <tshimoda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/29 12:04:47 by tshimoda          #+#    #+#             */
-/*   Updated: 2022/02/16 12:23:45 by tshimoda         ###   ########.fr       */
+/*   Updated: 2022/02/21 12:17:10 by tshimoda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incls/vector_array.h"
+#include "../../libft/libsrcs/libft.h"
 
 void	vector_init_array(t_vector *v)
 {
@@ -54,8 +55,9 @@ void	vector_resize_capacity(t_vector *v, size_t new_capacity)
 	void	**temp;
 
 	temp = v->elements;
-	vector_free_elements(v);
 	v->elements = malloc(sizeof(void *) * new_capacity);
+	ft_memcpy(v->elements, temp, sizeof(void *) * v->total);
+	vector_free_elements(v);
 	v->elements = temp;
 	v->capacity = new_capacity;
 }
