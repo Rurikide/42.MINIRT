@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   parse.c                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: tshimoda <tshimoda@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/16 15:10:51 by tshimoda          #+#    #+#             */
-/*   Updated: 2022/02/21 21:01:37 by tshimoda         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../../incls/mini_rt.h"
 
 int	ft_table_len(char **tab)
@@ -153,7 +141,7 @@ int	parse_ambient(t_scene *scene, char *line)
 	// printf("BLUE VALUE = %d\n", scene->amb->color.b);
 	while (ft_is_space_tab(line[i]))
 		i++;
-	if (line[i] != '\0')
+	if (line[i] != '\n' && line[i] != '\0')
 	{
 		printf("ERROR TOO MANY INFO\n");
 		printf("FOUND %c\n", line[i]);
