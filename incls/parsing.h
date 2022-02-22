@@ -6,7 +6,7 @@
 /*   By: tshimoda <tshimoda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 11:18:44 by tshimoda          #+#    #+#             */
-/*   Updated: 2022/02/22 15:33:00 by tshimoda         ###   ########.fr       */
+/*   Updated: 2022/02/22 17:51:51 by tshimoda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,9 @@ void	ft_skip_space_tab(char *line, int *i);
 int	    check_rgb_range(int r, int g, int b);
 int		check_unit_range(double x, double y, double z);
 
-int		parse_3unit_ratio(t_scene *scene, char *line, int *i);
-int		parse_3color_rgb(t_scene *scene, char *line, int *i);
-int		parse_3coord_xyz(t_scene *scene, char *line, int *i);
+// int		parse_3unit_ratio(t_scene *scene, char *line, int *i);
+// int		parse_3color_rgb(t_scene *scene, char *line, int *i);
+// int		parse_3coord_xyz(t_scene *scene, char *line, int *i);
 
 
 int		parse_1color_rgb(char *line, int *i);
@@ -48,9 +48,14 @@ double	parse_1coord_xyz(char *line, int *i);
 
 double	parse_light_ratio(char *line, int *i);
 
-int		parse_ambient(t_scene *scene, char *line);
-int	parse_camera(t_scene *scene, char *line);
+int		parse_ambient(t_scene *scene, char *line, int i);
+int		parse_camera(t_scene *scene, char *line, int i);
+int		parse_light(t_scene *scene, char *line, int i);
+
+
+int		parse_field_of_view(char *line, int *i);
 
 int	check_if_missing_value(char *line, int i);
-int	check_if_missing_comma(char *line, int i);
+int	check_if_missing_comma(char *line, int *i);
+int	check_if_missing_space(char *line, int i);
 #endif

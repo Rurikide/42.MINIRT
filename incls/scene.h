@@ -6,7 +6,7 @@
 /*   By: tshimoda <tshimoda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 20:17:17 by tshimoda          #+#    #+#             */
-/*   Updated: 2022/02/22 11:55:13 by tshimoda         ###   ########.fr       */
+/*   Updated: 2022/02/22 17:49:16 by tshimoda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,14 +44,15 @@ typedef struct s_cam
 {
 	t_vec3	origin;
 	t_vec3	dir;
-	double	fov;
+	int		fov;
 }	t_cam;
 
 
 typedef struct s_lit
 {
+	t_vec3	origin;
 	double	ratio;
-	t_rgb 	color;
+	// bonus t_rgb 	color;
 }	t_lit;
 
 

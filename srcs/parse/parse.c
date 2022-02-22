@@ -8,6 +8,7 @@ double	parse_light_ratio(char *line, int *i)
 
 	index = *i;
 	ratio = 0;
+	check_if_missing_value(line, index);
 	float_len = get_float_len(line, index);
 	ratio = ft_atod(&line[index]);
 	if (ratio < 0.0 || ratio > 1.0)
@@ -19,21 +20,23 @@ double	parse_light_ratio(char *line, int *i)
 	return (ratio);	
 }
 
-int	parse_field_of_view(t_scene *scene, char *line, int *i)
+int	parse_field_of_view(char *line, int *i)
 {
 	int	index;
+	int	value;
 	int	fov_len;
 
 	index = *i;
+	check_if_missing_value(line, index);
 	fov_len = get_int_len(line, index);
-	scene->cam->fov = ft_atoi(&line[index]);
-	if (scene->cam->fov < 0 || scene->cam->fov > 180)
+	value = ft_atoi(&line[index]);
+	if (value < 0 || value > 180)
 	{
 		printf("\vERROR FOV VALUE\v\n");
 		return (-100);
 	}
 	*i = index + fov_len;
-	return (0);	
+	return (value);	
 }
 
 int	check_unit_range(double x, double y, double z)
@@ -128,7 +131,7 @@ int	check_rgb_range(int r, int g, int b)
 
 int	check_if_missing_value(char *line, int i)
 {
-	if (!ft_isdigit(line[i]))
+	if (!ft_isdigit(line[i]) && line[i] != '-')
 	{
 		printf("check if() ERROR  missing digit value\n");
 		return (-1000);
@@ -136,11 +139,26 @@ int	check_if_missing_value(char *line, int i)
 	return (0);
 }
 
-int	check_if_missing_comma(char *line, int i)
+int	check_if_missing_comma(char *line, int *i)
 {
-	if (line[i] != ',')
+	int index;
+
+	index = *i;
+	if (line[index] != ',')
 	{
 		printf("not a virgule\n");
+		return (-1);
+	}
+	else
+		*i += 1;
+	return (0);
+}
+
+int	check_if_missing_space(char *line, int i)
+{
+	if (line[i] != ' ' && line[i] != '\t')
+	{
+		printf("missing space after key/value\n");
 		return (-1);
 	}
 	return (0);
@@ -154,11 +172,13 @@ int	parse_1color_rgb(char *line, int *i)
 
 	index = *i;
 
-	if (!ft_isdigit(line[index]))
-	{
-		printf("parse1color, missing digit value\n");
-		return (-1000);
-	}
+	// if (!ft_isdigit(line[index]))
+	// {
+	// 	printf("parse1color, missing digit value\n");
+	// 	return (-1000);
+	// }
+	check_if_missing_value(line, index);
+
 	rgb_len = get_int_len(line, index);
 	value = ft_atoi(&line[index]);
 	*i = index + rgb_len;
@@ -173,11 +193,8 @@ double	parse_1coord_xyz(char *line, int *i)
 
 	index = *i;
 
-	if (!ft_isdigit(line[index]))
-	{
-		printf("parse1coord, not a digit\n");
-		return (-1000);
-	}
+	check_if_missing_value(line, index);
+
 	coord_len = get_float_len(line, index);
 	value = ft_atod(&line[index]);
 	*i = index + coord_len;
@@ -214,17 +231,17 @@ int	check_parsing_type(t_scene *scene, char *line)
 {
 	// int error = 0;
 	if (line[0] == 'A' && ft_is_space_tab(line[1]))
-		parse_ambient(scene, line);
+		parse_ambient(scene, line, 1);
 	else if (line[0] == 'C' && ft_is_space_tab(line[1]))
-		parse_camera(scene, line);
-	// else if (line[0] == 'L' && ft_is_space_tab(line[1]))
-	// 	parse_spotlight(scene, line);
+		parse_camera(scene, line, 1);
+	else if (line[0] == 'L' && ft_is_space_tab(line[1]))
+		parse_light(scene, line, 1);
 	// else if (line[0] == 's' && line[1] == 'p' && ft_is_space_tab(line[2]))
-	// 	parse_sphere(scene, line);
+	// 	parse_sphere(scene, line, 2);
 	// else if (line[0] == 'p' && line[1] == 'l' && ft_is_space_tab(line[2]))
-	// 	parse_plane(scene, line);
+	// 	parse_plane(scene, line, 2);
 	// else if (line[0] == 'c' && line[1] == 'y' && ft_is_space_tab(line[2]))
-	// 	parse_cylinder(scene, line);
+	// 	parse_cylinder(scene, line, 2);
 	else if (line[0] == '\n')
 		return (0);
 	else

@@ -1,32 +1,21 @@
 #include "../../incls/mini_rt.h"
 
-int	parse_ambient(t_scene *scene, char *line)
+int	parse_ambient(t_scene *scene, char *line, int i)
 {
-	int			i;
-
 	if (scene->amb != NULL)
 	{
 		printf("IL Y A DEJA UNE AMBIANT LIGHT\n");
 		return (-1);
 	}
 	scene->amb = (t_amb *)malloc(sizeof(t_amb));
-	i = 1;
-	
 	ft_skip_space_tab(line, &i);
-	check_if_missing_value(line, i);
-
 	scene->amb->ratio = parse_light_ratio(line, &i);
-	if (!ft_is_space_tab(line[i]))
-		return (-1);
-
+	check_if_missing_space(line, i);
 	ft_skip_space_tab(line, &i);
-	check_if_missing_value(line, i);
 	scene->amb->color.r = parse_1color_rgb(line, &i);
-	check_if_missing_comma(line, i);
-	i++;
+	check_if_missing_comma(line, &i);
 	scene->amb->color.g = parse_1color_rgb(line, &i);
-	check_if_missing_comma(line, i);
-	i++;
+	check_if_missing_comma(line, &i);
 	scene->amb->color.b = parse_1color_rgb(line, &i);
 
 	printf("AMBIANT RATIO = %f\n", scene->amb->ratio);
