@@ -1,14 +1,4 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: jbadia <jbadia@student.42quebec.com>       +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/15 21:57:36 by tshimoda          #+#    #+#             */
-/*   Updated: 2022/02/21 16:54:44 by jbadia           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
+
 
 #include "../incls/mini_rt.h"
 #include "../libft/libsrcs/libft.h"
@@ -101,18 +91,21 @@ void	make_scene(t_scene *scene)
 
 int main (int argc, char **argv)
 {
-   	t_rt *m_rt;
-   	t_mlx *mlx;
+	t_scene *scene;
+	t_mlx	*mlx;
+	t_rt 	*m_rt; 
+
+	scene = (t_scene *)malloc(sizeof(t_scene));
+	init_scene(scene);
 	
 	mlx = get_mlx();
 	m_rt = calloc(1, sizeof(t_rt));
 	init_rt(m_rt);
 	make_scene(m_rt->scene);
-	//check_args and error
-	//parsing
-	//if(!amb_light | !camera ! |light)
-	//	exit_error
+	if (argc != 2)
+		return (-1);
 
-    
+	parse_machine(scene, argv[1]);
+	// printf("%d\n", scene->amb->color.r);
     return (0);
 }

@@ -1,15 +1,3 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: jbadia <jbadia@student.42quebec.com>       +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2022/02/06 15:46:15 by tshimoda          #+#    #+#              #
-#    Updated: 2022/02/20 18:21:42 by jbadia           ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
 NAME= miniRT
 
 AR= ar rc
@@ -29,6 +17,8 @@ RDIR = srcs/ray_hit
 ODIR= objs
 
 SRCS=	main.c init.c mlx_utils.c 
+SRCS= main.c
+
 ARRAY= vector_array.c vector_utils.c
 PARSE= parse.c
 COLOR= color.c
@@ -36,7 +26,8 @@ VEC3D= vector_new.c vector_tool.c
 SHAPES= sphere.c
 RAY = intersection.c
 
-OBJS= $(SRCS:.c=.o) $(ARRAY:.c=.o) $(VEC3D:.c=.o) $(COLOR:.c=.o) $(SHAPES:.c=.o) $(RAY:.c=.o)
+OBJS= $(SRCS:.c=.o) $(ARRAY:.c=.o) $(VEC3D:.c=.o) $(COLOR:.c=.o) $(SHAPES:.c=.o) $(RAY:.c=.o) $(PARSE:.c=.o)
+
 
 SFIX= $(addprefix $(SDIR)/, $(SRCS))
 AFIX= $(addprefix $(ADIR)/, $(ARRAY))
