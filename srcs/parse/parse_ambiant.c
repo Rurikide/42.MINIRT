@@ -13,28 +13,19 @@ int	parse_ambient(t_scene *scene, char *line)
 	i = 1;
 	
 	ft_skip_space_tab(line, &i);
-
+	check_if_missing_value(line, i);
 
 	scene->amb->ratio = parse_light_ratio(line, &i);
 	if (!ft_is_space_tab(line[i]))
 		return (-1);
 
-
 	ft_skip_space_tab(line, &i);
-
+	check_if_missing_value(line, i);
 	scene->amb->color.r = parse_1color_rgb(line, &i);
-	if (line[i] != ',')
-	{
-		printf("not a virgule\n");
-		return (-1);
-	}
+	check_if_missing_comma(line, i);
 	i++;
 	scene->amb->color.g = parse_1color_rgb(line, &i);
-	if (line[i] != ',')
-	{
-		printf("not a virgule\n");
-		return (-1);
-	}
+	check_if_missing_comma(line, i);
 	i++;
 	scene->amb->color.b = parse_1color_rgb(line, &i);
 
@@ -42,9 +33,8 @@ int	parse_ambient(t_scene *scene, char *line)
 	printf("RED VALUE = %d\n", scene->amb->color.r);
 	printf("GREN VALUE = %d\n", scene->amb->color.g);
 	printf("BLUE VALUE = %d\n", scene->amb->color.b);
-	while (ft_is_space_tab(line[i]))
-		i++;
-	if (line[i] != '\n' && line[i] != '\0')
+	ft_skip_space_tab(line, &i);
+	if (ft_isalnum(line[i]))
 	{
 		printf("ERROR TOO MANY INFO\n");
 		printf("FOUND %c\n", line[i]);

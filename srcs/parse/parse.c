@@ -101,28 +101,48 @@ int	check_rgb_range(int r, int g, int b)
 	return (0);
 }
 
-int	parse_3color_rgb(t_scene *scene, char *line, int *i)
-{
-	int	rgb_len;
-	int	index;
+// int	parse_3color_rgb(t_scene *scene, char *line, int *i)
+// {
+// 	int	rgb_len;
+// 	int	index;
 
-	index = *i;
-	rgb_len = get_int_len(line, index);
-	scene->amb->color.r = ft_atoi(&line[index]);
-	if (line[index + rgb_len] != ',')
+// 	index = *i;
+// 	rgb_len = get_int_len(line, index);
+// 	scene->amb->color.r = ft_atoi(&line[index]);
+// 	if (line[index + rgb_len] != ',')
+// 		return (-1);
+// 	else
+// 		index += rgb_len + 1;
+// 	rgb_len = get_int_len(line, index);
+// 	scene->amb->color.g = ft_atoi(&line[index]);
+// 	if (line[index + rgb_len] != ',')
+// 		return (-1);
+// 	else
+// 		index += rgb_len + 1;
+// 	rgb_len = get_int_len(line, index);
+// 	scene->amb->color.b = ft_atoi(&line[index]);
+// 	*i = index + rgb_len;
+// 	// check_rgb_range(scene);
+// 	return (0);
+// }
+
+int	check_if_missing_value(char *line, int i)
+{
+	if (!ft_isdigit(line[i]))
+	{
+		printf("check if() ERROR  missing digit value\n");
+		return (-1000);
+	}
+	return (0);
+}
+
+int	check_if_missing_comma(char *line, int i)
+{
+	if (line[i] != ',')
+	{
+		printf("not a virgule\n");
 		return (-1);
-	else
-		index += rgb_len + 1;
-	rgb_len = get_int_len(line, index);
-	scene->amb->color.g = ft_atoi(&line[index]);
-	if (line[index + rgb_len] != ',')
-		return (-1);
-	else
-		index += rgb_len + 1;
-	rgb_len = get_int_len(line, index);
-	scene->amb->color.b = ft_atoi(&line[index]);
-	*i = index + rgb_len;
-	// check_rgb_range(scene);
+	}
 	return (0);
 }
 
@@ -136,7 +156,7 @@ int	parse_1color_rgb(char *line, int *i)
 
 	if (!ft_isdigit(line[index]))
 	{
-		printf("parse1color, not a digit\n");
+		printf("parse1color, missing digit value\n");
 		return (-1000);
 	}
 	rgb_len = get_int_len(line, index);
@@ -145,69 +165,50 @@ int	parse_1color_rgb(char *line, int *i)
 	return (value);
 }
 
-
-int	parse_3coord_xyz(t_scene *scene, char *line, int *i)
+double	parse_1coord_xyz(char *line, int *i)
 {
 	int	coord_len;
+	double value;
 	int	index;
 
 	index = *i;
+
+	if (!ft_isdigit(line[index]))
+	{
+		printf("parse1coord, not a digit\n");
+		return (-1000);
+	}
 	coord_len = get_float_len(line, index);
-	scene->cam->origin.x = ft_atod(&line[index]);
-	if (line[index + coord_len] != ',')
-		return (-1);
-	else
-		index += coord_len + 1;
-	coord_len = get_float_len(line, index);
-	scene->cam->origin.y = ft_atod(&line[index]);
-	if (line[index + coord_len] != ',')
-		return (-1);
-	else
-		index += coord_len + 1;
-	coord_len = get_float_len(line, index);
-	scene->cam->origin.z = ft_atod(&line[index]);
+	value = ft_atod(&line[index]);
 	*i = index + coord_len;
-	// check window width heigth ???
-	return (0);
+	return (value);
 }
 
 
-int	parse_camera(t_scene *scene, char *line)
-{
-	int			i;
+// int	parse_3coord_xyz(t_scene *scene, char *line, int *i)
+// {
+// 	int	coord_len;
+// 	int	index;
 
-	if (scene->cam != NULL)
-	{
-		printf("IL Y A DEJA UNE CAMERA\n");
-		return (-1);
-	}
-	scene->cam= (t_cam *)malloc(sizeof(t_cam));
-	// on sait que line[0] == 'C', donc je mets i = 1;
-	i = 1;
-	while (ft_is_space_tab(line[i]))
-		i++;
-	parse_3coord_xyz(scene, line, &i);
-	if (!ft_is_space_tab(line[i]))
-		return (-1);
-	while (ft_is_space_tab(line[i]))
-		i++;
-	parse_3unit_ratio(scene, line, &i);
-	// printf("RED VALUE = %d\n", scene->amb->color.r);
-	// printf("GREN VALUE = %d\n", scene->amb->color.g);
-	// printf("BLUE VALUE = %d\n", scene->amb->color.b);
-	while (ft_is_space_tab(line[i]))
-		i++;
-
-	// parse_fov(scene, line, &i);
-
-	if (line[i] != '\n' && line[i] != '\0')
-	{
-		printf("ERROR TOO MANY INFO\n");
-		printf("FOUND %c\n", line[i]);
-		return (-1);
-	}
-	return (0);
-}
+// 	index = *i;
+// 	coord_len = get_float_len(line, index);
+// 	scene->cam->origin.x = ft_atod(&line[index]);
+// 	if (line[index + coord_len] != ',')
+// 		return (-1);
+// 	else
+// 		index += coord_len + 1;
+// 	coord_len = get_float_len(line, index);
+// 	scene->cam->origin.y = ft_atod(&line[index]);
+// 	if (line[index + coord_len] != ',')
+// 		return (-1);
+// 	else
+// 		index += coord_len + 1;
+// 	coord_len = get_float_len(line, index);
+// 	scene->cam->origin.z = ft_atod(&line[index]);
+// 	*i = index + coord_len;
+// 	// check window width heigth ???
+// 	return (0);
+// }
 
 int	check_parsing_type(t_scene *scene, char *line)
 {
@@ -227,7 +228,10 @@ int	check_parsing_type(t_scene *scene, char *line)
 	else if (line[0] == '\n')
 		return (0);
 	else
-		return (-1); // message derreur 
+	{
+		printf("ERROR: key identifier must be at the beggining of line followed by a space\n");
+		return (-100); // message derreur
+	}
 	return (0);
 	// return (error);
 }

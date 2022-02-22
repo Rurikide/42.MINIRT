@@ -6,7 +6,7 @@
 /*   By: tshimoda <tshimoda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 11:18:44 by tshimoda          #+#    #+#             */
-/*   Updated: 2022/02/22 14:17:05 by tshimoda         ###   ########.fr       */
+/*   Updated: 2022/02/22 15:33:00 by tshimoda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,13 @@ int		parse_3coord_xyz(t_scene *scene, char *line, int *i);
 
 
 int		parse_1color_rgb(char *line, int *i);
+double	parse_1coord_xyz(char *line, int *i);
 
 double	parse_light_ratio(char *line, int *i);
 
 int		parse_ambient(t_scene *scene, char *line);
-int		parse_camera(t_scene *scene, char *line);
+int	parse_camera(t_scene *scene, char *line);
 
+int	check_if_missing_value(char *line, int i);
+int	check_if_missing_comma(char *line, int i);
 #endif
