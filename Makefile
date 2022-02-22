@@ -7,33 +7,40 @@ CC= gcc
 CFLAGS= -Wall -Wextra -c -g
 MFLAGS= -Lminilibx_opengl -lmlx -framework OpenGL -framework Appkit
 
-
 SDIR= srcs
 ADIR= srcs/vector_array
-#CDIR= srcs/color
+CDIR= srcs/color
 PDIR= srcs/parse
 VDIR= srcs/vector_3d
+SHDIR = srcs/shapes
+RDIR = srcs/ray_hit
 ODIR= objs
 
+SRCS=	main.c init.c mlx_utils.c 
 SRCS= main.c
 
 ARRAY= vector_array.c vector_utils.c
-#COLOR= color.c
 PARSE= parse.c
+COLOR= color.c
 VEC3D= vector_new.c vector_tool.c
+SHAPES= sphere.c
+RAY = intersection.c
 
-OBJS= $(SRCS:.c=.o) $(ARRAY:.c=.o) $(PARSE:.c=.o) $(VEC3D:.c=.o)
+OBJS= $(SRCS:.c=.o) $(ARRAY:.c=.o) $(VEC3D:.c=.o) $(COLOR:.c=.o) $(SHAPES:.c=.o) $(RAY:.c=.o) $(PARSE:.c=.o)
+
 
 SFIX= $(addprefix $(SDIR)/, $(SRCS))
 AFIX= $(addprefix $(ADIR)/, $(ARRAY))
-#CFIX= $(addprefix $(CDIR)/, $(COLOR))
+CFIX= $(addprefix $(CDIR)/, $(COLOR))
 PIX= $(addprefix $(PDIR)/, $(PARSE))
 VFIX= $(addprefix $(VDIR)/, $(VEC3D))
 OFIX= $(addprefix $(ODIR)/, $(OBJS)) 
+SHFIX= $(addprefix $(SHDIR)/, $(SHAPES)) 
+RFIX= $(addprefix $(RDIR)/, $(RAY)) 
 
-VPATH= $(SDIR) $(ADIR) $(PDIR) $(VDIR) #$(CDIR)
+VPATH= $(SDIR) $(ADIR) $(PDIR) $(VDIR) $(CDIR) $(SHDIR) $(RDIR)
 
-$(NAME): $(ODIR) $(OFIX)
+$(NAME): $(ODIR) $(OFIX) 
 	$(MAKE) -C ./libft
 	$(MAKE) -C ./minilibx_opengl
 	$(CC) $(OFIX) $(MFLAGS) -lft -L./libft -o $(NAME)

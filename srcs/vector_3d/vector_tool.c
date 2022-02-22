@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vector_tool.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tshimoda <tshimoda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jbadia <jbadia@student.42quebec.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/06 16:34:02 by tshimoda          #+#    #+#             */
-/*   Updated: 2022/02/16 15:11:15 by tshimoda         ###   ########.fr       */
+/*   Updated: 2022/02/21 09:20:43 by jbadia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,13 @@
 t_vec3	vec_normalize(t_vec3 v)
 {
 	double		grandeur;
+	t_vec3 		resultante;
 
 	grandeur = sqrt((v.x * v.x) + (v.y * v.y) + (v.z * v.z));
-	v.x /= grandeur;
-	v.y /= grandeur;
-	v.z /= grandeur;
-	return (v);
+	resultante.x = v.x / grandeur;
+	resultante.y = v.y / grandeur;
+	resultante.z = v.z / grandeur;
+	return (resultante);
 }
 
 // retourne la grandeur/longueur d'un vecteur

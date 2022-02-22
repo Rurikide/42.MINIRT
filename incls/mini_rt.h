@@ -1,14 +1,4 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   mini_rt.h                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: tshimoda <tshimoda@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/15 20:00:37 by tshimoda          #+#    #+#             */
-/*   Updated: 2022/02/21 16:47:17 by tshimoda         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
+
 
 #ifndef MINI_RT_H
 # define MINI_RT_H
@@ -47,6 +37,7 @@ typedef struct s_rt
 {
 	int	height;
 	int	width;
+	void	*img_ptr;
 	t_scene	*scene;
 	
 }				t_rt;
@@ -58,5 +49,19 @@ int		key_event(int keycode, t_mlx *mlx);
 int		click_close_window(void);
 void	hook_collection(t_mlx *mlx);
 void	my_mlx_pixel_put(t_mlx *mlx, int x, int y, int color);
+
+t_sphere	*init_sphere();
+t_cam	*init_cam();
+t_scene *init_scene();
+t_vec3	get_norm_sphere(t_scene *scene, t_vec3	hit_p);
+t_vec3	get_hit_point_sp(t_scene *scene, t_vec3 direction, double distance);
+double	get_root(double disc, double b);
+double hit_sphere(t_vec3 cam, t_vec3	direction, t_sphere *sphere);
+
+double	find_dist(t_sphere *sphere, t_vec3 cam, t_vec3 direction);
+int	intersection(t_scene *scene, t_vec3 direction);
+int	get_color(t_sphere *sphere, t_vec3 direction, t_scene *scene, double distance);
+
+
 
 #endif

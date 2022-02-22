@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vector_3d.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tshimoda <tshimoda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jbadia <jbadia@student.42quebec.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/06 16:30:59 by tshimoda          #+#    #+#             */
-/*   Updated: 2022/02/16 15:03:14 by tshimoda         ###   ########.fr       */
+/*   Updated: 2022/02/18 09:02:56 by jbadia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ typedef struct s_ray
 {
 	t_vec3 origin;
 	t_vec3 direction;	
-}	t_ray;
+}				t_ray;
 
 t_vec3	new_vector(double x, double y, double z);
 t_vec3	vec_add(t_vec3 u, t_vec3 v);
