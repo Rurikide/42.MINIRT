@@ -95,6 +95,8 @@ int main (int argc, char **argv)
 	// t_mlx	*mlx;
 	// t_rt 	*m_rt; 
 
+	if (argc != 2)
+		return(-100);
 	scene = (t_scene *)malloc(sizeof(t_scene));
 	init_scene(scene);
 	

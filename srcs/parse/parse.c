@@ -1,5 +1,25 @@
 #include "../../incls/mini_rt.h"
 
+double	parse_dimension(char *line, int *i)
+{
+	double ratio;
+	int	index;
+	int	float_len;
+
+	index = *i;
+	ratio = 0;
+	check_if_missing_value(line, index);
+	float_len = get_float_len(line, index);
+	ratio = ft_atod(&line[index]);
+	if (ratio < 0.0)
+	{
+		printf("\vERROR NEGATIVE LENGTH\v\n");
+		return (-100);
+	}
+	*i = index + float_len;
+	return (ratio);	
+}
+
 double	parse_light_ratio(char *line, int *i)
 {
 	double ratio;
@@ -39,50 +59,25 @@ int	parse_field_of_view(char *line, int *i)
 	return (value);	
 }
 
-int	check_unit_range(double x, double y, double z)
+int	check_unit_range(t_vec3 *unit)
 {
-	if (x < -1.0 || x  > 1.0)
+	if (unit->x < -1.0 || unit->x  > 1.0)
 	{
 		printf("\vERROR UNIT DIR X \v\n");
 		return (-1);
 	}
-	if (y < -1.0 || y  > 1.0)
+	if (unit->y < -1.0 || unit->y  > 1.0)
 	{
 		printf("\vERROR UNIT DIR Y\v\n");
 		return (-1);
 	}
-	if (z < -1.0 || z  > 1.0)
+	if (unit->z < -1.0 || unit->z > 1.0)
 	{
 		printf("\vERROR UNIT DIR Z\v\n");
 		return (-1);
 	}
 	return (0);
 }
-
-// int	parse_3unit_ratio(t_scene *scene, char *line, int *i)
-// {
-// 	int	unit_len;
-// 	int	index;
-
-// 	index = *i;
-// 	unit_len = get_float_len(line, index);
-// 	scene->cam->dir.x = ft_atod(&line[index]);
-// 	if (line[index + unit_len] != ',')
-// 		return (-1);
-// 	else
-// 		index += unit_len + 1;
-// 	unit_len = get_float_len(line, index);
-// 	scene->cam->dir.y = ft_atod(&line[index]);
-// 	if (line[index + unit_len] != ',')
-// 		return (-1);
-// 	else
-// 		index += unit_len + 1;
-// 	unit_len = get_float_len(line, index);
-// 	scene->cam->dir.z = ft_atod(&line[index]);
-// 	*i = index + unit_len;
-// 	// check_unit_range(scene);
-// 	return (0);
-// }
 
 int	check_rgb_range(int r, int g, int b)
 {
@@ -147,13 +142,7 @@ int	parse_1color_rgb(char *line, int *i)
 
 	index = *i;
 
-	// if (!ft_isdigit(line[index]))
-	// {
-	// 	printf("parse1color, missing digit value\n");
-	// 	return (-1000);
-	// }
 	check_if_missing_value(line, index);
-
 	rgb_len = get_int_len(line, index);
 	value = ft_atoi(&line[index]);
 	*i = index + rgb_len;
@@ -169,23 +158,24 @@ double	parse_1coord_xyz(char *line, int *i)
 	index = *i;
 
 	check_if_missing_value(line, index);
-
 	coord_len = get_float_len(line, index);
 	value = ft_atod(&line[index]);
 	*i = index + coord_len;
 	return (value);
 }
 
-int	set_color_rgb(t_rgb *color, char *line, int *i)
+void	set_color_rgb(t_rgb *color, char *line, int *i)
 {
 	color->r = parse_1color_rgb(line, i);
 	check_if_missing_comma(line, i);
 	color->g = parse_1color_rgb(line, i);
 	check_if_missing_comma(line, i);
 	color->b = parse_1color_rgb(line, i);
+
+	check_rgb_range(color->r, color->g, color->b);
 }
 
-int	set_coord_xyz(t_vec3 *v, char *line, int *i)
+void	set_coord_xyz(t_vec3 *v, char *line, int *i)
 {
 	v->x = parse_1coord_xyz(line, i);
 	check_if_missing_comma(line, i);
@@ -229,8 +219,8 @@ int	check_parsing_type(t_scene *scene, char *line)
 		parse_camera(scene, line, 1);
 	else if (line[0] == 'L' && ft_is_space_tab(line[1]))
 		parse_light(scene, line, 1);
-	// else if (line[0] == 's' && line[1] == 'p' && ft_is_space_tab(line[2]))
-	// 	parse_sphere(scene, line, 2);
+	else if (line[0] == 's' && line[1] == 'p' && ft_is_space_tab(line[2]))
+		parse_sphere(scene, line, 2);
 	// else if (line[0] == 'p' && line[1] == 'l' && ft_is_space_tab(line[2]))
 	// 	parse_plane(scene, line, 2);
 	// else if (line[0] == 'c' && line[1] == 'y' && ft_is_space_tab(line[2]))
@@ -299,7 +289,13 @@ int	init_scene(t_scene *scene)
 	// scene->sp = NULL;
 	// scene->pl = NULL;
 	// scene->cy = NULL;
-	scene->shape = NULL;
+	scene->shape = ft_calloc(1, sizeof(t_vector));
+	if (!scene->shape)
+		return (-100);
+	vector_init_array(scene->shape);
+	// scene->shape->elements = ft_calloc(4, (sizeof(void *)));
+	// scene->shape->capacity = VECTOR_INIT_CAPACITY;
+	// scene->shape->total = 0;
 	return (0);
 }
  

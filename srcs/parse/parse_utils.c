@@ -35,7 +35,7 @@ int	check_valid_ascii(char *line)
 	int		j;
 	int		valid;
 
-	charset = (char [10]){48, 65, 67, 76, 99, 108, 112, 116, 121};
+	charset = (char [10]){48, 65, 67, 76, 99, 108, 112, 115, 121};
 	numbers = (char [10]){49, 50, 51, 52, 53, 54, 55, 56, 57};
 	wspaces = (char [10]){9, 10, 11, 12, 13, 32, 44, 45, 46};
 	i = 0;
@@ -92,6 +92,7 @@ int	check_amb_cam(t_scene *scene)
 		printf("Il faut une ambiant light && une camera\n");
 		return (-100);
 	}
+	return (0);
 }
 
 int	check_one_amb(t_scene *scene)
@@ -101,6 +102,7 @@ int	check_one_amb(t_scene *scene)
 		printf("IL Y A DEJA UNE AMBIANT LIGHT\n");
 		return (-100);
 	}
+	return (0);
 }
 
 int	check_one_cam(t_scene *scene)
@@ -125,7 +127,9 @@ int	check_one_lit(t_scene *scene)
 
 int	check_surplus_info(t_scene *scene, char *line, int i)
 {
-	if (ft_isalnum(line[i]))
+	(void)scene;
+	
+	if (ft_isalnum(line[i]) || line[i] == '.' || line[i] == ',' || line[i] == '-')
 	{
 		printf("ERROR TOO MANY INFO\n");
 		printf("FOUND %c\n", line[i]);

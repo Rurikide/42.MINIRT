@@ -6,7 +6,7 @@
 /*   By: tshimoda <tshimoda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/29 12:04:47 by tshimoda          #+#    #+#             */
-/*   Updated: 2022/02/21 12:17:10 by tshimoda         ###   ########.fr       */
+/*   Updated: 2022/02/23 16:04:59 by tshimoda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 void	vector_init_array(t_vector *v)
 {
-	v->elements = malloc(sizeof(void *) * VECTOR_INIT_CAPACITY);
+	v->elements = ft_calloc(VECTOR_INIT_CAPACITY, (sizeof(void *)));
 	v->capacity = VECTOR_INIT_CAPACITY;
 	v->total = 0;
 }
