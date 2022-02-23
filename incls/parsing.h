@@ -6,7 +6,7 @@
 /*   By: tshimoda <tshimoda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 11:18:44 by tshimoda          #+#    #+#             */
-/*   Updated: 2022/02/22 17:51:51 by tshimoda         ###   ########.fr       */
+/*   Updated: 2022/02/23 13:48:19 by tshimoda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,18 @@ int		parse_light(t_scene *scene, char *line, int i);
 
 int		parse_field_of_view(char *line, int *i);
 
-int	check_if_missing_value(char *line, int i);
-int	check_if_missing_comma(char *line, int *i);
-int	check_if_missing_space(char *line, int i);
+int		check_if_missing_value(char *line, int i);
+int		check_if_missing_comma(char *line, int *i);
+int		check_if_missing_space(char *line, int i);
+
+int		check_amb_cam(t_scene *scene);
+int		check_one_amb(t_scene *scene);
+int		check_one_cam(t_scene *scene);
+int		check_one_lit(t_scene *scene);
+
+int		check_surplus_info(t_scene *scene, char *line, int i);
+
+int		set_color_rgb(t_rgb *color, char *line, int *i);
+int		set_coord_xyz(t_vec3 *v, char *line, int *i);
+
 #endif

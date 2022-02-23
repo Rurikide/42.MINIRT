@@ -84,3 +84,52 @@ int	check_rt_file(char *file)
 	close (fd);
 	return (1);
 }
+
+int	check_amb_cam(t_scene *scene)
+{
+	if	(scene->amb == NULL && scene->cam == NULL)
+	{
+		printf("Il faut une ambiant light && une camera\n");
+		return (-100);
+	}
+}
+
+int	check_one_amb(t_scene *scene)
+{
+	if (scene->amb != NULL)
+	{
+		printf("IL Y A DEJA UNE AMBIANT LIGHT\n");
+		return (-100);
+	}
+}
+
+int	check_one_cam(t_scene *scene)
+{
+	if (scene->cam != NULL)
+	{
+		printf("IL Y A DEJA UNE CAMERA\n");
+		return (-100);
+	}
+	return (0);
+}
+
+int	check_one_lit(t_scene *scene)
+{
+	if (scene->light != NULL)
+	{
+		printf("IL Y A DEJA UNE LIGHT\n");
+		return (-100);
+	}
+	return (0);
+}
+
+int	check_surplus_info(t_scene *scene, char *line, int i)
+{
+	if (ft_isalnum(line[i]))
+	{
+		printf("ERROR TOO MANY INFO\n");
+		printf("FOUND %c\n", line[i]);
+		return (-100);
+	}
+	return (0);
+}

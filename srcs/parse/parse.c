@@ -59,30 +59,30 @@ int	check_unit_range(double x, double y, double z)
 	return (0);
 }
 
-int	parse_3unit_ratio(t_scene *scene, char *line, int *i)
-{
-	int	unit_len;
-	int	index;
+// int	parse_3unit_ratio(t_scene *scene, char *line, int *i)
+// {
+// 	int	unit_len;
+// 	int	index;
 
-	index = *i;
-	unit_len = get_float_len(line, index);
-	scene->cam->dir.x = ft_atod(&line[index]);
-	if (line[index + unit_len] != ',')
-		return (-1);
-	else
-		index += unit_len + 1;
-	unit_len = get_float_len(line, index);
-	scene->cam->dir.y = ft_atod(&line[index]);
-	if (line[index + unit_len] != ',')
-		return (-1);
-	else
-		index += unit_len + 1;
-	unit_len = get_float_len(line, index);
-	scene->cam->dir.z = ft_atod(&line[index]);
-	*i = index + unit_len;
-	// check_unit_range(scene);
-	return (0);
-}
+// 	index = *i;
+// 	unit_len = get_float_len(line, index);
+// 	scene->cam->dir.x = ft_atod(&line[index]);
+// 	if (line[index + unit_len] != ',')
+// 		return (-1);
+// 	else
+// 		index += unit_len + 1;
+// 	unit_len = get_float_len(line, index);
+// 	scene->cam->dir.y = ft_atod(&line[index]);
+// 	if (line[index + unit_len] != ',')
+// 		return (-1);
+// 	else
+// 		index += unit_len + 1;
+// 	unit_len = get_float_len(line, index);
+// 	scene->cam->dir.z = ft_atod(&line[index]);
+// 	*i = index + unit_len;
+// 	// check_unit_range(scene);
+// 	return (0);
+// }
 
 int	check_rgb_range(int r, int g, int b)
 {
@@ -103,31 +103,6 @@ int	check_rgb_range(int r, int g, int b)
 	}
 	return (0);
 }
-
-// int	parse_3color_rgb(t_scene *scene, char *line, int *i)
-// {
-// 	int	rgb_len;
-// 	int	index;
-
-// 	index = *i;
-// 	rgb_len = get_int_len(line, index);
-// 	scene->amb->color.r = ft_atoi(&line[index]);
-// 	if (line[index + rgb_len] != ',')
-// 		return (-1);
-// 	else
-// 		index += rgb_len + 1;
-// 	rgb_len = get_int_len(line, index);
-// 	scene->amb->color.g = ft_atoi(&line[index]);
-// 	if (line[index + rgb_len] != ',')
-// 		return (-1);
-// 	else
-// 		index += rgb_len + 1;
-// 	rgb_len = get_int_len(line, index);
-// 	scene->amb->color.b = ft_atoi(&line[index]);
-// 	*i = index + rgb_len;
-// 	// check_rgb_range(scene);
-// 	return (0);
-// }
 
 int	check_if_missing_value(char *line, int i)
 {
@@ -199,6 +174,24 @@ double	parse_1coord_xyz(char *line, int *i)
 	value = ft_atod(&line[index]);
 	*i = index + coord_len;
 	return (value);
+}
+
+int	set_color_rgb(t_rgb *color, char *line, int *i)
+{
+	color->r = parse_1color_rgb(line, i);
+	check_if_missing_comma(line, i);
+	color->g = parse_1color_rgb(line, i);
+	check_if_missing_comma(line, i);
+	color->b = parse_1color_rgb(line, i);
+}
+
+int	set_coord_xyz(t_vec3 *v, char *line, int *i)
+{
+	v->x = parse_1coord_xyz(line, i);
+	check_if_missing_comma(line, i);
+	v->y = parse_1coord_xyz(line, i);
+	check_if_missing_comma(line, i);
+	v->z = parse_1coord_xyz(line, i);
 }
 
 
@@ -273,6 +266,8 @@ int	gnl_preparsing(t_scene *scene, char *file)
 			error = check_parsing_type(scene, line);
 		free(line);
 	}
+	//
+	check_amb_cam(scene);
 	close(fd);
 	return (error);
 	// return (ft_err_msg(error));
@@ -286,12 +281,12 @@ void	free_scene_exit(t_scene *scene)
 		free(scene->cam);
    	if (scene->light != NULL)
 		free(scene->light);
-	if (scene->sp != NULL)
-		free(scene->sp);
-	if (scene->pl != NULL)
-		free(scene->pl);	
-	if (scene->cy != NULL)
-		free(scene->cy);
+	// if (scene->sp != NULL)
+	// 	free(scene->sp);
+	// if (scene->pl != NULL)
+	// 	free(scene->pl);	
+	if (scene->shape != NULL)
+		free(scene->shape);
 	free(scene);
 	exit(0);
 }
@@ -301,9 +296,10 @@ int	init_scene(t_scene *scene)
 	scene->amb = NULL;
 	scene->cam = NULL;
 	scene->light = NULL;
-	scene->sp = NULL;
-	scene->pl = NULL;
-	scene->cy = NULL;
+	// scene->sp = NULL;
+	// scene->pl = NULL;
+	// scene->cy = NULL;
+	scene->shape = NULL;
 	return (0);
 }
  

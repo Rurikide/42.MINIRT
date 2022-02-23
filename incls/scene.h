@@ -6,7 +6,7 @@
 /*   By: tshimoda <tshimoda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 20:17:17 by tshimoda          #+#    #+#             */
-/*   Updated: 2022/02/22 17:49:16 by tshimoda         ###   ########.fr       */
+/*   Updated: 2022/02/23 11:04:05 by tshimoda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,20 +18,26 @@
 
 typedef enum	e_type
 {
-	SPHERE, 
-	CYL,
-	PLANE,
+	SPHERE = 1, 
+	CYL = 2,
+	PLANE = 3,
 }				t_type;
 
 typedef struct s_sphere
 {
 	t_vec3	center;
 	t_rgb	color;
+	// choisir le diametre ou le radius pour le resize???
 	double	rad;
 	t_vec3  norm;
 	t_type	type;
-}	            t_sphere;
+}	t_sphere;
 
+typedef struct s_shape
+{
+	void	*shape;
+	int		type;
+}t_shape;
 
 typedef struct s_amb
 {
@@ -64,10 +70,7 @@ typedef struct s_scene
 	// 
 
 	t_lit       *light;
-	t_vector	*sp;
-	t_vector	*pl;
-	t_vector	*cy;
-	//t_vector	*shape;
+	t_vector	*shape;
 }           t_scene;
 
 
