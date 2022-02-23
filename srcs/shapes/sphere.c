@@ -6,8 +6,8 @@ t_sphere	*init_sphere()
 
 	sphere = ft_calloc(1, sizeof(t_sphere));
 	sphere->color = new_color(100, 0, 255);
-	sphere->center = new_vector(500, 0, 0);
-	sphere->rad = 30;
+	sphere->center = new_vector(-20, -15, 0);
+	sphere->rad = 10;
 	sphere->type = SPHERE;
 
 	return (sphere);
@@ -18,11 +18,22 @@ t_cam	*init_cam()
 	t_cam *cam;
 
 	cam = ft_calloc(1, sizeof(t_cam));
-	cam->dir = new_vector(1, 0, 0);
-	cam->origin = new_vector(-200, 0, -100);
+	cam->dir = vec_multiply(new_vector(1, 0, 0), 1);
+	cam->origin = new_vector(0, 0, 50);
 	cam->fov = 70;
 
 	return (cam);
+}
+
+t_lit	*init_light()
+{
+	t_lit *lit;
+
+	lit = ft_calloc(1, sizeof(t_lit));
+	lit->origin = new_vector(0, 0, 40);
+	lit->ratio = 0.7;
+
+	return (lit);
 }
 
 t_scene *init_scene()
@@ -33,6 +44,7 @@ t_scene *init_scene()
 	scene->sp = init_sphere();
 	scene->cam = init_cam();
 	scene->nb_obj = 1;
+	scene->light = init_light();
 	return (scene);
 }
 

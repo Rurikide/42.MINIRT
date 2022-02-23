@@ -10,7 +10,7 @@
 /*fonction avec 2 boucles while imbriqué*/
 
 
-double	find_dist(t_sphere *sphere, t_vec3 cam, t_vec3 direction)
+double	 find_dist(t_sphere *sphere, t_vec3 cam, t_vec3 direction)
 {
 	double	distance;
 
@@ -50,15 +50,38 @@ int	intersection(t_scene *scene, t_vec3 direction)
 	return (color);
 }
 
+double	shadowing(t_vec3 hit_point, t_scene *scene)
+{
+	int i;
+	t_vec3 dir;
+	double dist;
+
+	dir = vec_normalize(vec_sub(scene->light->origin, hit_point));
+	i = 0;
+	while (i < scene->nb_obj)
+	{
+		dist = find_dist(scene->sp, hit_point, dir);
+		if (dist > 0 && dist < vec_len(vec_sub(hit_point, scene->light->origin)))
+			return (-1);
+		i++;
+	}
+	return (0);
+}
 
 int	get_color(t_sphere *sphere, t_vec3 direction, t_scene *scene, double distance)
 {
 	t_vec3	hit_point;
 	t_vec3 norm;
 	int	color;
+	double shadow;
 
 	hit_point = get_hit_point_sp(scene, direction, distance);
-	norm = get_norm_sphere(scene, hit_point);
-	color = rgb_to_int(sphere->color);
+	if (sphere->type == SPHERE)
+		norm = vec_normalize(vec_sub(hit_point, sphere->center));
+	shadow = shadowing(hit_point, scene);
+	if (shadow == 0)
+		color = 0x0000FF;
+	else
+		color = rgb_to_int(sphere->color);
 	return (color);
 }

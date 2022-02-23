@@ -38,27 +38,23 @@ t_vec3 rotate_dir(t_vec3 direction, t_scene *scene)
 
 t_vec3	get_ray_dir(t_scene *scene, t_mlx *mlx, int x, int y, t_vec3 cam_norm)
 {
-	double	dst;
 	t_vec3	direction;
-	t_vec3	a;
-	t_vec3	b;
-	t_vec3	c;
+	// double	dst;
+	// t_vec3	a;
+	// t_vec3	b;
+	// t_vec3	c;
 
-	dst = mlx->width / (2 * tanf(scene->cam->fov * M_PI / 360));
-	a = new_vector(dst, y - mlx->width / 2, -(x - mlx->height / 2));
-	b = new_vector(- (y - mlx->width /2), dst, -(x - mlx->height / 2));
-	c = new_vector(-(x - mlx->height / 2), y - mlx->width /2, dst);
-	direction = add_3_vec(vec_multiply(a, cam_norm.x), 
-		vec_multiply(b, cam_norm.y), vec_multiply(c, cam_norm.z));
-
-	// double a = y + mlx->width/2;
-	// double b = x + mlx->height/2;
-	// double max = fmax(mlx->height, mlx->width);
-	// double c = max / ((2 * tanf(scene->cam->fov * M_PI / 360)));
-	// direction.x = 1 * a + 0 * b + 0 * c;
-	// direction.y = 0 * a + 1 * b + 0 * c;
-	// direction.z = 0 * a + 0 * b + 1 * c;
-	return((direction));
+	// dst = mlx->width / (2 * tanf(scene->cam->fov * M_PI / 360));
+	// a = new_vector(dst, y - mlx->width / 2, -(x - mlx->height / 2));
+	// b = new_vector(- (y - mlx->width /2), dst, -(x - mlx->height / 2));
+	// c = new_vector(-(x - mlx->height / 2), y - mlx->width /2, dst);
+	// direction = add_3_vec(vec_multiply(a, cam_norm.x), 
+	// 	vec_multiply(b, cam_norm.y), vec_multiply(c, cam_norm.z));
+	direction.x = (x - mlx->width) / 2;
+	direction.y = mlx->height / 2 - y;
+	direction.z = -mlx->height;
+	
+	return((vec_normalize(direction)));
 }
 
 void	ray_tracing(t_scene *scene)
@@ -77,7 +73,7 @@ void	ray_tracing(t_scene *scene)
 		while (y < mlx->width)
 		{
 			dir = get_ray_dir(scene, mlx, x, y, vec_normalize(scene->cam->dir));
-			dir = rotate_dir(dir, scene);
+			//dir = rotate_dir(dir, scene);
 			color = intersection(scene, dir); //faire une struct obj ou ou tab döbj
 			my_mlx_pixel_put(mlx, y, x, color);
 			y++;

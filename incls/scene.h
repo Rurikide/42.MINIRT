@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   scene.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tshimoda <tshimoda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jbadia <jbadia@student.42quebec.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 20:17:17 by tshimoda          #+#    #+#             */
-/*   Updated: 2022/02/21 16:55:20 by jbadia           ###   ########.fr       */
+/*   Updated: 2022/02/23 14:39:17 by jbadia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ typedef struct s_lit
 {
 	double	ratio;
 	t_rgb color;
+	t_vec3	origin;
 }	t_lit;
 
 
@@ -65,8 +66,8 @@ typedef struct s_scene
 
     t_lit       *light;
 //	t_vector	*sp;
-	t_vector	*pl;
-	t_vector	*cy;
+	//t_vector	*pl;
+	//t_vector	*cy;
 	//t_vector	*shape;
 }           t_scene;
 
