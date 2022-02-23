@@ -6,8 +6,8 @@ t_sphere	*init_sphere()
 
 	sphere = ft_calloc(1, sizeof(t_sphere));
 	sphere->color = new_color(100, 0, 255);
-	sphere->center = new_vector(-20, -15, 0);
-	sphere->rad = 10;
+	sphere->center = new_vector(20, 15, -50);
+	sphere->rad = 25;
 	sphere->type = SPHERE;
 
 	return (sphere);
@@ -30,7 +30,7 @@ t_lit	*init_light()
 	t_lit *lit;
 
 	lit = ft_calloc(1, sizeof(t_lit));
-	lit->origin = new_vector(0, 0, 40);
+	lit->origin = new_vector(-15, 0, 10);
 	lit->ratio = 0.7;
 
 	return (lit);

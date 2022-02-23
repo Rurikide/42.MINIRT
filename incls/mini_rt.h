@@ -18,6 +18,10 @@
 
 # define KEY_ESC 53 //ESCAPE
 # define KEY_Q 12 // Q
+# define KEY_A 0x00
+# define KEY_S 0x01
+# define KEY_D 0x02
+# define KEY_W 0x0D
 
 typedef struct s_mlx
 {
@@ -45,10 +49,11 @@ typedef struct s_rt
 t_mlx	*get_mlx(void);
 void	init_rt(t_rt *rt);
 
-int		key_event(int keycode, t_mlx *mlx);
+int		key_event(int keycode, t_scene *scene);
 int		click_close_window(void);
-void	hook_collection(t_mlx *mlx);
+void	hook_collection(t_mlx *mlx, t_scene *scene);
 void	my_mlx_pixel_put(t_mlx *mlx, int x, int y, int color);
+void	move_cam(int keycode, t_scene *scene);
 
 t_sphere	*init_sphere();
 t_cam	*init_cam();
@@ -64,7 +69,7 @@ int	intersection(t_scene *scene, t_vec3 direction);
 int	get_color(t_sphere *sphere, t_vec3 direction, t_scene *scene, double distance);
 double	shadowing(t_vec3 hit_point, t_scene *scene);
 
-
+void	ray_tracing(t_scene *scene);
 
 
 #endif

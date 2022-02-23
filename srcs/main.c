@@ -50,9 +50,10 @@ t_vec3	get_ray_dir(t_scene *scene, t_mlx *mlx, int x, int y, t_vec3 cam_norm)
 	// c = new_vector(-(x - mlx->height / 2), y - mlx->width /2, dst);
 	// direction = add_3_vec(vec_multiply(a, cam_norm.x), 
 	// 	vec_multiply(b, cam_norm.y), vec_multiply(c, cam_norm.z));
-	direction.x = (x - mlx->width) / 2;
-	direction.y = mlx->height / 2 - y;
-	direction.z = -mlx->height;
+	direction.x = y - mlx->width / 2;
+	direction.y = mlx->height / 2 - x;
+	direction.z = - mlx->width / (2 * tan(scene->cam->fov * M_PI / 360));
+	//-mlx->height;
 	
 	return((vec_normalize(direction)));
 }
@@ -88,8 +89,8 @@ void	make_scene(t_scene *scene)
 
 	mlx = get_mlx();
 	ray_tracing(scene);
+	hook_collection(mlx, scene);
 	mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->img, 0, 0);
-	hook_collection(mlx);
 	mlx_loop(mlx->mlx);
 }
 
