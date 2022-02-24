@@ -1,3 +1,4 @@
+
 #ifndef SCENE_H
 # define SCENE_H
 
@@ -39,13 +40,14 @@ typedef struct s_shape
 	void	*shape;
 	double	(*hit_obj)(void *, t_vec3, t_vec3);
 	int		type;
-}t_shape;
+}				t_shape;
+
 
 typedef struct s_amb
 {
 	double	ratio;
 	t_rgb	color;
-}	t_amb;
+}	     t_amb;
 
 typedef struct s_cam
 {

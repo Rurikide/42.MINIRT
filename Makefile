@@ -14,19 +14,21 @@ PDIR= srcs/parse
 VDIR= srcs/vector_3d
 SHDIR = srcs/shapes
 RDIR = srcs/ray_hit
+MDIR = srcs/movements
 ODIR= objs
 
 SRCS=	main.c init.c mlx_utils.c 
-SRCS= main.c
+
 
 ARRAY= vector_array.c vector_utils.c
+COLOR= color.c color_rgb.c
 PARSE= parse.c parse_ambiant.c parse_camera.c parse_len.c parse_light.c parse_shape.c parse_utils.c 
-COLOR= color.c
 VEC3D= vector_new.c vector_tool.c
 SHAPES= sphere.c
-RAY = intersection.c
+RAY = intersection.c get_color.c
+MOV = move_cam.c
 
-OBJS= $(SRCS:.c=.o) $(ARRAY:.c=.o) $(VEC3D:.c=.o) $(COLOR:.c=.o) $(SHAPES:.c=.o) $(RAY:.c=.o) $(PARSE:.c=.o)
+OBJS= $(SRCS:.c=.o) $(ARRAY:.c=.o) $(VEC3D:.c=.o) $(COLOR:.c=.o) $(SHAPES:.c=.o) $(RAY:.c=.o) $(PARSE:.c=.o) $(MOV:.c=.o)
 
 
 SFIX= $(addprefix $(SDIR)/, $(SRCS))
@@ -37,8 +39,9 @@ VFIX= $(addprefix $(VDIR)/, $(VEC3D))
 OFIX= $(addprefix $(ODIR)/, $(OBJS)) 
 SHFIX= $(addprefix $(SHDIR)/, $(SHAPES)) 
 RFIX= $(addprefix $(RDIR)/, $(RAY)) 
+MFIX = $(addprefix $(MDIR)/, $(MOV)) 
 
-VPATH= $(SDIR) $(ADIR) $(PDIR) $(VDIR) $(CDIR) $(SHDIR) $(RDIR)
+VPATH= $(SDIR) $(ADIR) $(PDIR) $(VDIR) $(CDIR) $(SHDIR) $(RDIR) $(MDIR)
 
 $(NAME): $(ODIR) $(OFIX) 
 	$(MAKE) -C ./libft

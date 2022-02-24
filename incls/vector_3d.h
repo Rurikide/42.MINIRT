@@ -23,7 +23,6 @@ typedef struct s_vec3
 	double	z;
 }	t_vec3;
 
-
 typedef struct s_ray
 {
 	t_vec3 origin;
