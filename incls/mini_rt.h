@@ -49,6 +49,7 @@ int		click_close_window(void);
 void	hook_collection(t_mlx *mlx, t_scene *scene);
 void	my_mlx_pixel_put(t_mlx *mlx, int x, int y, int color);
 
+
 /*MOVEMENTS
 MOVE_CAM_C*/
 void	move_cam(int keycode, t_scene *scene);
@@ -68,6 +69,7 @@ int	intersection(t_scene *scene, t_vec3 direction);
 /*GET_COLOR_C*/
 int	get_color(t_shape *obj, t_vec3 direction, t_scene *scene, double distance);
 double	shadowing(t_vec3 hit_point, t_scene *scene);
+
 
 
 /*MAIN_C*/

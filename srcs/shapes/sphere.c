@@ -12,18 +12,20 @@
 // {
 // 	t_vec3	hit_p;
 
+
 // 	hit_p = vec_add(vec_multiply(direction, distance), scene->cam->origin);
 // 	return (hit_p);
 // }
 
 double	get_root(double disc, double b)
 {
-	double	t1;
-	double	t2;
-	double	t;
-	double	min;
-	double	max;
+  double	t1;
+  double	t2;
+  double	t;
+  double	min;
+  double	max;
 	
+
 	t1 = -b + sqrt(disc)/2;
 	t2 = -b - sqrt(disc)/2;
 	min = fmin(t1, t2);

@@ -1,14 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   scene.h                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: jbadia <jbadia@student.42quebec.com>       +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/15 20:17:17 by tshimoda          #+#    #+#             */
-/*   Updated: 2022/02/23 14:39:17 by jbadia           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
 #ifndef SCENE_H
 # define SCENE_H
@@ -21,14 +10,14 @@ typedef enum e_type
 	SP = 1,
 	CY = 2,
 	PL = 3,
-}			t_type;
+}	t_type;
 
 typedef struct s_sp
 {
 	t_vec3	origin;
 	double	rad;
 	t_rgb	color;
-}				t_sp;
+}	t_sp;
 
 typedef struct s_pl
 {
@@ -53,11 +42,12 @@ typedef struct s_shape
 	int		type;
 }				t_shape;
 
+
 typedef struct s_amb
 {
 	double	ratio;
-	t_rgb 	color;
-}				t_amb;
+	t_rgb	color;
+}	     t_amb;
 
 typedef struct s_cam
 {

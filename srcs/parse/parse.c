@@ -1,43 +1,24 @@
 /*
 #include "../../incls/mini_rt.h"
 
-int	ft_table_len(char **tab)
+double	parse_dimension(char *line, int *i)
 {
-	int len;
+	double ratio;
+	int	index;
+	int	float_len;
 
-	len = 0;
-	while (tab[len])
-		len++;
-	return (len);
-}
-
-int	get_float_len(char *line, int i)
-{
-	int float_len;
-	int dot;
-	
-	dot = 0;
-	float_len = 0;
-	if (line[i] == '-')
+	index = *i;
+	ratio = 0;
+	check_if_missing_value(line, index);
+	float_len = get_float_len(line, index);
+	ratio = ft_atod(&line[index]);
+	if (ratio < 0.0)
 	{
-		i++;
-		float_len++;
+		printf("\vERROR NEGATIVE LENGTH\v\n");
+		return (-100);
 	}
-	if (ft_isdigit(line[i]))
-	{
-		while (ft_isdigit(line[i]) || line[i] == '.')
-		{
-			if (line[i] == '.')
-				dot++;
-			i++;
-			float_len++;
-		}
-	}
-	else
-		return (-1);
-	if (dot > 1)
-		return (-1);
-	return(float_len);
+	*i = index + float_len;
+	return (ratio);	
 }
 
 double	parse_light_ratio(char *line, int *i)
@@ -48,67 +29,70 @@ double	parse_light_ratio(char *line, int *i)
 
 	index = *i;
 	ratio = 0;
+	check_if_missing_value(line, index);
 	float_len = get_float_len(line, index);
 	ratio = ft_atod(&line[index]);
 	if (ratio < 0.0 || ratio > 1.0)
-		return (-1);	
+	{
+		printf("\vERROR LIGHT VALUE\v\n");
+		return (-100);
+	}
 	*i = index + float_len;
 	return (ratio);	
 }
 
-int	get_int_len(char *line, int i)
+int	parse_field_of_view(char *line, int *i)
 {
-	int int_len;
-
-	int_len = 0;
-	if (ft_isdigit(line[i]))
-	{
-		while (ft_isdigit(line[i]))
-		{
-			i++;
-			int_len++;
-		}
-	}
-	else
-	{
-		printf("extra space or non-digit after virgule\n");
-		return (-100);
-	}
-	return (int_len);
-}
-
-int	parse_color_rgb(t_scene *scene, char *line, int *i)
-{
-	int	rgb_len;
 	int	index;
+	int	value;
+	int	fov_len;
 
 	index = *i;
-	rgb_len = get_int_len(line, index);
-	scene->amb->color.r = ft_atoi(&line[index]);
-	if (line[index + rgb_len] != ',')
+	check_if_missing_value(line, index);
+	fov_len = get_int_len(line, index);
+	value = ft_atoi(&line[index]);
+	if (value < 0 || value > 180)
+	{
+		printf("\vERROR FOV VALUE\v\n");
+		return (-100);
+	}
+	*i = index + fov_len;
+	return (value);	
+}
+
+int	check_unit_range(t_vec3 *unit)
+{
+	if (unit->x < -1.0 || unit->x  > 1.0)
+	{
+		printf("\vERROR UNIT DIR X \v\n");
 		return (-1);
-	else
-		index += rgb_len + 1;
-	rgb_len = get_int_len(line, index);
-	scene->amb->color.g = ft_atoi(&line[index]);
-	if (line[index + rgb_len] != ',')
+	}
+	if (unit->y < -1.0 || unit->y  > 1.0)
+	{
+		printf("\vERROR UNIT DIR Y\v\n");
 		return (-1);
-	else
-		index += rgb_len + 1;
-	rgb_len = get_int_len(line, index);
-	scene->amb->color.b = ft_atoi(&line[index]);
-	*i = index + rgb_len;
-	if (scene->amb->color.r < 0 || scene->amb->color.r  > 255)
+	}
+	if (unit->z < -1.0 || unit->z > 1.0)
+	{
+		printf("\vERROR UNIT DIR Z\v\n");
+		return (-1);
+	}
+	return (0);
+}
+
+int	check_rgb_range(int r, int g, int b)
+{
+	if (r < 0 || r  > 255)
 	{
 		printf("\vERROR RED VALUE \v\n");
 		return (-1);
 	}
-	if (scene->amb->color.g < 0 || scene->amb->color.g  > 255)
+	if (g < 0 || g  > 255)
 	{
 		printf("\vERROR GREEN VALUE\v\n");
 		return (-1);
 	}
-	if (scene->amb->color.b < 0 || scene->amb->color.b  > 255)
+	if (b < 0 || b  > 255)
 	{
 		printf("\vERROR BLUE VALUE\v\n");
 		return (-1);
@@ -116,106 +100,115 @@ int	parse_color_rgb(t_scene *scene, char *line, int *i)
 	return (0);
 }
 
-int	parse_ambient(t_scene *scene, char *line)
+int	check_if_missing_value(char *line, int i)
 {
-	int			i;
-
-	if (scene->amb != NULL)
+	if (!ft_isdigit(line[i]) && line[i] != '-')
 	{
-		printf("IL Y A DEJA UNE AMBIANT LIGHT\n");
+		printf("check if() ERROR  missing digit value\n");
+		return (-1000);
+	}
+	return (0);
+}
+
+int	check_if_missing_comma(char *line, int *i)
+{
+	int index;
+
+	index = *i;
+	if (line[index] != ',')
+	{
+		printf("not a virgule\n");
 		return (-1);
 	}
-	scene->amb = (t_amb *)malloc(sizeof(t_amb));
-	// on sait que line[0] == 'A', donc je mets i = 1;
-	i = 1;
-	while (ft_is_space_tab(line[i]))
-		i++;
-	scene->amb->ratio = parse_light_ratio(line, &i);
+	else
+		*i += 1;
+	return (0);
+}
 
-	if (!ft_is_space_tab(line[i]))
-		return (-1);
-	while (ft_is_space_tab(line[i]))
-		i++;
-	parse_color_rgb(scene, line, &i);
-	// printf("RED VALUE = %d\n", scene->amb->color.r);
-	// printf("GREN VALUE = %d\n", scene->amb->color.g);
-	// printf("BLUE VALUE = %d\n", scene->amb->color.b);
-	while (ft_is_space_tab(line[i]))
-		i++;
-	if (line[i] != '\n' && line[i] != '\0')
+int	check_if_missing_space(char *line, int i)
+{
+	if (line[i] != ' ' && line[i] != '\t')
 	{
-		printf("ERROR TOO MANY INFO\n");
-		printf("FOUND %c\n", line[i]);
+		printf("missing space after key/value\n");
 		return (-1);
 	}
 	return (0);
+}
+
+int	parse_1color_rgb(char *line, int *i)
+{
+	int	rgb_len;
+	int	value;
+	int	index;
+
+	index = *i;
+
+	check_if_missing_value(line, index);
+	rgb_len = get_int_len(line, index);
+	value = ft_atoi(&line[index]);
+	*i = index + rgb_len;
+	return (value);
+}
+
+double	parse_1coord_xyz(char *line, int *i)
+{
+	int	coord_len;
+	double value;
+	int	index;
+
+	index = *i;
+
+	check_if_missing_value(line, index);
+	coord_len = get_float_len(line, index);
+	value = ft_atod(&line[index]);
+	*i = index + coord_len;
+	return (value);
+}
+
+void	set_color_rgb(t_rgb *color, char *line, int *i)
+{
+	color->r = parse_1color_rgb(line, i);
+	check_if_missing_comma(line, i);
+	color->g = parse_1color_rgb(line, i);
+	check_if_missing_comma(line, i);
+	color->b = parse_1color_rgb(line, i);
+
+	check_rgb_range(color->r, color->g, color->b);
+}
+
+void	set_coord_xyz(t_vec3 *v, char *line, int *i)
+{
+	v->x = parse_1coord_xyz(line, i);
+	check_if_missing_comma(line, i);
+	v->y = parse_1coord_xyz(line, i);
+	check_if_missing_comma(line, i);
+	v->z = parse_1coord_xyz(line, i);
 }
 
 int	check_parsing_type(t_scene *scene, char *line)
 {
 	// int error = 0;
 	if (line[0] == 'A' && ft_is_space_tab(line[1]))
-		parse_ambient(scene, line);
-	// else if (line[0] == 'C' && ft_is_space_tab(line[1]))
-	// 	parse_camera(scene, line);
-	// else if (line[0] == 'L' && ft_is_space_tab(line[1]))
-	// 	parse_spotlight(scene, line);
-	// else if (line[0] == 's' && line[1] == 'p' && ft_is_space_tab(line[2]))
-	// 	parse_sphere(scene, line);
-	// else if (line[0] == 'p' && line[1] == 'l' && ft_is_space_tab(line[2]))
-	// 	parse_plane(scene, line);
-	// else if (line[0] == 'c' && line[1] == 'y' && ft_is_space_tab(line[2]))
-	// 	parse_cylinder(scene, line);
+		parse_ambient(scene, line, 1);
+	else if (line[0] == 'C' && ft_is_space_tab(line[1]))
+		parse_camera(scene, line, 1);
+	else if (line[0] == 'L' && ft_is_space_tab(line[1]))
+		parse_light(scene, line, 1);
+	else if (line[0] == 's' && line[1] == 'p' && ft_is_space_tab(line[2]))
+		parse_sphere(scene, line, 2);
+	else if (line[0] == 'p' && line[1] == 'l' && ft_is_space_tab(line[2]))
+		parse_plane(scene, line, 2);
+	else if (line[0] == 'c' && line[1] == 'y' && ft_is_space_tab(line[2]))
+		parse_cylinder(scene, line, 2);
 	else if (line[0] == '\n')
 		return (0);
 	else
-		return (-1); // message derreur 
+	{
+		printf("ERROR: key identifier must be at the beggining of line followed by a space\n");
+		return (-100); // message derreur
+	}
 	return (0);
 	// return (error);
-}
-
-int	ft_is_space_tab(char c)
-{
-	if (c == ' ' || c == '\t')
-		return (1);
-	return (0);
-	// return message à faire
-}
-
-// check_valid_ascii() vérifie que la ligne ne contient que les caractères valides dans le fichier .rt
-// par exemple ascii 65 = 'A' et 9 = '\n' 
-int	check_valid_ascii(char *line)
-{
-	char	*charset;
-	char	*numbers;
-	char	*wspaces;
-	int		i;
-	int		j;
-	int		valid;
-
-	charset = (char [10]){48, 65, 67, 76, 99, 108, 112, 116, 121};
-	numbers = (char [10]){49, 50, 51, 52, 53, 54, 55, 56, 57};
-	wspaces = (char [10]){9, 10, 11, 12, 13, 32, 44, 45, 46};
-	i = 0;
-	while (line[i])
-	{
-		valid = 0;
-		j = 0;
-		while (charset[j])
-		{
-			if (line[i] == charset[j] || line[i] == numbers[j] || line[i] == wspaces[j])
-				valid = 1;
-			j++;
-		}
-		if (valid == 0)
-		{
-			//
-			printf("invalid ascii\n");
-			return (-1);
-		}
-		i++;
-	}
-	return (valid);
 }
 
 int	gnl_preparsing(t_scene *scene, char *file)
@@ -238,34 +231,12 @@ int	gnl_preparsing(t_scene *scene, char *file)
 			error = check_parsing_type(scene, line);
 		free(line);
 	}
+	//
+	printf("here\n");
+	check_amb_cam(scene);
 	close(fd);
 	return (error);
 	// return (ft_err_msg(error));
-}
-
-int	check_rt_file(char *file)
-{
-	int		fd;
-	int		len;
-	int		v_len;
-	char	*valid;
-
-	fd = 0;
-	v_len = 2;
-	valid = ".rt";
-	len = ft_strlen(file) - 1;
-	while (valid[v_len])
-	{
-		if (len < 1 || valid[v_len] != file[len])
-			return (-1);
-		v_len--;
-		len--;
-	}
-	fd = open(file, O_RDONLY);
-	if (fd < 0)
-		return (-1);
-	close (fd);
-	return (1);
 }
 
 void	free_scene_exit(t_scene *scene)
@@ -274,14 +245,14 @@ void	free_scene_exit(t_scene *scene)
 		free(scene->amb);
 	if (scene->cam != NULL)
 		free(scene->cam);
-   	if (scene->light != NULL)
-		free(scene->light);
-	if (scene->sp != NULL)
-		free(scene->sp);
-	if (scene->pl != NULL)
-		free(scene->pl);	
-	if (scene->cy != NULL)
-		free(scene->cy);
+   	if (scene->lit != NULL)
+		free(scene->lit);
+	// if (scene->sp != NULL)
+	// 	free(scene->sp);
+	// if (scene->pl != NULL)
+	// 	free(scene->pl);	
+	if (scene->objs != NULL)
+		free(scene->objs);
 	free(scene);
 	exit(0);
 }
@@ -290,10 +261,17 @@ int	init_scene(t_scene *scene)
 {
 	scene->amb = NULL;
 	scene->cam = NULL;
-	scene->light = NULL;
-	scene->sp = NULL;
-	scene->pl = NULL;
-	scene->cy = NULL;
+	scene->lit = NULL;
+	// scene->sp = NULL;
+	// scene->pl = NULL;
+	// scene->cy = NULL;
+	scene->objs = ft_calloc(1, sizeof(t_vector));
+	if (!scene->objs)
+		return (-100);
+	vector_init_array(scene->objs);
+	// scene->shape->elements = ft_calloc(4, (sizeof(void *)));
+	// scene->shape->capacity = VECTOR_INIT_CAPACITY;
+	// scene->shape->total = 0;
 	return (0);
 }
  

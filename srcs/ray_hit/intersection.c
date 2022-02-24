@@ -1,5 +1,6 @@
 #include "../../incls/mini_rt.h"
 
+
 /*fonction qui renvoi la couleur frappée par le rayon
 on ne garde que la couleur de l'objet le plus proche de la cam*/
 int	intersection(t_scene *scene, t_vec3 direction)
@@ -26,5 +27,4 @@ int	intersection(t_scene *scene, t_vec3 direction)
 	}
 	return (color);
 }
-
 

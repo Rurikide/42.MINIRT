@@ -25,6 +25,7 @@
 
 // }
 
+
 t_vec3	get_ray_dir(t_scene *scene, t_mlx *mlx, int x, int y, t_vec3 cam_norm)
 {
 	t_vec3	direction;
@@ -71,19 +72,17 @@ void	make_scene(t_scene *scene)
 	mlx_loop(mlx->mlx);
 }
 
+
+
 int main (int argc, char **argv)
 {
 	t_scene *scene;
 
-	// scene = (t_scene *)malloc(sizeof(t_scene));
-	// init_scene(scene);
-	
-
-//	make_scene(scene);
-	// if (argc != 2)
-	// 	return (-1);
-
-	//parse_machine(scene, argv[1]);
-	// printf("%d\n", scene->amb->color.r);
+	if (argc != 2)
+		return(-100);
+	scene = ft_calloc(1, sizeof(t_scene);
+	init_scene(scene);
+	parse_machine(scene, argv[1]);
+	make_scene(scene);
     return (0);
 }
