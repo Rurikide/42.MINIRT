@@ -3,7 +3,7 @@
 #include "../libft/libsrcs/libft.h"
 #include "../libft/libsrcs/ft_printf.h"
 #include "../libft/libsrcs/get_next_line.h"
-#include "../minilibx_opengl/mlx.h"
+#include "../libx/mlx.h"
 
 #include <stdio.h>
 
@@ -26,7 +26,7 @@
 // }
 
 
-t_vec3	get_ray_dir(t_scene *scene, t_mlx *mlx, int x, int y, t_vec3 cam_norm)
+t_vec3	get_ray_dir(t_scene *scene, t_mlx *mlx, int x, int y)
 {
 	t_vec3	direction;
 	
@@ -51,7 +51,7 @@ void	ray_tracing(t_scene *scene)
 		y = 0;
 		while (y < mlx->width)
 		{
-			dir = get_ray_dir(scene, mlx, x, y, vec_normalize(scene->cam->dir));
+			dir = get_ray_dir(scene, mlx, x, y);
 			//dir = rotate_dir(dir, scene);
 			color = intersection(scene, dir); //faire une struct obj ou ou tab döbj
 			my_mlx_pixel_put(mlx, y, x, color);
@@ -80,7 +80,7 @@ int main (int argc, char **argv)
 
 	if (argc != 2)
 		return(-100);
-	scene = ft_calloc(1, sizeof(t_scene);
+	scene = ft_calloc(1, sizeof(t_scene));
 	init_scene(scene);
 	parse_machine(scene, argv[1]);
 	make_scene(scene);

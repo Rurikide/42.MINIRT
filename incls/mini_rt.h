@@ -14,7 +14,7 @@
 # include "../libft/libsrcs/ft_printf.h"
 # include "../libft/libsrcs/get_next_line.h"
 
-# include "../minilibx_opengl/mlx.h"
+# include "../libx/mlx.h"
 
 # define KEY_ESC 53 //ESCAPE
 # define KEY_Q 12 // Q
@@ -41,13 +41,13 @@ typedef struct s_mlx
 }			t_mlx;
 
 
-t_mlx	*get_mlx(void);
 
 /*MLX_UTILS_C*/
 int		key_event(int keycode, t_scene *scene);
 int		click_close_window(void);
 void	hook_collection(t_mlx *mlx, t_scene *scene);
 void	my_mlx_pixel_put(t_mlx *mlx, int x, int y, int color);
+t_mlx	*get_mlx(void);
 
 
 /*MOVEMENTS
@@ -74,7 +74,7 @@ double	shadowing(t_vec3 hit_point, t_scene *scene);
 
 /*MAIN_C*/
 void	ray_tracing(t_scene *scene);
-t_vec3	get_ray_dir(t_scene *scene, t_mlx *mlx, int x, int y, t_vec3 cam_norm);
+t_vec3	get_ray_dir(t_scene *scene, t_mlx *mlx, int x, int y);
 void	make_scene(t_scene *scene);
 
 

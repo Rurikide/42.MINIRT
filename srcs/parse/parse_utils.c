@@ -117,7 +117,7 @@ int	check_one_cam(t_scene *scene)
 
 int	check_one_lit(t_scene *scene)
 {
-	if (scene->light != NULL)
+	if (scene->lit != NULL)
 	{
 		printf("IL Y A DEJA UNE LIGHT\n");
 		return (-100);

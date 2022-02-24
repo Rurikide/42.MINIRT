@@ -47,3 +47,20 @@ void    my_mlx_pixel_put(t_mlx *mlx, int x, int y, int color)
         *(unsigned int *)dst = color;
     }
 }
+
+t_mlx	*get_mlx(void)
+{
+	static t_mlx	mlx;
+
+	if (mlx.init != 1)
+    {
+        mlx.mlx = mlx_init();
+		mlx.width = 800;
+		mlx.height = 600;
+      	mlx.img = mlx_new_image(mlx.mlx, mlx.width, mlx.height);
+		mlx.adr = mlx_get_data_addr(mlx.img, &mlx.bpp, &mlx.w_len, &mlx.endian);
+		mlx.win = mlx_new_window(mlx.mlx, mlx.width, mlx.height, "mini_RT");
+        mlx.init = 1;
+    }
+    return (&mlx);
+}

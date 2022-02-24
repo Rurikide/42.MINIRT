@@ -5,7 +5,7 @@ RM= rm -rf
 
 CC= gcc
 CFLAGS= -Wall -Wextra -c -g
-MFLAGS= -Lminilibx_opengl -lmlx -framework OpenGL -framework Appkit
+MFLAGS= -Llibx -lmlx -framework OpenGL -framework Appkit
 
 SDIR= srcs
 ADIR= srcs/vector_array
@@ -15,9 +15,10 @@ VDIR= srcs/vector_3d
 SHDIR = srcs/shapes
 RDIR = srcs/ray_hit
 MDIR = srcs/movements
+MLXDIR = srcs/mlx
 ODIR= objs
 
-SRCS=	main.c init.c mlx_utils.c 
+SRCS=	main.c
 
 
 ARRAY= vector_array.c vector_utils.c
@@ -27,8 +28,9 @@ VEC3D= vector_new.c vector_tool.c
 SHAPES= sphere.c
 RAY = intersection.c get_color.c
 MOV = move_cam.c
+MLX = mlx_utils.c
 
-OBJS= $(SRCS:.c=.o) $(ARRAY:.c=.o) $(VEC3D:.c=.o) $(COLOR:.c=.o) $(SHAPES:.c=.o) $(RAY:.c=.o) $(PARSE:.c=.o) $(MOV:.c=.o)
+OBJS= $(SRCS:.c=.o) $(ARRAY:.c=.o) $(VEC3D:.c=.o) $(COLOR:.c=.o) $(SHAPES:.c=.o) $(RAY:.c=.o) $(PARSE:.c=.o) $(MOV:.c=.o) $(MLX:.c=.o)
 
 
 SFIX= $(addprefix $(SDIR)/, $(SRCS))
@@ -40,12 +42,13 @@ OFIX= $(addprefix $(ODIR)/, $(OBJS))
 SHFIX= $(addprefix $(SHDIR)/, $(SHAPES)) 
 RFIX= $(addprefix $(RDIR)/, $(RAY)) 
 MFIX = $(addprefix $(MDIR)/, $(MOV)) 
+MLXFIX = $(addprefix $(MLXDIR)/, $(MLX)) 
 
-VPATH= $(SDIR) $(ADIR) $(PDIR) $(VDIR) $(CDIR) $(SHDIR) $(RDIR) $(MDIR)
+VPATH= $(SDIR) $(ADIR) $(PDIR) $(VDIR) $(CDIR) $(SHDIR) $(RDIR) $(MDIR) $(MLXDIR)
 
 $(NAME): $(ODIR) $(OFIX) 
 	$(MAKE) -C ./libft
-	$(MAKE) -C ./minilibx_opengl
+	$(MAKE) -C ./libx
 	$(CC) $(OFIX) $(MFLAGS) -lft -L./libft -o $(NAME)
 	@echo "\033[1;32mminiRT\033[0;39m"
 

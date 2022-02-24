@@ -39,8 +39,8 @@ int	get_color(t_shape *obj, t_vec3 direction, t_scene *scene, double distance)
 	// {
 
 	// }
-	shadow = shadowing(hit_point, scene);
-	if (shadow == 0)
-		color = 0x0000FF;
+	//shadow = shadowing(hit_point, scene);
+	// if (shadow == 0)
+	// 	color = 0x0000FF;
 	return (color);
 }

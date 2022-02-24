@@ -1,4 +1,4 @@
-/*
+
 #include "../../incls/mini_rt.h"
 
 double	parse_dimension(char *line, int *i)
@@ -286,5 +286,3 @@ void	parse_machine(t_scene *scene, char *file)
 	
 	return ;
 }
-
-*/

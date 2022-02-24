@@ -30,7 +30,7 @@ void	parse_cylinder(t_scene *scene, char *line, int i)
 
     new = ft_calloc(1, sizeof(t_shape));
     cy = ft_calloc(1, sizeof(t_cy));
-	new->hit_obj = &hit_cylinder;
+	//new->hit_obj = &hit_cylinder;
 	ft_skip_space_tab(line, &i);
 	set_coord_xyz(&cy->origin, line, &i);
 	check_if_missing_space(line, i);
@@ -60,7 +60,7 @@ void	parse_plane(t_scene *scene, char *line, int i)
 
     new = ft_calloc(1, sizeof(t_shape));
     pl = ft_calloc(1, sizeof(t_pl));
-	new->hit_obj = &hit_plane;
+	//new->hit_obj = &hit_plane;
 	ft_skip_space_tab(line, &i);
 	set_coord_xyz(&pl->origin, line, &i);
 	check_if_missing_space(line, i);
