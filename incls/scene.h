@@ -1,66 +1,51 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   scene.h                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: tshimoda <tshimoda@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/15 20:17:17 by tshimoda          #+#    #+#             */
-/*   Updated: 2022/02/23 17:49:17 by tshimoda         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #ifndef SCENE_H
 # define SCENE_H
 
 # include "vector_3d.h"
 # include "vector_array.h"
 
-typedef enum	e_type
+typedef enum e_type
 {
-	SP = 1, 
+	SP = 1,
 	CY = 2,
 	PL = 3,
-}				t_type;
+}	t_type;
 
-typedef struct s_sphere
+typedef struct s_sp
 {
-	t_vec3	center;
+	t_vec3	origin;
 	double	rad;
 	t_rgb	color;
-	// choisir le diametre ou le radius pour le resize???
-	// t_vec3  norm; le vecteur normal normalizer???
-}	t_sphere;
+}	t_sp;
 
-typedef struct s_plane
+typedef struct s_pl
 {
-	t_vec3	center;
+	t_vec3	origin;
 	t_vec3	dir;
 	t_rgb	color;
-}	t_plane;
+}	t_pl;
 
-typedef struct s_cylinder
+typedef struct s_cy
 {
-	t_vec3	center;
+	t_vec3	origin;
 	t_vec3	dir;
 	double	rad;
 	double	height;
 	t_rgb	color;
-}	t_cylinder;
-
+}	t_cy;
 
 typedef struct s_shape
 {
 	void	*shape;
+	double	(*hit_obj)(void *, t_vec3, t_vec3);
 	int		type;
 }t_shape;
 
 typedef struct s_amb
 {
 	double	ratio;
-	t_rgb color;
+	t_rgb	color;
 }	t_amb;
-
 
 typedef struct s_cam
 {
@@ -69,7 +54,6 @@ typedef struct s_cam
 	int		fov;
 }	t_cam;
 
-
 typedef struct s_lit
 {
 	t_vec3	origin;
@@ -77,17 +61,12 @@ typedef struct s_lit
 	t_rgb	color;
 }	t_lit;
 
-
 typedef struct s_scene 
 {
-	int			nb_obj;
 	t_amb		*amb;
-	t_cam       *cam;
-	// 
-	t_lit       *light;
-	
-	t_vector	*shape;
-}           t_scene;
-
+	t_cam		*cam;
+	t_lit		*lit;
+	t_vector	*objs;
+}	t_scene;
 
 #endif
