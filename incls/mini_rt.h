@@ -50,17 +50,17 @@ int		click_close_window(void);
 void	hook_collection(t_mlx *mlx);
 void	my_mlx_pixel_put(t_mlx *mlx, int x, int y, int color);
 
-t_sphere	*init_sphere();
+t_sp	*init_sphere();
 t_cam	*init_cam();
 // t_scene *jinit_scene();
 t_vec3	get_norm_sphere(t_scene *scene, t_vec3	hit_p);
 t_vec3	get_hit_point_sp(t_scene *scene, t_vec3 direction, double distance);
 double	get_root(double disc, double b);
-double hit_sphere(t_vec3 cam, t_vec3	direction, t_sphere *sphere);
+double hit_sphere(t_vec3 cam, t_vec3	direction, t_sp *sphere);
 
-double	find_dist(t_sphere *sphere, t_vec3 cam, t_vec3 direction);
+double	find_dist(t_sp *sphere, t_vec3 cam, t_vec3 direction);
 int	intersection(t_scene *scene, t_vec3 direction);
-int	get_color(t_sphere *sphere, t_vec3 direction, t_scene *scene, double distance);
+int	get_color(t_sp *sphere, t_vec3 direction, t_scene *scene, double distance);
 
 
 

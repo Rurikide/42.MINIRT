@@ -184,32 +184,6 @@ void	set_coord_xyz(t_vec3 *v, char *line, int *i)
 	v->z = parse_1coord_xyz(line, i);
 }
 
-
-// int	parse_3coord_xyz(t_scene *scene, char *line, int *i)
-// {
-// 	int	coord_len;
-// 	int	index;
-
-// 	index = *i;
-// 	coord_len = get_float_len(line, index);
-// 	scene->cam->origin.x = ft_atod(&line[index]);
-// 	if (line[index + coord_len] != ',')
-// 		return (-1);
-// 	else
-// 		index += coord_len + 1;
-// 	coord_len = get_float_len(line, index);
-// 	scene->cam->origin.y = ft_atod(&line[index]);
-// 	if (line[index + coord_len] != ',')
-// 		return (-1);
-// 	else
-// 		index += coord_len + 1;
-// 	coord_len = get_float_len(line, index);
-// 	scene->cam->origin.z = ft_atod(&line[index]);
-// 	*i = index + coord_len;
-// 	// check window width heigth ???
-// 	return (0);
-// }
-
 int	check_parsing_type(t_scene *scene, char *line)
 {
 	// int error = 0;
@@ -221,10 +195,10 @@ int	check_parsing_type(t_scene *scene, char *line)
 		parse_light(scene, line, 1);
 	else if (line[0] == 's' && line[1] == 'p' && ft_is_space_tab(line[2]))
 		parse_sphere(scene, line, 2);
-	// else if (line[0] == 'p' && line[1] == 'l' && ft_is_space_tab(line[2]))
-	// 	parse_plane(scene, line, 2);
-	// else if (line[0] == 'c' && line[1] == 'y' && ft_is_space_tab(line[2]))
-	// 	parse_cylinder(scene, line, 2);
+	else if (line[0] == 'p' && line[1] == 'l' && ft_is_space_tab(line[2]))
+		parse_plane(scene, line, 2);
+	else if (line[0] == 'c' && line[1] == 'y' && ft_is_space_tab(line[2]))
+		parse_cylinder(scene, line, 2);
 	else if (line[0] == '\n')
 		return (0);
 	else
@@ -257,6 +231,7 @@ int	gnl_preparsing(t_scene *scene, char *file)
 		free(line);
 	}
 	//
+	printf("here\n");
 	check_amb_cam(scene);
 	close(fd);
 	return (error);
@@ -269,14 +244,14 @@ void	free_scene_exit(t_scene *scene)
 		free(scene->amb);
 	if (scene->cam != NULL)
 		free(scene->cam);
-   	if (scene->light != NULL)
-		free(scene->light);
+   	if (scene->lit != NULL)
+		free(scene->lit);
 	// if (scene->sp != NULL)
 	// 	free(scene->sp);
 	// if (scene->pl != NULL)
 	// 	free(scene->pl);	
-	if (scene->shape != NULL)
-		free(scene->shape);
+	if (scene->objs != NULL)
+		free(scene->objs);
 	free(scene);
 	exit(0);
 }
@@ -285,14 +260,14 @@ int	init_scene(t_scene *scene)
 {
 	scene->amb = NULL;
 	scene->cam = NULL;
-	scene->light = NULL;
+	scene->lit = NULL;
 	// scene->sp = NULL;
 	// scene->pl = NULL;
 	// scene->cy = NULL;
-	scene->shape = ft_calloc(1, sizeof(t_vector));
-	if (!scene->shape)
+	scene->objs = ft_calloc(1, sizeof(t_vector));
+	if (!scene->objs)
 		return (-100);
-	vector_init_array(scene->shape);
+	vector_init_array(scene->objs);
 	// scene->shape->elements = ft_calloc(4, (sizeof(void *)));
 	// scene->shape->capacity = VECTOR_INIT_CAPACITY;
 	// scene->shape->total = 0;

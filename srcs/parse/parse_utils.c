@@ -87,7 +87,7 @@ int	check_rt_file(char *file)
 
 int	check_amb_cam(t_scene *scene)
 {
-	if	(scene->amb == NULL && scene->cam == NULL)
+	if	(scene->amb == NULL || scene->cam == NULL)
 	{
 		printf("Il faut une ambiant light && une camera\n");
 		return (-100);

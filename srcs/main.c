@@ -99,6 +99,7 @@ int main (int argc, char **argv)
 		return(-100);
 	scene = (t_scene *)malloc(sizeof(t_scene));
 	init_scene(scene);
+	parse_machine(scene, argv[1]);
 	
 	// mlx = get_mlx();
 	// m_rt = calloc(1, sizeof(t_rt));
@@ -107,7 +108,6 @@ int main (int argc, char **argv)
 	// if (argc != 2)
 	// 	return (-1);
 
-	parse_machine(scene, argv[1]);
 	// printf("%d\n", scene->amb->color.r);
     return (0);
 }
