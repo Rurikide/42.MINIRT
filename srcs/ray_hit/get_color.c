@@ -20,6 +20,15 @@
 // }
 
 // fonction pour récupérer la bonne couleur
+
+double	spot_light(t_vec3 hit_point, t_scene *scene, t_vec3 norm)
+{
+	double	spot;
+
+	spot = 100 * scene->lit->ratio * vec_dot(vec_sub(scene->lit->origin, hit_point), norm) / vec_squared(vec_sub(scene->lit->origin, hit_point));
+	return(spot);
+}
+
 int	get_color(t_shape *obj, t_vec3 direction, t_scene *scene, double distance)
 {
 	t_vec3	hit_point;
@@ -27,13 +36,15 @@ int	get_color(t_shape *obj, t_vec3 direction, t_scene *scene, double distance)
 	int	color;
 	int	i;
 	double shadow;
+	double	test;
 
 	i = 0;
 	hit_point = get_hit_point_sp(scene, direction, distance);
 	if (obj->type == 1)
 	{
 		norm = vec_normalize(vec_sub(hit_point, ((t_sp *)obj->shape)->origin));
-		color = rgb_to_int(((t_sp *)obj->shape)->color);
+		color = rgb_to_int(color_multiply_rgb((((t_sp *)obj->shape)->color),(scene->amb->color),scene->amb->ratio));
+		
 	}
 	// else if (obj->type == 2)
 	// {

@@ -11,8 +11,8 @@ int	intersection(t_scene *scene, t_vec3 direction)
 	int		color;	
 	t_shape *obj;
 
-	closer = 10000;
-	color = 0x000000;
+	closer = INFINITY;
+	color = rgb_to_int(color_multiply_rgb(new_color(0,0,0),scene->amb->color,scene->amb->ratio));
 	i = 0;
 	while (i < scene->objs->total)
 	{

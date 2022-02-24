@@ -16,6 +16,7 @@
 
 # include "../libx/mlx.h"
 
+#define INFINITY 1000
 # define KEY_ESC 53 //ESCAPE
 # define KEY_Q 12 // Q
 # define KEY_A 0x00
