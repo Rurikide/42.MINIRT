@@ -23,6 +23,9 @@
 # define KEY_D 0x02
 # define KEY_W 0x0D
 
+# define WIDTH	1080 
+# define HEIGHT 720
+
 typedef struct s_mlx
 {
 	void	*mlx;
@@ -37,39 +40,40 @@ typedef struct s_mlx
 	int		w_len;
 }			t_mlx;
 
-typedef struct s_rt
-{
-	int	height;
-	int	width;
-	void	*img_ptr;
-	t_scene	*scene;
-	
-}				t_rt;
 
 t_mlx	*get_mlx(void);
-void	init_rt(t_rt *rt);
 
+/*MLX_UTILS_C*/
 int		key_event(int keycode, t_scene *scene);
 int		click_close_window(void);
 void	hook_collection(t_mlx *mlx, t_scene *scene);
 void	my_mlx_pixel_put(t_mlx *mlx, int x, int y, int color);
-void	move_cam(int keycode, t_scene *scene);
 
-t_sphere	*init_sphere();
-t_cam	*init_cam();
-t_scene *init_scene();
-t_lit	*init_light();
+/*MOVEMENTS
+MOVE_CAM_C*/
+void	move_cam(int keycode, t_scene *scene);
+void remake_scene(t_scene *scene, t_mlx *mlx);
+
+/*SHAPES
+SPHERE_C*/
 t_vec3	get_norm_sphere(t_scene *scene, t_vec3	hit_p);
 t_vec3	get_hit_point_sp(t_scene *scene, t_vec3 direction, double distance);
 double	get_root(double disc, double b);
-double hit_sphere(t_vec3 cam, t_vec3	direction, t_sphere *sphere);
+double hit_sphere(void *sphere, t_vec3 cam, t_vec3 direction);
 
-double	find_dist(t_sphere *sphere, t_vec3 cam, t_vec3 direction);
+
+/*RAY_HIT
+INTERSECTION_C*/
 int	intersection(t_scene *scene, t_vec3 direction);
-int	get_color(t_sphere *sphere, t_vec3 direction, t_scene *scene, double distance);
+/*GET_COLOR_C*/
+int	get_color(t_shape *obj, t_vec3 direction, t_scene *scene, double distance);
 double	shadowing(t_vec3 hit_point, t_scene *scene);
 
+
+/*MAIN_C*/
 void	ray_tracing(t_scene *scene);
+t_vec3	get_ray_dir(t_scene *scene, t_mlx *mlx, int x, int y, t_vec3 cam_norm);
+void	make_scene(t_scene *scene);
 
 
 #endif

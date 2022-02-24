@@ -1,5 +1,4 @@
 
-
 #include "../incls/mini_rt.h"
 #include "../libft/libsrcs/libft.h"
 #include "../libft/libsrcs/ft_printf.h"
@@ -8,54 +7,32 @@
 
 #include <stdio.h>
 
-t_vec3	add_3_vec(t_vec3 a, t_vec3 b, t_vec3 c)
-{
-	t_vec3 resultante;
+// t_vec3 rotate_dir(t_vec3 direction, t_scene *scene)
+// {
+// 	double x;
+// 	double y;
+// 	double z;
+// 	double	a;
 
-	resultante.x = a.x + b.x + c.x;
-	resultante.y = a.y + b.y + c.y;
-	resultante.z = a.z + b.z + c.z;
-	return (resultante);
-}
+// 	a = 0;
+// 	x = direction.x * cos(a) - direction.z * sin(a);
+// 	z = direction.x	* sin(a) + direction.z * cos(a);
+// 	direction = vec_normalize(new_vector(x, direction.y, z));
+// 	x = direction.x * cos(a) - direction.y * sin(a);
+// 	z = direction.x	* sin(a) + direction.y * cos(a);
+// 	direction = vec_normalize(new_vector(x, y, direction.z));
+// 	return (direction);
 
-t_vec3 rotate_dir(t_vec3 direction, t_scene *scene)
-{
-	double x;
-	double y;
-	double z;
-	double	a;
-
-	a = 0;
-	x = direction.x * cos(a) - direction.z * sin(a);
-	z = direction.x	* sin(a) + direction.z * cos(a);
-	direction = vec_normalize(new_vector(x, direction.y, z));
-	x = direction.x * cos(a) - direction.y * sin(a);
-	z = direction.x	* sin(a) + direction.y * cos(a);
-	direction = vec_normalize(new_vector(x, y, direction.z));
-	return (direction);
-
-}
+// }
 
 t_vec3	get_ray_dir(t_scene *scene, t_mlx *mlx, int x, int y, t_vec3 cam_norm)
 {
 	t_vec3	direction;
-	// double	dst;
-	// t_vec3	a;
-	// t_vec3	b;
-	// t_vec3	c;
-
-	// dst = mlx->width / (2 * tanf(scene->cam->fov * M_PI / 360));
-	// a = new_vector(dst, y - mlx->width / 2, -(x - mlx->height / 2));
-	// b = new_vector(- (y - mlx->width /2), dst, -(x - mlx->height / 2));
-	// c = new_vector(-(x - mlx->height / 2), y - mlx->width /2, dst);
-	// direction = add_3_vec(vec_multiply(a, cam_norm.x), 
-	// 	vec_multiply(b, cam_norm.y), vec_multiply(c, cam_norm.z));
+	
 	direction.x = y - mlx->width / 2;
 	direction.y = mlx->height / 2 - x;
 	direction.z = - mlx->width / (2 * tan(scene->cam->fov * M_PI / 360));
-	//-mlx->height;
-	
-	return((vec_normalize(direction)));
+	return(vec_normalize(direction));
 }
 
 void	ray_tracing(t_scene *scene)
@@ -97,14 +74,12 @@ void	make_scene(t_scene *scene)
 int main (int argc, char **argv)
 {
 	t_scene *scene;
-	t_rt 	*m_rt; 
 
 	// scene = (t_scene *)malloc(sizeof(t_scene));
 	// init_scene(scene);
 	
-	m_rt = calloc(1, sizeof(t_rt));
-	init_rt(m_rt);
-	make_scene(m_rt->scene);
+
+//	make_scene(scene);
 	// if (argc != 2)
 	// 	return (-1);
 
