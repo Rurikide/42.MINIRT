@@ -19,7 +19,7 @@ int	rgb_to_int(t_rgb rgb);
 int		add_color(int color_a, int color_b);
 t_rgb	new_color(int r, int g, int b);
 t_rgb    color_multiply_rgb(t_rgb obj, t_rgb amb_lit, double ratio);
-
+int multiply_color(int color, double ratio);
 
 
 #endif

@@ -1,10 +1,5 @@
 #include "../../incls/mini_rt.h"
 
-int	add_color(int color_1, int color_2)
-{
-	return (color_1 + color_2);
-}
-
 t_rgb	new_color(int r, int g, int b)
 {
 	t_rgb	rgb;
@@ -28,4 +23,17 @@ t_rgb    color_multiply_rgb(t_rgb obj, t_rgb amb_lit, double ratio)
     new.g = obj.g + ((amb_lit.g - obj.g) * ratio);
     new.b = obj.b + ((amb_lit.b - obj.b) * ratio);
     return (new);
+}
+
+int multiply_color(int color, double ratio)
+{
+    int r;
+    int g;
+    int b;
+
+    r = get_r(check_rgb(color * ratio));
+    g = get_g(check_rgb(color * ratio));
+    b = get_b(check_rgb(color * ratio));
+
+    return (rgb_to_int(new_color(r, g, b)));
 }
