@@ -1,38 +1,10 @@
 #include "../../incls/mini_rt.h"
 
-int	ft_is_space_tab(char c)
-{
-	if (c == ' ' || c == '\t')
-		return (1);
-	return (0);
-	// return message à faire
-}
-
-void	ft_skip_space_tab(char *line, int *i)
-{
-	int move_forward;
-	int	index;
-
-	move_forward = 0;
-	index = *i;
-	while (ft_is_space_tab(line[index]))
-	{
-		index++;
-		move_forward++;
-	}
-	*i += move_forward;
-}
-
-
-// check_valid_ascii() vérifie que la ligne ne contient que les caractères valides dans le fichier .rt
-// par exemple ascii 65 = 'A' et 9 = '\n' 
-int	check_valid_ascii(char *line)
+int	check_valid_ascii(t_scene *sc, char *line, int i, int j)
 {
 	char	*charset;
 	char	*numbers;
 	char	*wspaces;
-	int		i;
-	int		j;
 	int		valid;
 
 	charset = (char [10]){48, 65, 67, 76, 99, 108, 112, 115, 121};
@@ -50,10 +22,7 @@ int	check_valid_ascii(char *line)
 			j++;
 		}
 		if (valid == 0)
-		{
-			printf("invalid ascii\n");
-			return (-1);
-		}
+			print_error_exit(sc, "Found invalid character");
 		i++;
 	}
 	return (valid);
@@ -87,53 +56,43 @@ int	check_rt_file(char *file)
 int	check_amb_cam(t_scene *scene)
 {
 	if (scene->amb == NULL || scene->cam == NULL)
-	{
-		printf("Il faut une ambiant light && une camera\n");
-		return (-100);
-	}
+		print_error_exit(scene, "Missing Ambiant or Camera");
 	return (0);
 }
 
 int	check_one_amb(t_scene *scene)
 {
 	if (scene->amb != NULL)
-	{
-		printf("IL Y A DEJA UNE AMBIANT LIGHT\n");
-		return (-100);
-	}
+		print_error_exit(scene, "Max one Ambiant light [A]");
 	return (0);
 }
 
 int	check_one_cam(t_scene *scene)
 {
 	if (scene->cam != NULL)
-	{
-		printf("IL Y A DEJA UNE CAMERA\n");
-		return (-100);
-	}
+		print_error_exit(scene, "Max one Camera [C]");
 	return (0);
 }
 
 int	check_one_lit(t_scene *scene)
 {
 	if (scene->lit != NULL)
-	{
-		printf("IL Y A DEJA UNE LIGHT\n");
-		return (-100);
-	}
+		print_error_exit(scene, "Max one Light source [L]");
 	return (0);
 }
 
 int	check_surplus_info(t_scene *scene, char *line, int i)
 {
-	(void)scene;
-
-	if (ft_isalnum(line[i]) || line[i] == '.' || \
-		line[i] == ',' || line[i] == '-')
-	{
-		printf("ERROR TOO MANY INFO\n");
-		printf("FOUND %c\n", line[i]);
-		return (-100);
-	}
+	if (ft_isalnum(line[i]) || ft_is_dash_comma_dot(line[i]))
+		print_error_exit(scene, "Too many input for an element");
 	return (0);
+}
+
+void	print_error_exit(t_scene *scene, char *msg)
+{
+	ft_putendl_fd("Error", 1);
+	ft_putendl_fd(msg, 1);
+	if (scene != NULL)
+		free_scene(scene);
+	exit(EXIT_FAILURE);
 }

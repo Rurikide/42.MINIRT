@@ -58,6 +58,9 @@ SRCS	=	ft_memset.c \
 			ft_atod.c \
 			ft_isspace.c \
 			ft_table_len.c \
+			ft_is_space_tab.c \
+			ft_skip_space_tab.c \
+			ft_is_dash_comma_dot.c \
 
 
 

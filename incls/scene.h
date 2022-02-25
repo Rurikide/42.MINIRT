@@ -67,6 +67,7 @@ typedef struct s_scene
 	t_cam		*cam;
 	t_lit		*lit;
 	t_vector	*objs;
+	int			init;
 }	t_scene;
 
 #endif

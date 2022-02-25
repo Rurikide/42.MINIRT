@@ -9,11 +9,12 @@ int	parse_ambient(t_scene *scene, char *line, int i)
 	check_if_missing_space(line, i);
 	ft_skip_space_tab(line, &i);
 	set_color_rgb(&scene->amb->color, line, &i);
-	printf("AMBIANT RATIO = %f\n", scene->amb->ratio);
-	printf("RED VALUE = %d\n", scene->amb->color.r);
-	printf("GREN VALUE = %d\n", scene->amb->color.g);
-	printf("BLUE VALUE = %d\n", scene->amb->color.b);
 	ft_skip_space_tab(line, &i);
 	check_surplus_info(scene, line, i);
 	return (0);
 }
+
+	// printf("AMBIANT RATIO = %f\n", scene->amb->ratio);
+	// printf("RED VALUE = %d\n", scene->amb->color.r);
+	// printf("GREN VALUE = %d\n", scene->amb->color.g);
+	// printf("BLUE VALUE = %d\n", scene->amb->color.b);

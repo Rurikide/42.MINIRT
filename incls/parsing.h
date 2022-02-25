@@ -6,14 +6,12 @@
 int		get_float_len(char *line, int i);
 int		get_int_len(char *line, int i);
 int		check_parsing_type(t_scene *scene, char *line);
-int		check_valid_ascii(char *line);
+int		check_valid_ascii(t_scene *sc, char *line, int i, int j);
 int		check_rt_file(char *file);
-void	free_scene_exit(t_scene *scene);
-int		init_scene(t_scene *scene);
+void	free_scene(t_scene *scene);
+t_scene	*get_scene(void);
 void	parse_machine(t_scene *scene, char *file);
 int		gnl_preparsing(t_scene *scene, char *file);
-int		ft_is_space_tab(char c);
-void	ft_skip_space_tab(char *line, int *i);
 int		check_rgb_range(int r, int g, int b);
 int		check_unit_range(t_vec3 *unit);
 int		parse_1color_rgb(char *line, int *i);
@@ -37,4 +35,5 @@ int		parse_light(t_scene *scene, char *line, int i);
 void	parse_sphere(t_scene *scene, char *line, int i);
 void	parse_cylinder(t_scene *scene, char *line, int i);
 void	parse_plane(t_scene *scene, char *line, int i);
+void	print_error_exit(t_scene *scene, char *msg);
 #endif

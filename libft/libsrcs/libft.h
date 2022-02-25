@@ -6,7 +6,7 @@
 /*   By: tshimoda <tshimoda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/31 13:56:02 by tshimoda          #+#    #+#             */
-/*   Updated: 2022/02/22 11:22:53 by tshimoda         ###   ########.fr       */
+/*   Updated: 2022/02/24 22:18:45 by tshimoda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,5 +67,8 @@ double	ft_power(double nb, int exponent);
 double	ft_square_root(double nb);
 int		ft_isspace(char c);
 int		ft_table_len(char **tab);
+int		ft_is_space_tab(char c);
+int		ft_is_dash_comma_dot(char c);
+void	ft_skip_space_tab(char *line, int *i);
 
 #endif

@@ -203,10 +203,7 @@ int	check_parsing_type(t_scene *scene, char *line)
 	else if (line[0] == '\n')
 		return (0);
 	else
-	{
-		printf("ERROR: key identifier must be at the beggining of line followed by a space\n");
-		return (-100); // message derreur
-	}
+		print_error_exit(scene, "Line must begin with key identifier, followed by a space");
 	return (0);
 	// return (error);
 }
@@ -224,22 +221,19 @@ int	gnl_preparsing(t_scene *scene, char *file)
 		line = get_next_line(fd);
 		if (line == NULL)
 			break ;
-		error = check_valid_ascii(line);
+		error = check_valid_ascii(scene, line, 0, 0);
 
 		//check parsing type renvoi 1 on success
 		if (error == 1)
 			error = check_parsing_type(scene, line);
 		free(line);
 	}
-	//
-	printf("here\n");
-	check_amb_cam(scene);
 	close(fd);
 	return (error);
 	// return (ft_err_msg(error));
 }
 
-void	free_scene_exit(t_scene *scene)
+void	free_scene(t_scene *scene)
 {
 	if (scene->amb != NULL)
 		free(scene->amb);
@@ -247,42 +241,35 @@ void	free_scene_exit(t_scene *scene)
 		free(scene->cam);
    	if (scene->lit != NULL)
 		free(scene->lit);
-	// if (scene->sp != NULL)
-	// 	free(scene->sp);
-	// if (scene->pl != NULL)
-	// 	free(scene->pl);	
 	if (scene->objs != NULL)
-		free(scene->objs);
-	free(scene);
-	exit(0);
+		vector_free_elements(scene->objs);
+	// if (scene != NULL)
+	// 	free(scene);
+	printf("msg from free scene()\n");
 }
 
-int	init_scene(t_scene *scene)
+t_scene	*get_scene(void)
 {
-	scene->amb = NULL;
-	scene->cam = NULL;
-	scene->lit = NULL;
-	// scene->sp = NULL;
-	// scene->pl = NULL;
-	// scene->cy = NULL;
-	scene->objs = ft_calloc(1, sizeof(t_vector));
-	if (!scene->objs)
-		return (-100);
-	vector_init_array(scene->objs);
-	// scene->shape->elements = ft_calloc(4, (sizeof(void *)));
-	// scene->shape->capacity = VECTOR_INIT_CAPACITY;
-	// scene->shape->total = 0;
-	return (0);
+	static t_scene	scene;
+
+	if (scene.init != 1)
+	{
+		scene.init = 1;
+		scene.amb = NULL;
+		scene.cam = NULL;
+		scene.lit = NULL;
+		scene.objs = ft_calloc(1, sizeof(t_vector));
+		// if (!scene.objs)
+		// 	return (-100);
+		vector_init_array(scene.objs);
+	}
+	return (&scene);
 }
  
 void	parse_machine(t_scene *scene, char *file)
 {
-	// // check si l'extension est .rt et si le fichier existe. return -1 en cas d'erreur
-	check_rt_file(file);
-
-	// // ft_read effectue open, GNL pour récupérer une ligne à la fois et ensuite appelle d'autres fonctions pour parser
-	// // note la fonction check_rt_file verifie déjà si le open fd est valide. 
-	gnl_preparsing(scene, file); 
-	
-	return ;
+	if (check_rt_file(file) == -1)
+		print_error_exit(scene, "test dans parse machine");
+	gnl_preparsing(scene, file);
+	check_amb_cam(scene);
 }
