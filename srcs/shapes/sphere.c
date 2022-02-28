@@ -1,17 +1,8 @@
 #include "../../incls/mini_rt.h"
 
-// t_vec3	get_norm_sphere(t_scene *scene, t_vec3	hit_p)
-// {
-// 	t_vec3 normal;
-
-// 	normal = vec_sub(hit_p, scene->sp->);
-// 	return (vec_normalize(normal));
-// }
-
 t_vec3	get_hit_point_sp(t_scene *scene, t_vec3 direction, double distance)
 {
 	t_vec3	hit_p;
-
 
 	hit_p = vec_add(vec_multiply(direction, distance), scene->cam->origin);
 	return (hit_p);

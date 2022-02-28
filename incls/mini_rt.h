@@ -70,6 +70,9 @@ int	intersection(t_scene *scene, t_vec3 direction);
 /*GET_COLOR_C*/
 int	get_color(t_shape *obj, t_vec3 direction, t_scene *scene, double distance);
 double	shadowing(t_vec3 hit_point, t_scene *scene);
+double	spot_light(t_vec3 hit_point, t_scene *scene, t_vec3 norm);
+double	spec_light(t_vec3 norm, t_vec3 dir, t_vec3 hit_point, t_scene *scene);
+
 
 
 
