@@ -16,7 +16,10 @@ int		get_b(int color);
 int		rgb_to_int(t_rgb rgb);
 
 /*COLOR_C*/
-int		add_color(int color_a, int color_b);
 t_rgb	new_color(int r, int g, int b);
+int add_color(int color, double ratio);
+t_rgb    color_multiply_rgb(t_rgb obj, t_rgb amb_lit, double ratio);
+int multiply_color(int color, double ratio);
+int	add_3_colors(int a, int b, int c);
 
 #endif

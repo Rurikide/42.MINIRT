@@ -13,8 +13,9 @@
 
 # include "../libx/mlx.h"
 
-# define KEY_ESC 53
-# define KEY_Q 12
+#define INFINITY 1000
+# define KEY_ESC 53 //ESCAPE
+# define KEY_Q 12 // Q
 # define KEY_A 0x00
 # define KEY_S 0x01
 # define KEY_D 0x02
@@ -62,6 +63,9 @@ int		intersection(t_scene *scene, t_vec3 direction);
 /*GET_COLOR_C*/
 int		get_color(t_shape *obj, t_vec3 direction, t_scene *scene, double distance);
 double	shadowing(t_vec3 hit_point, t_scene *scene);
+double	spot_light(t_vec3 hit_point, t_scene *scene, t_vec3 norm);
+double	spec_light(t_vec3 norm, t_vec3 dir, t_vec3 hit_point, t_scene *scene);
+
 
 /*MAIN_C*/
 void	ray_tracing(t_scene *scene);
