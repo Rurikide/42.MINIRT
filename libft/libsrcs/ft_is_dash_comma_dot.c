@@ -1,23 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_table_len.c                                     :+:      :+:    :+:   */
+/*   ft_is_dash_comma_dot.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tshimoda <tshimoda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/22 11:15:47 by tshimoda          #+#    #+#             */
-/*   Updated: 2022/02/24 17:57:29 by tshimoda         ###   ########.fr       */
+/*   Created: 2022/02/24 22:16:07 by tshimoda          #+#    #+#             */
+/*   Updated: 2022/02/24 22:17:22 by tshimoda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_table_len(char **tab)
+int	ft_is_dash_comma_dot(char c)
 {
-	int	len;
-
-	len = 0;
-	while (tab[len])
-		len++;
-	return (len);
+	if (c == '-' || c == ',' || c == '.')
+		return (1);
+	return (0);
 }
+

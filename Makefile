@@ -23,7 +23,7 @@ SRCS=	main.c
 
 ARRAY= vector_array.c vector_utils.c
 COLOR= color.c color_rgb.c
-PARSE= parse.c parse_ambiant.c parse_camera.c parse_len.c parse_light.c parse_shape.c parse_utils.c 
+PARSE= parse.c check_ambcamlit.c check_syntaxe.c check_valid_file.c parse_ambcamlit.c parse_rgb.c parse_settings.c parse_shape.c parse_utils.c parse_xyz.c scene_utils.c
 VEC3D= vector_new.c vector_tool.c
 SHAPES= sphere.c
 RAY = intersection.c get_color.c

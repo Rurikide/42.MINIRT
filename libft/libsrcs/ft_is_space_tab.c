@@ -1,23 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_table_len.c                                     :+:      :+:    :+:   */
+/*   ft_is_space_tab.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tshimoda <tshimoda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/22 11:15:47 by tshimoda          #+#    #+#             */
-/*   Updated: 2022/02/24 17:57:29 by tshimoda         ###   ########.fr       */
+/*   Created: 2022/02/24 22:13:37 by tshimoda          #+#    #+#             */
+/*   Updated: 2022/02/24 22:13:56 by tshimoda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_table_len(char **tab)
+int	ft_is_space_tab(char c)
 {
-	int	len;
-
-	len = 0;
-	while (tab[len])
-		len++;
-	return (len);
+	if (c == ' ' || c == '\t')
+		return (1);
+	return (0);
 }

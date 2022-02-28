@@ -1,23 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_table_len.c                                     :+:      :+:    :+:   */
+/*   ft_skip_space_tab.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tshimoda <tshimoda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/22 11:15:47 by tshimoda          #+#    #+#             */
-/*   Updated: 2022/02/24 17:57:29 by tshimoda         ###   ########.fr       */
+/*   Created: 2022/02/24 22:12:53 by tshimoda          #+#    #+#             */
+/*   Updated: 2022/02/24 22:13:05 by tshimoda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_table_len(char **tab)
+void	ft_skip_space_tab(char *line, int *i)
 {
-	int	len;
+	int move_forward;
+	int	index;
 
-	len = 0;
-	while (tab[len])
-		len++;
-	return (len);
+	move_forward = 0;
+	index = *i;
+	while (ft_is_space_tab(line[index]))
+	{
+		index++;
+		move_forward++;
+	}
+	*i += move_forward;
 }

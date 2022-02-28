@@ -79,9 +79,12 @@ int main (int argc, char **argv)
 	t_scene *scene;
 
 	if (argc != 2)
-		return(-100);
-	scene = ft_calloc(1, sizeof(t_scene));
-	init_scene(scene);
+	{
+		printf("Error\n");
+		printf("Please select onr .rt file\n");
+		exit(EXIT_FAILURE);
+	}
+	scene = get_scene();
 	parse_machine(scene, argv[1]);
 	make_scene(scene);
     return (0);
