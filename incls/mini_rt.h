@@ -2,6 +2,7 @@
 # define MINI_RT_H
 
 # include "color.h"
+# include "matrix.h"
 # include "parsing.h"
 # include "vector_3d.h"
 # include "scene.h"
