@@ -14,9 +14,11 @@ double	shadow_ray(t_vec3 hit_point, t_scene *scene)
 	{
 		obj = (t_shape *)scene->objs->elements[i];
 		distance = obj->hit_obj(obj->shape, hit_point, dir_lit);
-		/*si la distance est > 0 et distance < à la distance entre mon hit_point et la lumière */
+		/*si la distance est > 0 c'est que ca hit devant la cam
+		mais si elle est inférieure à la len du vecteur, c'est qu'on intercepte un autre
+		objet en chemin donc il va y avoir une ombre sur l'objet*/
 		if (distance > 0 && distance < vec_len(vec_sub(scene->lit->origin, hit_point))
-			&& scene->objs->elements[i] != i) 
+			&& scene->objs->elements[i - 1] != i) 
 			return (-1); // je suis dans le spot_light
 		i++;
 	}
@@ -59,15 +61,18 @@ int	get_color(t_shape *obj, t_vec3 direction, t_scene *scene, double distance)
 	hit_point = get_hit_point_sp(scene, direction, distance);
 	if (obj->type == 1)
 		norm = vec_normalize(vec_sub(hit_point, ((t_sp *)obj->shape)->origin));
-	shadow = shadow_ray(hit_point, scene); // j'envoie un rayon depuis le point d'origine de la lumière
-	if (shadow == 0) // je suis pas dans le spotlight
+	shadow = shadow_ray(hit_point, scene); 
+	if (shadow == 0) //il n'y a rien qui interfère entremon objet et la lumière, donc je dois afficher la couleu de l'objet en tenant compte des lumières
 		color = add_3_colors(multiply_color(rgb_to_int((((t_sp *)obj->shape)->color)), scene->amb->ratio), 
 		multiply_color(rgb_to_int((((t_sp *)obj->shape)->color)), spot_light(hit_point, scene, norm)), 
 		multiply_color(rgb_to_int((((t_sp *)obj->shape)->color)), spec_light(norm, direction, hit_point, scene))); 
-	else 
+	else //il y a un objet entre ma lumière et mon objet, je dois afficher de l'ombre sur ledit objet
+	{
 		color = add_color(
 			add_3_colors((multiply_color(rgb_to_int((((t_sp *)obj->shape)->color)), scene->amb->ratio)), 
 			multiply_color(rgb_to_int((((t_sp *)obj->shape)->color)), spot_light(hit_point, scene, norm)), 0)
 			,-30);
+		printf("test");
+	}
 	return (color);
 }
