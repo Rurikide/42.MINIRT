@@ -49,7 +49,7 @@ t_vec3	get_ray_dir(t_scene *scene, t_mlx *mlx, double u, double v)
 	t_ray	ray;
 	t_vec3	cam_horizon;
 	t_vec3	cam_verti;
-	
+
 scene->cam->screen_center = vec_add(scene->cam->origin,
 		vec_multiply(scene->cam->dir, 1));
 	scene->cam->bott_left = vec_add(scene->cam->screen_center,
@@ -85,8 +85,8 @@ void	ray_tracing(t_scene *scene)
 		x = 0;
 		while (x < mlx->width)
 		{
-			double u = (double)x / (WIDTH);
-			double v = (double)y / (HEIGHT);
+			double u = (double)x / (WIDTH - 1);
+			double v = (double)y / (HEIGHT - 1);
 			dir = get_ray_dir(scene, mlx, u, v);
 		//	dir = rotate_dir(dir, scene);
 			color = intersection(scene, dir); //faire une struct obj ou ou tab döbj
