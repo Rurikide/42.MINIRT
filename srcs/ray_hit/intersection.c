@@ -13,7 +13,7 @@ int	intersection(t_scene *scene, t_vec3 direction)
 
 	closer = INFINITY;
 	//color = rgb_to_int(color_multiply_rgb(new_color(0,0,0),scene->amb->color,scene->amb->ratio));
-	color = 0xFFBBFF;
+	color = 0xFFFFFF;
 	i = 0;
 	while (i < scene->objs->total)
 	{

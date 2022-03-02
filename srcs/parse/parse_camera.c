@@ -15,13 +15,13 @@ int	parse_camera(t_scene *scene, char *line, int i)
 	check_if_missing_space(line, i);
 	ft_skip_space_tab(line, &i);
 	scene->cam->fov = parse_field_of_view(line, &i);
-	scene->cam->screen_center = vec_add(scene->cam->origin,
-		vec_multiply(scene->cam->dir, 1));
-	scene->cam->bott_left = vec_add(scene->cam->screen_center,
-		new_vector(-1, -1, 0));
-	scene->cam->view_p_ratio = (double)WIDTH / (double)HEIGHT;
-	scene->cam->view_p_h = 2.0;
-	scene->cam->view_p_w = 2.0 * scene->cam->view_p_ratio; 
+	// scene->cam->screen_center = vec_add(scene->cam->origin,
+	// 	vec_multiply(scene->cam->dir, 1));
+	// scene->cam->bott_left = vec_add(scene->cam->screen_center,
+	// 	new_vector(-1, -1, 0));
+	// scene->cam->view_p_ratio = (double)WIDTH / (double)HEIGHT;
+	// scene->cam->view_p_h = 2.0;
+	// scene->cam->view_p_w = 2.0 * scene->cam->view_p_ratio; 
 	// printf("CAM origin x = %f\n", scene->cam->origin.x);
 	// printf("CAM origin y = %f\n", scene->cam->origin.y);
 	// printf("CAM origin z = %f\n", scene->cam->origin.z);
