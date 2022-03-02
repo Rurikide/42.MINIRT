@@ -44,41 +44,21 @@ t_vec3	get_ray_dir(t_scene *scene, t_mlx *mlx, double u, double v)
 	// direction.z = - mlx->width / (2 * tan(scene->cam->fov * M_PI / 360));
 	// return(vec_normalize(direction));
 //---------------------------------------------------------------
-  	t_vec3 screen_center;
-	t_vec3	cam_left_top;
-	t_vec3	cam_right_top;
- 	t_vec3	cam_bottom_left;
+
 	t_vec3 point_on_screen;
+	t_ray	ray;
+	t_vec3	cam_horizon;
+	t_vec3	cam_verti;
 
- 	screen_center = vec_add(scene->cam->origin, vec_multiply(scene->cam->dir, 1));
-	cam_left_top = vec_add(screen_center, new_vector(-1, 1, 0)); //p0
-	cam_right_top = vec_add(screen_center, new_vector(1, 1, 0)); //p1
- 	cam_bottom_left = vec_add(screen_center, new_vector(-1, -1, 0)); //p2
-
-	point_on_screen = add_3_vec(cam_left_top, 
-					vec_multiply(vec_sub(cam_right_top, cam_left_top), u), 
-					vec_multiply(vec_sub(cam_bottom_left, cam_left_top), v));
-
-t_vec3 ray_dir = vec_sub(point_on_screen, scene->cam->origin);
- 	return (vec_normalize(ray_dir));
-
-//--------------------------------------------------------------------	 
-	// t_ray	ray;
-	// double	vp_height;
-	// double	vp_width;
-	// t_vec3	cam_horizon;
-	// t_vec3	cam_verti;
-
-	// ray.origin = scene->cam->origin;
-	// vp_height = 2.0;
-	// vp_width = 2.0;
-
-	// cam_horizon = new_vector(vp_width, 0, 0);
-	// cam_verti = new_vector(0, vp_height, 0);
-	// // left_bottom + u * horizontal + v * vertical - origin 
-	// ray.direction = vec_normalize(vec_sub(vec_add(vec_add(cam_bottom_left, vec_multiply(cam_horizon, u)), vec_multiply(cam_verti, v)),
-    //                             scene->cam->origin));
-	// return(ray.direction);
+	ray.origin = scene->cam->origin;
+	cam_horizon = new_vector(scene->cam->view_p_w, 0, 0);
+	cam_verti = new_vector(0, scene->cam->view_p_h, 0);
+	/* Pour avoir le point sur l'écran on ajoute le vecteur left_bottom au vecteur qui goes along the screen width
+	et on le multiplie par la position du pixel sur la width; Puis on ajoute le vecteur qui goes along the height 
+	of the screen and multiply it by how far the pixel is on the height oh the screen*/
+	point_on_screen = add_3_vec(scene->cam->bott_left, vec_multiply(cam_horizon, u), vec_multiply(cam_verti, v));
+	ray.direction = vec_normalize(vec_sub(point_on_screen, ray.origin));
+	return(ray.direction);
 
  }
 
@@ -97,8 +77,8 @@ void	ray_tracing(t_scene *scene)
 		x = 0;
 		while (x < mlx->width)
 		{
-			double u = (double)x / (mlx->width - 1);
-			double v = (double)y / (mlx->height - 1);
+			double u = (double)x / (WIDTH);
+			double v = (double)y / (HEIGHT);
 			dir = get_ray_dir(scene, mlx, u, v);
 		//	dir = rotate_dir(dir, scene);
 			color = intersection(scene, dir); //faire une struct obj ou ou tab döbj
