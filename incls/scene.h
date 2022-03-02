@@ -52,6 +52,11 @@ typedef struct s_cam
 	t_vec3	origin;
 	t_vec3	dir;
 	int		fov;
+	t_vec3	screen_center;
+	t_vec3	bott_left;
+	double	view_p_h;
+	double	view_p_w;
+	double	view_p_ratio;
 }	t_cam;
 
 typedef struct s_lit

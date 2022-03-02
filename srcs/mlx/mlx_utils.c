@@ -55,8 +55,8 @@ t_mlx	*get_mlx(void)
 	if (mlx.init != 1)
     {
         mlx.mlx = mlx_init();
-		mlx.width = 800;
-		mlx.height = 600;
+		mlx.width = WIDTH;
+		mlx.height = HEIGHT;
       	mlx.img = mlx_new_image(mlx.mlx, mlx.width, mlx.height);
 		mlx.adr = mlx_get_data_addr(mlx.img, &mlx.bpp, &mlx.w_len, &mlx.endian);
 		mlx.win = mlx_new_window(mlx.mlx, mlx.width, mlx.height, "mini_RT");

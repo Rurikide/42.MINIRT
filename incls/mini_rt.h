@@ -22,8 +22,8 @@
 # define KEY_D 0x02
 # define KEY_W 0x0D
 
-# define WIDTH	1080 
-# define HEIGHT 720
+# define WIDTH	1000
+# define HEIGHT 1000
 
 typedef struct s_mlx
 {
@@ -70,7 +70,7 @@ double	spec_light(t_vec3 norm, t_vec3 dir, t_vec3 hit_point, t_scene *scene);
 
 /*MAIN_C*/
 void	ray_tracing(t_scene *scene);
-t_vec3	get_ray_dir(t_scene *scene, t_mlx *mlx, int x, int y);
+t_vec3	get_ray_dir(t_scene *scene, t_mlx *mlx, double u, double v);
 void	make_scene(t_scene *scene);
 
 #endif
