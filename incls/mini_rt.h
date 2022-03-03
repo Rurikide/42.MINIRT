@@ -22,8 +22,8 @@
 # define KEY_D 0x02
 # define KEY_W 0x0D
 
-# define WIDTH	1600
-# define HEIGHT 900
+# define WIDTH	1080
+# define HEIGHT 720
 
 typedef struct s_mlx
 {

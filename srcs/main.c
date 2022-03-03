@@ -6,6 +6,158 @@
 
 #include <stdio.h>
 
+
+//fonction pour gérer les ombres
+double	shadow_ray(t_vec3 hit_point, t_scene *scene)
+{
+	size_t i;
+	t_vec3 dir_lit;
+	double distance;
+	t_shape *obj;
+
+	dir_lit = vec_normalize(vec_sub(scene->lit->origin, hit_point)); //vecteur qui part de la source de lumiere au hit_point
+	i = 0;
+	while (i < scene->objs->total)
+	{
+		obj = (t_shape *)scene->objs->elements[i];
+		distance = obj->hit_obj(obj->shape, hit_point, dir_lit);
+		/*si la distance est > 0 c'est que ca hit devant la cam
+		mais si elle est inférieure à la len du vecteur, c'est qu'on intercepte un autre
+		objet en chemin donc il va y avoir une ombre sur l'objet*/
+		if (distance > 0 && distance < vec_len(vec_sub(scene->lit->origin, hit_point))
+			&& scene->objs->elements[i - 1] != i) 
+			return (-1); // je suis dans le spot_light
+		i++;
+	}
+	return (0);
+}
+
+double	spec_light(t_vec3 norm, t_vec3 dir, t_vec3 hit_point, t_scene *scene)
+{
+	t_vec3 reflet;
+	t_vec3 spot;
+
+	spot = vec_normalize(vec_sub(scene->lit->origin, hit_point));
+	reflet = vec_normalize(vec_sub(dir, vec_multiply(norm, 2 * vec_dot(norm, dir))));
+	return (pow(fmax(vec_dot(reflet, spot), 0), 32) * scene->lit->ratio);
+}
+
+/*Calcul l'angle formé par le vecteur du spot_light et le vecteur du hit_point
+Spot_light se situe entre -1 et 1, sachant que 0 est l'angle qui donne la lumière
+la plus intense car directement face au point d'intersection*/
+double	spot_light(t_vec3 hit_point, t_scene *scene, t_vec3 norm)
+{
+	t_vec3	spot;
+	double	spot_light;
+
+	spot = vec_normalize(vec_sub(scene->lit->origin, hit_point));
+	spot_light = vec_dot(norm, spot) * scene->lit->ratio; 
+	return (spot_light);
+}
+
+int	get_color(t_shape *obj, t_vec3 direction, t_scene *scene, double distance)
+{
+	t_vec3	hit_point;
+	t_vec3 norm;
+	int	color;
+	int	i;
+	double shadow;
+	double	test;
+
+	i = 0;
+	hit_point = get_hit_point_sp(scene, direction, distance);
+	if (obj->type == 1)
+		norm = vec_normalize(vec_sub(hit_point, ((t_sp *)obj->shape)->origin));
+	shadow = shadow_ray(hit_point, scene); 
+	if (shadow == 0) //il n'y a rien qui interfère entremon objet et la lumière, donc je dois afficher la couleu de l'objet en tenant compte des lumières
+		color = add_3_colors(multiply_color(rgb_to_int((((t_sp *)obj->shape)->color)), scene->amb->ratio), 
+		multiply_color(rgb_to_int((((t_sp *)obj->shape)->color)), spot_light(hit_point, scene, norm)), 
+		multiply_color(rgb_to_int((((t_sp *)obj->shape)->color)), spec_light(norm, direction, hit_point, scene))); 
+	else //il y a un objet entre ma lumière et mon objet, je dois afficher de l'ombre sur ledit objet
+	{
+		color = add_color(
+			add_3_colors((multiply_color(rgb_to_int((((t_sp *)obj->shape)->color)), scene->amb->ratio)), 
+			multiply_color(rgb_to_int((((t_sp *)obj->shape)->color)), spot_light(hit_point, scene, norm)), 0)
+			,-30);
+	}
+	return (color);
+}
+
+
+t_vec3	get_hit_point_sp(t_scene *scene, t_vec3 direction, double distance)
+{
+	t_vec3	hit_p;
+
+	hit_p = vec_add(vec_multiply(direction, distance), scene->cam->origin);
+	return (hit_p);
+}
+
+double	get_root(double disc, double b)
+{
+  double	t1;
+  double	t2;
+  double	t;
+  double	min;
+  double	max;
+	
+
+	t1 = -b + sqrt(disc)/2;
+	t2 = -b - sqrt(disc)/2;
+	min = fmin(t1, t2);
+	max = fmax(t1, t2);
+	if (min >= 0)
+		t = min;
+	else
+		t = max;
+	return (t);
+}
+
+double hit_sphere(void *sphere, t_vec3 cam, t_vec3 direction)
+{
+	double	b;
+	double	c;
+	double	disc;
+	t_vec3	v;
+	t_sp *sp;
+
+	sp = (t_sp *)sphere;
+	v = vec_sub(cam, sp->origin);
+	b = 2 * vec_dot(direction, v);
+	c = vec_dot(v, v) - sp->rad * sp->rad;
+	disc = b * b - 4*c;
+	if (disc >= 0)
+		return (get_root(disc, b));
+	else
+		return (0);
+}
+	
+
+int get_hit_color(t_scene *scene, t_ray ray)
+{
+	// aka intersection
+	int	i;
+	double distance;
+	double closer;
+	int		color;	
+	t_shape *obj;
+
+	closer = INFINITY;
+	color = 0x000000;
+	i = 0;
+	while (i < scene->objs->total)
+	{
+		obj = (t_shape *)scene->objs->elements[i];
+		distance = obj->hit_obj(obj->shape, ray.origin, ray.direction);
+		if (distance > 0 && distance < closer)
+		{
+			closer = distance;
+			color = get_color(obj, ray.direction, scene, distance);
+		}
+		i++;
+	}
+	return (color);
+}
+
 t_vec3		multiply_by_matrix(t_vec3 p, t_matrix m)
  {
  	t_vec3 res;
@@ -77,6 +229,19 @@ t_vec3		get_direction(t_scene *scene, int x, int y)
 	return (new_vector(p_x, p_y, 1));
 }
 
+t_ray	ray_to_pixel(t_scene *scene, int x, int y)
+{
+	t_matrix world;
+	t_ray ray;
+		world = look_at(scene->cam->origin, scene->cam->dir);
+		t_vec3 ori = multiply_by_matrix(new_vector(0, 0, 0), world);
+		t_vec3 dir = get_direction(scene, x, y);
+		dir = multiply_by_matrix(dir, world);
+		dir = vec_sub(dir, ori);
+		dir = vec_normalize(dir);
+		ray = create_ray(ori, dir);
+	return(ray);
+}
 
 void	ray_tracing(t_scene *scene)
 {
@@ -84,20 +249,14 @@ void	ray_tracing(t_scene *scene)
 	int x = 0;
 	int y = 0;
 	int color = 0x123456;
-	t_matrix world;
 	t_ray ray;
-
 	while (y < mlx->height)
 	{
 		x = 0;
 		while (x < mlx->width)
 		{
-			world = look_at(scene->cam->origin, scene->cam->dir);
-			t_vec3 dir = get_direction(scene, x, y);
-			t_vec3 ori = multiply_by_matrix(new_vector(0, 0, 0), world);
-			dir = vec_sub(dir, ori);
-			dir = vec_normalize(dir);
-			ray = create_ray(ori, dir);
+			ray = ray_to_pixel(scene, x, y);
+			color = get_hit_color(scene, ray);
 			my_mlx_pixel_put(mlx, x, y, color);
 			x++;
 		}
