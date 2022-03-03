@@ -21,6 +21,8 @@
 # define KEY_S 0x01
 # define KEY_D 0x02
 # define KEY_W 0x0D
+# define KEY_UP 126
+# define KEY_DOWN 125
 
 # define WIDTH	1080
 # define HEIGHT 720

@@ -13,8 +13,7 @@ int	key_event(int keycode, t_scene *scene)
 		mlx_destroy_window(mlx->mlx, mlx->win);
 		exit(0);
 	}
-	else if (keycode == KEY_A || keycode == KEY_S || keycode == KEY_D
-		|| keycode == KEY_W)
+	else if (keycode == KEY_A || keycode == KEY_S || keycode == KEY_D || keycode == KEY_W || keycode == KEY_UP || keycode == KEY_DOWN)
 		move_cam(keycode, scene);
 	return (0);
 }

@@ -17,9 +17,13 @@ void	move_cam(int keycode, t_scene *scene)
 		scene->cam->origin.x -= 1;
 	else if (keycode == KEY_D)
 		scene->cam->origin.x += 1;
-	else if (keycode == KEY_S)
+	else if (keycode == KEY_DOWN)
 		scene->cam->origin.y -= 1;
-	else if (keycode == KEY_W)
+	else if (keycode == KEY_UP)
 		scene->cam->origin.y += 1;
+	else if (keycode == KEY_W)
+		scene->cam->origin.z -= 1;
+	else if (keycode == KEY_S)
+		scene->cam->origin.z += 1;
 	remake_scene(scene, mlx);
 }
