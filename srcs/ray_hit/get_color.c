@@ -48,6 +48,27 @@ double	spot_light(t_vec3 hit_point, t_scene *scene, t_vec3 norm)
 	return (spot_light);
 }
 
+t_rgb	get_ambient_lit(t_scene *scene)
+{
+	t_rgb	color;
+
+	color.r = scene->amb->ratio * scene->amb->color.r / 255;
+	color.g = scene->amb->ratio * scene->amb->color.g / 255;
+	color.b = scene->amb->ratio * scene->amb->color.b / 255;
+	return (color);
+}
+
+t_rgb	multiply_rgb(t_rgb c1, t_rgb c2)
+{
+	t_rgb color;
+
+	color.r = (((c1.r / 255) * (c2.r / 255)) * 255);
+	color.g = (((c1.g / 255) * (c2.g / 255)) * 255);
+	color.b = (((c1.b / 255) * (c2.b / 255)) * 255);
+
+	return (color);
+}
+
 int	get_color(t_shape *obj, t_vec3 direction, t_scene *scene, double distance)
 {
 	t_vec3	hit_point;
@@ -55,27 +76,31 @@ int	get_color(t_shape *obj, t_vec3 direction, t_scene *scene, double distance)
 	int	color;
 	int	i;
 	double shadow;
-	double	test;
+	t_rgb ambiant_light;
 
 	i = 0;
 	hit_point = get_hit_point_sp(scene, direction, distance);
 	if (obj->type == 1)
 		norm = vec_normalize(vec_sub(hit_point, ((t_sp *)obj->shape)->origin));
+	ambiant_light = get_ambient_lit(scene);
+	//printf("%f\n", ambiant_light);
 	shadow = shadow_ray(hit_point, scene); 
-	if (shadow == 0) //il n'y a rien qui interfère entremon objet et la lumière, donc je dois afficher la couleu de l'objet en tenant compte des lumières
-		color = 0x123456; 
-		color = add_3_colors(multiply_color(rgb_to_int((((t_sp *)obj->shape)->color)), scene->amb->ratio), 
-		multiply_color(rgb_to_int((((t_sp *)obj->shape)->color)), spot_light(hit_point, scene, norm)), 
-		multiply_color(rgb_to_int((((t_sp *)obj->shape)->color)), spec_light(norm, direction, hit_point, scene))); 
-	else //il y a un objet entre ma lumière et mon objet, je dois afficher de l'ombre sur ledit objet
-	{
-		color = 0x000000; 
-		
-		add_color(
-			add_3_colors((multiply_color(rgb_to_int((((t_sp *)obj->shape)->color)), scene->amb->ratio)), 
-			multiply_color(rgb_to_int((((t_sp *)obj->shape)->color)), spot_light(hit_point, scene, norm)), 0)
-			,-30);
-		printf("test");
-	}
+	 if (shadow == 0) //il n'y a rien qui interfère entremon objet et la lumière, donc je dois afficher la couleu de l'objet en tenant compte des lumières
+	 {
+		color = rgb_to_int(multiply_rgb(ambiant_light, (((t_sp *)obj->shape)->color)));
+
+
+	 } 
+	// 	color = add_3_colors(multiply_color(rgb_to_int((((t_sp *)obj->shape)->color)), scene->amb->ratio), 
+	// 	multiply_color(rgb_to_int((((t_sp *)obj->shape)->color)), spot_light(hit_point, scene, norm)), 
+	// 	multiply_color(rgb_to_int((((t_sp *)obj->shape)->color)), spec_light(norm, direction, hit_point, scene))); 
+	// else //il y a un objet entre ma lumière et mon objet, je dois afficher de l'ombre sur ledit objet
+	// {	
+	// 	add_color( 
+	// 		add_3_colors((multiply_color(rgb_to_int((((t_sp *)obj->shape)->color)), scene->amb->ratio)), 
+	// 		multiply_color(rgb_to_int((((t_sp *)obj->shape)->color)), spot_light(hit_point, scene, norm)), 0)
+	// 		,-30);
+		//printf("test");
+	//}
 	return (color);
 }
