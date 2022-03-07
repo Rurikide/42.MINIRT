@@ -16,7 +16,7 @@ int get_hit_color(t_scene *scene, t_ray ray)
 	t_shape *obj;
 
 	closer = INFINITY;
-	color = 0x000000;
+	color = 0xFFFFFF;
 	i = 0;
 	while (i < scene->objs->total)
 	{
@@ -25,7 +25,7 @@ int get_hit_color(t_scene *scene, t_ray ray)
 		if (distance > 0 && distance < closer)
 		{
 			closer = distance;
-			color = get_color(obj, ray.direction, scene, distance);
+			color = get_color(obj, ray, scene, distance);
 		}
 		i++;
 	}
@@ -116,7 +116,7 @@ t_vec3		get_direction(t_scene *scene, int x, int y)
 	aspect_ratio = (double)get_mlx()->width / (double)get_mlx()->height;
 	p_x = (2 * (x + 0.5) / (double)get_mlx()->width - 1) * aspect_ratio * fov_coeff;
 	p_y = (1 - 2 * (y + 0.5) / (double)get_mlx()->height) * fov_coeff;
-	return (new_vector(-p_x, p_y, 1));
+	return (new_vector(p_x, -p_y, 1));
 }
 
 t_ray	ray_to_pixel(t_scene *scene, int x, int y)

@@ -1,10 +1,10 @@
 #include "../../incls/mini_rt.h"
 
-t_vec3	get_hit_point_sp(t_scene *scene, t_vec3 direction, double distance)
+t_vec3	get_hit_point_sp(t_scene *scene, t_ray ray, double distance)
 {
 	t_vec3	hit_p;
 
-	hit_p = vec_add(vec_multiply(direction, distance), scene->cam->origin);
+	hit_p = vec_add(vec_multiply(ray.direction, distance), ray.origin);
 	return (hit_p);
 }
 
@@ -28,7 +28,7 @@ double	get_root(double disc, double b)
 	return (t);
 }
 
-double hit_sphere(void *sphere, t_vec3 cam, t_vec3 direction)
+double hit_sphere(void *sphere, t_vec3 ray_origin, t_vec3 ray_direction)
 {
 	double	b;
 	double	c;
@@ -37,8 +37,8 @@ double hit_sphere(void *sphere, t_vec3 cam, t_vec3 direction)
 	t_sp *sp;
 
 	sp = (t_sp *)sphere;
-	v = vec_sub(cam, sp->origin);
-	b = 2 * vec_dot(direction, v);
+	v = vec_sub(ray_origin, sp->origin);
+	b = 2 * vec_dot(ray_direction, v);
 	c = vec_dot(v, v) - sp->rad * sp->rad;
 	disc = b * b - 4*c;
 	if (disc >= 0)
