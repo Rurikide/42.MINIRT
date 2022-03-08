@@ -16,7 +16,7 @@ int get_hit_color(t_scene *scene, t_ray ray)
 	t_shape *obj;
 
 	closer = INFINITY;
-	color = 0x000000;
+	color = 0xFFFFFF;
 	i = 0;
 	while (i < scene->objs->total)
 	{
@@ -25,7 +25,7 @@ int get_hit_color(t_scene *scene, t_ray ray)
 		if (distance > 0 && distance < closer)
 		{
 			closer = distance;
-			color = get_color(obj, ray.direction, scene, distance);
+			color = get_color(obj, ray, scene, distance);
 		}
 		i++;
 	}

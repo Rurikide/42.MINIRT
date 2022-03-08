@@ -8,8 +8,8 @@
             "type": "lldb",
             "request": "launch",
             "name": "Debug",
-            "program": "/Users/jbadia/Documents/42_Cursus/42.MINIRT/miniRT",
-            "args": [],
+            "program": "/Users/justine/Documents/dev/42.MINIRT/miniRT",
+            "args": ["amb.rt"],
             "cwd": "${workspaceFolder}"
         }
     ]

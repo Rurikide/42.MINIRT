@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_ambcamlit.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tshimoda <tshimoda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jbadia <jbadia@student.42quebec.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 15:23:11 by tshimoda          #+#    #+#             */
-/*   Updated: 2022/02/26 15:23:50 by tshimoda         ###   ########.fr       */
+/*   Updated: 2022/03/08 09:53:35 by jbadia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,13 +46,6 @@ void	parse_camera(t_scene *scene, char *line, int i)
 	check_surplus_info(scene, line, i);
 }
 
-	// printf("CAM origin x = %f\n", scene->cam->origin.x);
-	// printf("CAM origin y = %f\n", scene->cam->origin.y);
-	// printf("CAM origin z = %f\n", scene->cam->origin.z);
-	// printf("CAM dir x = %f\n", scene->cam->dir.x);
-	// printf("CAM dir y = %f\n", scene->cam->dir.y);
-	// printf("CAM dir z = %f\n", scene->cam->dir.z);
-	// printf("CAM field of view = %d\n", scene->cam->fov);
 void	parse_light(t_scene *scene, char *line, int i)
 {
 	check_one_lit(scene);

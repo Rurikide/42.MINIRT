@@ -56,16 +56,16 @@ void	remake_scene(t_scene *scene, t_mlx *mlx);
 /*SHAPES
 SPHERE_C*/
 t_vec3	get_norm_sphere(t_scene *scene, t_vec3	hit_p);
-t_vec3	get_hit_point_sp(t_scene *scene, t_vec3 direction, double distance);
+t_vec3	get_hit_point_sp(t_scene *scene, t_ray ray, double distance);
 double	get_root(double disc, double b);
-double	hit_sphere(void *sphere, t_vec3 cam, t_vec3 direction);
+double	hit_sphere(void *sphere, t_vec3 ray_origin, t_vec3 ray_direction);
 
 /*RAY_HIT
 INTERSECTION_C*/
 int		intersection(t_scene *scene, t_vec3 direction);
 /*GET_COLOR_C*/
-int		get_color(t_shape *obj, t_vec3 direction, t_scene *scene, double distance);
-double	shadowing(t_vec3 hit_point, t_scene *scene);
+int		get_color(t_shape *obj,t_ray ray, t_scene *scene, double distance);
+double	shadowing(t_vec3 hit_point, t_scene *scene, t_vec3 ray_dir);
 double	spot_light(t_vec3 hit_point, t_scene *scene, t_vec3 norm);
 double	spec_light(t_vec3 norm, t_vec3 dir, t_vec3 hit_point, t_scene *scene);
 

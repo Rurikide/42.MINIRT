@@ -27,8 +27,5 @@ int    get_b(int color)
 
 int	rgb_to_int(t_rgb rgb)
 {
-	int	color;
-
-	color = rgb.r << 16 | rgb.g << 8 | rgb.b;
-	return (color);
+	return (rgb.r << 16 | rgb.g << 8 | rgb.b);
 }
