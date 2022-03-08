@@ -204,11 +204,12 @@ int	get_color(t_shape *obj, t_ray ray, t_scene *scene, double distance)
 	//specular light
 	spec_lit = multiply_color(rgb_to_int((((t_sp *)obj->shape)->color)), spec_light(norm, ray.direction, hit_p, scene));
 
+	spec_lit = 0x000000;
 	shadow = shadow_ray(hit_p, scene, ray.direction);
 	if (shadow == 0)
 		color = add_3_colors(ambient_lit, diffuse_lit, spec_lit);
 	else 
-		color = 0x000000;
+		color = ambient_lit;
 
 	return (color);
 }

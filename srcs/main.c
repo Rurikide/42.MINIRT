@@ -16,7 +16,7 @@ int get_hit_color(t_scene *scene, t_ray ray)
 	t_shape *obj;
 
 	closer = INFINITY;
-	color = 0xFFFFFF;
+	color = 0x000000;
 	i = 0;
 	while (i < scene->objs->total)
 	{
@@ -138,7 +138,7 @@ void	ray_tracing(t_scene *scene)
 	t_mlx *mlx = get_mlx();
 	int x = 0;
 	int y = 0;
-	int color = 0x123456;
+	int color;
 	t_ray ray;
 	while (y < mlx->height)
 	{
