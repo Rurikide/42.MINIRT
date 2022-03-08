@@ -21,7 +21,9 @@ int get_hit_color(t_scene *scene, t_ray ray)
 	while (i < scene->objs->total)
 	{
 		obj = (t_shape *)scene->objs->elements[i];
+		//hit_sphere()
 		distance = obj->hit_obj(obj->shape, ray.origin, ray.direction);
+		// printf("distance = %f\n", distance);
 		if (distance > 0 && distance < closer)
 		{
 			closer = distance;
@@ -116,7 +118,7 @@ t_vec3		get_direction(t_scene *scene, int x, int y)
 	aspect_ratio = (double)get_mlx()->width / (double)get_mlx()->height;
 	p_x = (2 * (x + 0.5) / (double)get_mlx()->width - 1) * aspect_ratio * fov_coeff;
 	p_y = (1 - 2 * (y + 0.5) / (double)get_mlx()->height) * fov_coeff;
-	return (new_vector(-p_x, p_y, 1));
+	return (new_vector(p_x, p_y, 1));
 }
 
 t_ray	ray_to_pixel(t_scene *scene, int x, int y)
@@ -127,9 +129,9 @@ t_ray	ray_to_pixel(t_scene *scene, int x, int y)
 		t_vec3 ori = multiply_by_matrix(new_vector(0, 0, 0), world);
 		t_vec3 dir = get_direction(scene, x, y);
 		dir = multiply_by_matrix(dir, world);
-		dir = vec_sub(dir, ori);
+		dir = vec_sub(dir, scene->cam->origin);
 		dir = vec_normalize(dir);
-		ray = create_ray(ori, dir);
+		ray = create_ray(scene->cam->origin, dir);
 	return(ray);
 }
 
@@ -140,6 +142,8 @@ void	ray_tracing(t_scene *scene)
 	int y = 0;
 	int color;
 	t_ray ray;
+
+	
 	while (y < mlx->height)
 	{
 		x = 0;

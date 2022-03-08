@@ -112,9 +112,9 @@ double	shadow_ray(t_vec3 hit_point, t_scene *scene, t_vec3 ray_dir)
 	while (i < scene->objs->total)
 	{
 		obj = (t_shape *)scene->objs->elements[i];
-		distance = obj->hit_obj(obj->shape, hit_point, ray_dir);
-		if (distance > 0 && distance < vec_len(vec_sub(scene->lit->origin, hit_point))
-			&& scene->objs->elements[i - 1] != i) 
+		distance = obj->hit_obj(obj->shape, hit_point, dir_lit);
+	//	if (distance > 0 && distance < vec_len(vec_sub(scene->lit->origin, hit_point)) && scene->objs->elements[i - 1] != i) 
+		if (distance > 0 && distance < vec_len(vec_sub(scene->lit->origin, hit_point))) 
 			return (-1);
 		i++;
 	}
@@ -190,22 +190,28 @@ int	get_color(t_shape *obj, t_ray ray, t_scene *scene, double distance)
 	int	spec_lit;
 
 	hit_p = get_hit_point_sp(scene, ray, distance);
+	// printf("__________________________\n");
+	// printf("hit_p.x = %f\n", hit_p.x);
+	// printf("hit_p.y = %f\n", hit_p.y);
+	// printf("hit_p.z = %f\n", hit_p.z);
 	norm = vec_normalize(vec_sub(hit_p, ((t_sp *)obj->shape)->origin));
 	lit_ray.origin = scene->lit->origin;
 	lit_ray.direction = vec_normalize(vec_sub(lit_ray.origin, hit_p));
-
+	// lit_ray.origin = vec_add(lit_ray.origin, lit_ray.direction);
 	//ambient light
 	ambient_lit = rgb_to_int(get_ambient_lit(scene, ((t_sp *)obj->shape)->color));
 
 	//diffuse light
 	kd = spot_light(hit_p, scene, norm);
+	//kd = 1;
 	diffuse_lit = multiply_color(rgb_to_int(get_diffuse_lit((((t_sp *)obj->shape)->color), scene)), kd);
 
 	//specular light
 	spec_lit = multiply_color(rgb_to_int((((t_sp *)obj->shape)->color)), spec_light(norm, ray.direction, hit_p, scene));
 
+	//diffuse_lit = 0x000000;
 	spec_lit = 0x000000;
-	shadow = shadow_ray(hit_p, scene, ray.direction);
+	shadow = shadow_ray(vec_add(hit_p, lit_ray.direction), scene, lit_ray.direction);
 	if (shadow == 0)
 		color = add_3_colors(ambient_lit, diffuse_lit, spec_lit);
 	else 
