@@ -100,7 +100,7 @@ t_rgb	get_spec_lit(t_rgb obj,	double ks)
 /*si la distance est > 0 c'est que ca hit devant la cam mais 
 si elle est inférieure à la len du vecteur, c'est qu'on intercepte
 un autre objet en chemin donc il va y avoir une ombre sur l'objet*/
-double	shadow_ray(t_vec3 hit_point, t_scene *scene)
+double	shadow_ray(t_vec3 hit_point, t_scene *scene, t_vec3 ray_dir)
 {
 	size_t i;
 	t_vec3 dir_lit;
@@ -112,7 +112,7 @@ double	shadow_ray(t_vec3 hit_point, t_scene *scene)
 	while (i < scene->objs->total)
 	{
 		obj = (t_shape *)scene->objs->elements[i];
-		distance = obj->hit_obj(obj->shape, hit_point, dir_lit);
+		distance = obj->hit_obj(obj->shape, hit_point, ray_dir);
 		if (distance > 0 && distance < vec_len(vec_sub(scene->lit->origin, hit_point))
 			&& scene->objs->elements[i - 1] != i) 
 			return (-1);
@@ -143,9 +143,9 @@ double	spec_light(t_vec3 norm, t_vec3 ray_dir, t_vec3 hit_point, t_scene *scene)
 
 	n = 45;
 	reflect = get_reflect(norm, ray_dir);
-	view_dir = vec_normalize(vec_sub(ray_dir, hit_point));
+	view_dir = vec_normalize(vec_sub(scene->lit->origin, hit_point));
 	specular = vec_dot(reflect, view_dir);
-	return (pow(fmax(specular, 0.0), n) * scene->lit->ratio);
+	return (pow(fmax(specular, 0.0), n) * scene->lit->ratio * 1.2);
 }
 
 /*Lambert's Cosine Law :
@@ -199,12 +199,12 @@ int	get_color(t_shape *obj, t_ray ray, t_scene *scene, double distance)
 
 	//diffuse light
 	kd = spot_light(hit_p, scene, norm);
-	diffuse_lit = multiply_color(rgb_to_int(get_diffuse_lit((((t_sp *)obj->shape)->color), scene)), kd * 4);
+	diffuse_lit = multiply_color(rgb_to_int(get_diffuse_lit((((t_sp *)obj->shape)->color), scene)), kd);
 
 	//specular light
 	spec_lit = multiply_color(rgb_to_int((((t_sp *)obj->shape)->color)), spec_light(norm, ray.direction, hit_p, scene));
 
-	shadow = shadow_ray(hit_p, scene);
+	shadow = shadow_ray(hit_p, scene, ray.direction);
 	if (shadow == 0)
 		color = add_3_colors(ambient_lit, diffuse_lit, spec_lit);
 	else 
