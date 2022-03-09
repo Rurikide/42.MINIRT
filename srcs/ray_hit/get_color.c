@@ -112,8 +112,8 @@ double	shadow_ray(t_vec3 hit_point, t_scene *scene, t_vec3 ray_dir, t_vec3 ray_o
 	while (i < scene->objs->total)
 	{
 		obj = (t_shape *)scene->objs->elements[i];
-		distance = obj->hit_obj(obj->shape, hit_point, ray_dir);
-		if (distance > 0 && distance < vec_len(vec_sub(ray_ori, hit_point)) //scene_lit au ray_origin ?
+		distance = obj->hit_obj(obj->shape, hit_point,dir_lit);
+		if (distance > 0 && distance < vec_len(vec_sub(scene->lit->origin, hit_point)) //scene_lit au ray_origin ?
 			&& scene->objs->elements[i - 1] != i) 
 			return (-1);
 		i++;
@@ -204,11 +204,11 @@ int	get_color(t_shape *obj, t_ray ray, t_scene *scene, double distance)
 	//specular light
 	spec_lit = multiply_color(rgb_to_int((((t_sp *)obj->shape)->color)), spec_light(norm, ray.direction, hit_p, scene));
 
-	shadow = shadow_ray(hit_p, scene, ray.direction, ray.origin);
+	shadow = shadow_ray(vec_add(hit_p, lit_ray.direction), scene, ray.direction, ray.origin);
 	if (shadow == 0)
 		color = add_3_colors(ambient_lit, diffuse_lit, spec_lit);
 	else 
-		color = add_3_colors(ambient_lit, diffuse_lit, 0);
+		color = add_3_colors(ambient_lit, 0, 0);
 
 	return (color);
 }
