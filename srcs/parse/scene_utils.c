@@ -6,7 +6,7 @@
 /*   By: tshimoda <tshimoda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 15:27:08 by tshimoda          #+#    #+#             */
-/*   Updated: 2022/02/26 15:27:08 by tshimoda         ###   ########.fr       */
+/*   Updated: 2022/03/09 15:56:15 by tshimoda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,13 @@ t_scene	*get_scene(void)
 		scene.amb = NULL;
 		scene.cam = NULL;
 		scene.lit = NULL;
+		//
+		scene.select = NULL;
+		//
+		scene.screen.x = 0;
+		scene.screen.y = 0;
+		scene.screen.is_selected = 0;
+		//
 		scene.objs = ft_calloc(1, sizeof(t_vector));
 		vector_init_array(scene.objs);
 	}

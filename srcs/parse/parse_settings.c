@@ -6,7 +6,7 @@
 /*   By: tshimoda <tshimoda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 15:24:44 by tshimoda          #+#    #+#             */
-/*   Updated: 2022/02/26 15:24:45 by tshimoda         ###   ########.fr       */
+/*   Updated: 2022/03/09 15:44:48 by tshimoda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ double	parse_light_ratio(char *line, int *i)
 	ratio = ft_atod(&line[index]);
 	if (ratio < 0.0 || ratio > 1.0)
 		print_error_exit(get_scene(), "light ratio range");
+	if (ratio == 0.0)
+		ratio = 0.1;
 	*i = index + float_len;
 	return (ratio);
 }

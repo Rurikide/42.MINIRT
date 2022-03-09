@@ -7,6 +7,7 @@ int	key_event(int keycode, t_scene *scene)
 	t_mlx *mlx;
 
 	mlx = get_mlx();
+	//
 	// printf("keycode = %d\n", keycode);
 	if (keycode == KEY_ESC || keycode == KEY_Q)
 	{
@@ -16,7 +17,7 @@ int	key_event(int keycode, t_scene *scene)
 	}
 	else if (keycode == KEY_A || keycode == KEY_S || keycode == KEY_D || keycode == KEY_W || keycode == KEY_R || keycode == KEY_T  || \
 	keycode == KEY_UP || keycode == KEY_DOWN || keycode == KEY_LEFT || keycode == KEY_RIGHT || \
-	keycode == NUMPAD_2 || keycode == NUMPAD_4 || keycode == NUMPAD_6 || keycode == NUMPAD_8)
+	keycode == NUMPAD_2 || keycode == NUMPAD_4 || keycode == NUMPAD_6 || keycode == NUMPAD_8 || keycode == 37)
 		move_cam(keycode, scene);
 	return (0);
 }
@@ -29,8 +30,13 @@ int	click_close_window(void)
 	exit(0);
 }
 
+
 void	hook_collection(t_mlx *mlx, t_scene* scene)
 {
+	//MOUSE HOOK
+	mlx_mouse_hook(mlx->win, mouse_event, scene);
+
+
 	mlx_hook(mlx->win, 2, 1L << 0, key_event, scene);
 
 	// HOOK EVENT to close the window

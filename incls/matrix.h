@@ -40,4 +40,6 @@ t_vec3	rotate_dir(t_vec3 dir, t_scene *scene);
 void	move_cam(int keycode, t_scene *scene);
 t_vec3	tilt_cam(t_vec3 dir, double pan);
 t_vec3	pan_cam(t_vec3 dir, double tilt);
+int	mouse_event(int	button, int x, int y, t_scene *scene);
+
 #endif

@@ -40,11 +40,22 @@ typedef struct s_cy
 	t_rgb	color;
 }	t_cy;
 
+typedef struct s_screen
+{
+	int x;
+	int	y;
+	int is_selected;
+}	t_screen;
+
 typedef struct s_shape
 {
 	void	*shape;
 	double	(*hit_obj)(void *, t_vec3, t_vec3);
 	int		type;
+	//
+	t_vec3	origin;
+	t_vec3	dir;
+	//
 }	t_shape;
 
 typedef struct s_amb
@@ -60,9 +71,6 @@ typedef struct s_cam
 	int		fov;
 	t_vec3	screen_center;
 	t_vec3	bott_left;
-	double	view_p_h;
-	double	view_p_w;
-	double	view_p_ratio;
 	double	angle;
 	double	view_range;
 	t_matrix m;
@@ -81,6 +89,9 @@ typedef struct s_scene
 	t_cam		*cam;
 	t_lit		*lit;
 	t_vector	*objs;
+	// mettre select a NULL
+	t_shape		*select;
+	t_screen	screen;
 	int			init;
 	// t_ray		ray;
 }	t_scene;
