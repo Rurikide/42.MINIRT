@@ -100,7 +100,7 @@ t_rgb	get_spec_lit(t_rgb obj,	double ks)
 /*si la distance est > 0 c'est que ca hit devant la cam mais 
 si elle est inférieure à la len du vecteur, c'est qu'on intercepte
 un autre objet en chemin donc il va y avoir une ombre sur l'objet*/
-double	shadow_ray(t_vec3 hit_point, t_scene *scene, t_vec3 ray_dir)
+double	shadow_ray(t_vec3 hit_point, t_scene *scene, t_vec3 ray_dir, t_vec3 ray_ori)
 {
 	size_t i;
 	t_vec3 dir_lit;
@@ -113,7 +113,7 @@ double	shadow_ray(t_vec3 hit_point, t_scene *scene, t_vec3 ray_dir)
 	{
 		obj = (t_shape *)scene->objs->elements[i];
 		distance = obj->hit_obj(obj->shape, hit_point, ray_dir);
-		if (distance > 0 && distance < vec_len(vec_sub(scene->lit->origin, hit_point))
+		if (distance > 0 && distance < vec_len(vec_sub(ray_ori, hit_point)) //scene_lit au ray_origin ?
 			&& scene->objs->elements[i - 1] != i) 
 			return (-1);
 		i++;
@@ -204,11 +204,11 @@ int	get_color(t_shape *obj, t_ray ray, t_scene *scene, double distance)
 	//specular light
 	spec_lit = multiply_color(rgb_to_int((((t_sp *)obj->shape)->color)), spec_light(norm, ray.direction, hit_p, scene));
 
-	shadow = shadow_ray(hit_p, scene, ray.direction);
+	shadow = shadow_ray(hit_p, scene, ray.direction, ray.origin);
 	if (shadow == 0)
 		color = add_3_colors(ambient_lit, diffuse_lit, spec_lit);
 	else 
-		color = 0x000000;
+		color = add_3_colors(ambient_lit, diffuse_lit, 0);
 
 	return (color);
 }
