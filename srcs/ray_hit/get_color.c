@@ -100,7 +100,7 @@ t_rgb	get_spec_lit(t_rgb obj,	double ks)
 /*si la distance est > 0 c'est que ca hit devant la cam mais 
 si elle est inférieure à la len du vecteur, c'est qu'on intercepte
 un autre objet en chemin donc il va y avoir une ombre sur l'objet*/
-double	shadow_ray(t_vec3 hit_point, t_scene *scene, t_vec3 ray_dir, t_vec3 ray_ori)
+double	shadow_ray(t_vec3 hit_point, t_scene *scene, t_vec3 ray_dir)
 {
 	size_t i;
 	t_vec3 dir_lit;
@@ -113,7 +113,7 @@ double	shadow_ray(t_vec3 hit_point, t_scene *scene, t_vec3 ray_dir, t_vec3 ray_o
 	{
 		obj = (t_shape *)scene->objs->elements[i];
 		distance = obj->hit_obj(obj->shape, hit_point,dir_lit);
-		if (distance > 0 && distance < vec_len(vec_sub(scene->lit->origin, hit_point)) //scene_lit au ray_origin ?
+		if (distance > 0 && distance < vec_len(vec_sub(scene->lit->origin, hit_point))
 			&& scene->objs->elements[i - 1] != i) 
 			return (-1);
 		i++;
@@ -190,31 +190,25 @@ int	get_color(t_shape *obj, t_ray ray, t_scene *scene, double distance)
 	int	spec_lit;
 
 	hit_p = get_hit_point_sp(scene, ray, distance);
-	// printf("__________________________\n");
-	// printf("hit_p.x = %f\n", hit_p.x);
-	// printf("hit_p.y = %f\n", hit_p.y);
-	// printf("hit_p.z = %f\n", hit_p.z);
 	norm = vec_normalize(vec_sub(hit_p, ((t_sp *)obj->shape)->origin));
 	lit_ray.origin = scene->lit->origin;
 	lit_ray.direction = vec_normalize(vec_sub(lit_ray.origin, hit_p));
-	// lit_ray.origin = vec_add(lit_ray.origin, lit_ray.direction);
+	
 	//ambient light
 	ambient_lit = rgb_to_int(get_ambient_lit(scene, ((t_sp *)obj->shape)->color));
 
 	//diffuse light
 	kd = spot_light(hit_p, scene, norm);
-	//kd = 1;
-	diffuse_lit = multiply_color(rgb_to_int(get_diffuse_lit((((t_sp *)obj->shape)->color), scene)), kd);
+	diffuse_lit = multiply_color(rgb_to_int(get_diffuse_lit((((t_sp *)obj->shape)->color), scene)), kd * 2);
 
 	//specular light
 	spec_lit = multiply_color(rgb_to_int((((t_sp *)obj->shape)->color)), spec_light(norm, ray.direction, hit_p, scene));
-
 
 	shadow = shadow_ray(vec_add(hit_p, lit_ray.direction), scene, lit_ray.direction);
 	if (shadow == 0)
 		color = add_3_colors(ambient_lit, diffuse_lit, spec_lit);
 	else 
-		color = add_3_colors(ambient_lit, 0, 0);
-
+		color = add_2_colors(ambient_lit, rgb_to_int(new_color(0,0,0)));
+		//add_2_colors(ambient_lit, multiply_color(diffuse_lit, -0.1)); // ou on ajoute du noir et l'ambiant light seulement ... ?
 	return (color);
 }
