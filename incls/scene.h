@@ -4,6 +4,12 @@
 # include "vector_3d.h"
 # include "vector_array.h"
 
+
+typedef struct	s_matrix
+{
+	double d[4][4];
+}				t_matrix;
+
 typedef enum e_type
 {
 	SP = 1,
@@ -57,6 +63,9 @@ typedef struct s_cam
 	double	view_p_h;
 	double	view_p_w;
 	double	view_p_ratio;
+	double	angle;
+	double	view_range;
+	t_matrix m;
 }	t_cam;
 
 typedef struct s_lit
@@ -73,6 +82,7 @@ typedef struct s_scene
 	t_lit		*lit;
 	t_vector	*objs;
 	int			init;
+	// t_ray		ray;
 }	t_scene;
 
 #endif

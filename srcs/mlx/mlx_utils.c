@@ -7,13 +7,16 @@ int	key_event(int keycode, t_scene *scene)
 	t_mlx *mlx;
 
 	mlx = get_mlx();
+	// printf("keycode = %d\n", keycode);
 	if (keycode == KEY_ESC || keycode == KEY_Q)
 	{
 		mlx_destroy_image(mlx->mlx, mlx->img);
 		mlx_destroy_window(mlx->mlx, mlx->win);
 		exit(0);
 	}
-	else if (keycode == KEY_A || keycode == KEY_S || keycode == KEY_D || keycode == KEY_W || keycode == KEY_UP || keycode == KEY_DOWN)
+	else if (keycode == KEY_A || keycode == KEY_S || keycode == KEY_D || keycode == KEY_W || keycode == KEY_R || keycode == KEY_T  || \
+	keycode == KEY_UP || keycode == KEY_DOWN || keycode == KEY_LEFT || keycode == KEY_RIGHT || \
+	keycode == NUMPAD_2 || keycode == NUMPAD_4 || keycode == NUMPAD_6 || keycode == NUMPAD_8)
 		move_cam(keycode, scene);
 	return (0);
 }
