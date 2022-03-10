@@ -56,6 +56,8 @@ typedef struct s_shape
 	t_vec3	origin;
 	t_vec3	dir;
 	//
+	t_rgb	color;
+	//
 }	t_shape;
 
 typedef struct s_amb
