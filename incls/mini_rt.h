@@ -82,6 +82,9 @@ t_vec3	get_norm_sphere(t_scene *scene, t_vec3	hit_p);
 t_vec3	get_hit_point_sp(t_scene *scene, t_ray ray, double distance);
 double	get_root(double disc, double b);
 double	hit_sphere(void *sphere, t_vec3 cam, t_vec3 direction);
+/*PLANE_C*/
+double hit_plane(void *plan, t_vec3 ray_origin, t_vec3 ray_direction);
+
 
 /*RAY_HIT
 INTERSECTION_C*/
