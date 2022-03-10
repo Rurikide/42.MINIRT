@@ -1,6 +1,6 @@
 #include "../../incls/mini_rt.h"
 
-t_vec3	get_hit_point_sp(t_scene *scene, t_ray ray, double distance)
+t_vec3	get_hit_point(t_scene *scene, t_ray ray, double distance)
 {
 	t_vec3	hit_p;
 

@@ -16,7 +16,7 @@ t_shape *get_hit_shape(t_scene *scene, t_ray ray)
 	{
 		obj = (t_shape *)scene->objs->elements[i];
 		distance = obj->hit_obj(obj->shape, ray.origin, ray.direction);
-		if (distance > 0 && distance < closer)
+		if (distance > M_EPSILON && distance < closer)
 		{
 			closer = distance;
 			shape = obj;
@@ -72,6 +72,13 @@ int	mouse_event(int	button, int x, int y, t_scene *scene)
 			sphere->rad -=0.5;
 			remake_scene(scene, mlx);
 		}
+	}
+	if (clicked_on->type == 3)
+	{
+		scene->screen.is_selected = 1;
+		scene->select = clicked_on;
+		t_pl *plan = (t_pl *)clicked_on->shape;
+		printf("the object is a plan and its origin coord = (%.2f;%.2f;%.2f)\n", plan->origin.x, plan->origin.y, plan->origin.z);
 	}
 	return (0);
 }

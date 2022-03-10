@@ -6,12 +6,14 @@ double hit_plane(void *plan, t_vec3 ray_origin, t_vec3 ray_direction)
 	double	lo_po;
 	double	ldotn;
 	double	t;
+	double	d;
 	
 	pl = (t_pl *)plan;
-	lo_po = vec_dot(vec_sub(ray_origin, pl->origin), pl->dir);
-	ldotn = vec_dot(ray_direction, pl->dir);
+	lo_po = (vec_dot(vec_sub(pl->origin, ray_origin), vec_normalize(pl->dir)));
+	ldotn = vec_dot(ray_direction, vec_normalize(pl->dir));
 	t = lo_po / ldotn;
-	printf("%f\n", t);
-
+	if ( t == 0.0)
+		t = M_EPSILON;
+	return (t);
 
 }
