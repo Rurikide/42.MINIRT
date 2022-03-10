@@ -18,7 +18,6 @@ int multiply_color(int color, double ratio)
     int b;
 
 	r = check_rgb(get_r(color) * ratio);
-	//printf("R = %d\n", r);
 	g = check_rgb(get_g(color) * ratio);
 	b = check_rgb(get_b(color) * ratio);
     return (rgb_to_int(new_color(r, g, b)));
@@ -48,4 +47,14 @@ int	add_3_colors(int a, int d, int c)
 	return (rgb_to_int(new_color(r, g, b)));
 }
 
+int	add_2_colors(int a, int c)
+{
+	int	r;
+	int	g;
+	int	b;
 
+	r = check_rgb(get_r(a) + get_r(c));
+	g = check_rgb(get_g(a) + get_g(c));
+	b = check_rgb(get_b(a) + get_b(c));
+	return (rgb_to_int(new_color(r, g, b)));
+}

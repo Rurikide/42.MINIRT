@@ -1,15 +1,10 @@
 #include "../../incls/mini_rt.h"
 
-t_vec3	get_hit_point_sp(t_scene *scene, t_ray ray, double distance)
+t_vec3	get_hit_point(t_scene *scene, t_ray ray, double distance)
 {
 	t_vec3	hit_p;
 
 	hit_p = vec_add(vec_multiply(ray.direction, distance), ray.origin);
-	// 	printf("__________________________\n");
-	// printf("ray_p.x = %f\n", ray.origin.x);
-	// printf("ray_p.y = %f\n", ray.origin.y);
-	// printf("ray_p.z = %f\n", ray.origin.z);
-	
 	return (hit_p);
 }
 
