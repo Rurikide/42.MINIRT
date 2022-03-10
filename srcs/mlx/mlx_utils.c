@@ -17,7 +17,7 @@ int	key_event(int keycode, t_scene *scene)
 	}
 	else if (keycode == KEY_A || keycode == KEY_S || keycode == KEY_D || keycode == KEY_W || keycode == KEY_R || keycode == KEY_T  || \
 	keycode == KEY_UP || keycode == KEY_DOWN || keycode == KEY_LEFT || keycode == KEY_RIGHT || \
-	keycode == NUMPAD_2 || keycode == NUMPAD_4 || keycode == NUMPAD_6 || keycode == NUMPAD_8 || keycode == 37)
+	keycode == KEY_I || keycode == KEY_J || keycode == KEY_K || keycode == KEY_L || keycode == KEY_U || keycode == KEY_O)
 		move_cam(keycode, scene);
 	return (0);
 }

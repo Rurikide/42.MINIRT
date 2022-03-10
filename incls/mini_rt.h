@@ -14,14 +14,15 @@
 
 # include "../libx/mlx.h"
 
-#define INFINITY 1000
 # define KEY_ESC 53 //ESCAPE
 # define KEY_Q 12 // Q
 
-# define KEY_A 0x00  //0
-# define KEY_S 0x01  //1
-# define KEY_D 0x02  //2
-# define KEY_W 0x0D  //13
+# define KEY_A 0
+# define KEY_S 1
+# define KEY_D 2
+# define KEY_W 13
+# define KEY_R 15
+# define KEY_T 17
 
 # define KEY_UP 126
 # define KEY_DOWN 125
@@ -30,22 +31,19 @@
 
 # define KEY_PLUS 24
 # define KEY_MINUS 27
+# define KEY_PLUS_PETIT 43
+# define KEY_PLUS_GRAND 47
 
-# define KEY_R 15
-# define KEY_T 17
+# define KEY_O 31
+# define KEY_U 32
+# define KEY_I 34
+# define KEY_L 37
+# define KEY_J 38
+# define KEY_K 40
 
-# define NUMPAD_2 84
-# define NUMPAD_4 86
-# define NUMPAD_6 88
-# define NUMPAD_8 91
-
-# define NUMPAD_5 87
-
-# define NUMPAD_1 83
-# define NUMPAD_3 85
-# define NUMPAD_7 89
-# define NUMPAD_9 92
-
+# define X_AXIS 7
+# define Y_AXIS 16
+# define Z_AXIS 6
 
 # define WIDTH	1080
 # define HEIGHT 720
@@ -85,7 +83,6 @@ double	hit_sphere(void *sphere, t_vec3 cam, t_vec3 direction);
 /*PLANE_C*/
 double hit_plane(void *plan, t_vec3 ray_origin, t_vec3 ray_direction);
 
-
 /*RAY_HIT
 INTERSECTION_C*/
 int		intersection(t_scene *scene, t_vec3 direction);
@@ -95,9 +92,8 @@ double	shadowing(t_vec3 hit_point, t_scene *scene, t_vec3 ray_dir);
 double	spot_light(t_vec3 hit_point, t_scene *scene, t_vec3 norm);
 double	spec_light(t_vec3 norm, t_vec3 dir, t_vec3 hit_point, t_scene *scene);
 
-
 /*MAIN_C*/
-void	ray_tracing(t_scene *scene);
+void	ray_tracing(t_scene *scene, int x, int y);
 t_vec3	get_ray_dir(t_scene *scene, t_mlx *mlx, double u, double v);
 void	make_scene(t_scene *scene);
 

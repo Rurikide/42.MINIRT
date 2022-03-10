@@ -28,19 +28,14 @@ t_shape *get_hit_shape(t_scene *scene, t_ray ray)
 	return (shape);
 }
 
-
 int	mouse_event(int	button, int x, int y, t_scene *scene)
 {
-	t_ray ray;
-	t_shape *clicked_on;
-	t_mlx *mlx;
+	t_shape	*clicked_on;
+	t_ray	ray;
+	t_mlx	*mlx;
 
 	mlx = get_mlx();
-
-	// scene->screen.x = x;
-	// scene->screen.y = y;
-	// printf("click coordinate = (%d;%d)\n", scene->screen.x, scene->screen.y);
-	ray = ray_to_pixel(scene, x, y);
+	ray = ray_generator(scene, x, y);
 	clicked_on = get_hit_shape(scene, ray);
 	if (clicked_on == NULL)
 	{
@@ -75,108 +70,13 @@ int	mouse_event(int	button, int x, int y, t_scene *scene)
 	}
 	if (clicked_on->type == 3)
 	{
-		scene->screen.is_selected = 1;
+		scene->screen.is_selected = 3;
 		scene->select = clicked_on;
 		t_pl *plan = (t_pl *)clicked_on->shape;
 		printf("the object is a plan and its origin coord = (%.2f;%.2f;%.2f)\n", plan->origin.x, plan->origin.y, plan->origin.z);
+		remake_scene(scene, mlx);
 	}
 	return (0);
-}
-
-t_matrix	new_matrix(t_vec3 origin, t_vec3 forward, t_vec3 right, t_vec3 up)
-{
-	t_matrix	new;
-
-	new.d[0][0] = right.x;
-	new.d[0][1] = right.y;
-	new.d[0][2] = right.z;
-	new.d[0][3] = 0;
-	new.d[1][0] = up.x;
-	new.d[1][1] = up.y;
-	new.d[1][2] = up.z;
-	new.d[1][3] = 0;
-	new.d[2][0] = forward.x;
-	new.d[2][1] = forward.y;
-	new.d[2][2] = forward.z;
-	new.d[2][3] = 0;
-	new.d[3][0] = origin.x;
-	new.d[3][1] = origin.y;
-	new.d[3][2] = origin.z;
-	new.d[3][3] = 1;
-	return (new);
-}
-
-t_matrix	matrix_identity(void)
-{
-	t_scene *scene;
-	t_vec3	forward;
-	t_vec3	up;
-	t_vec3	right;
-	t_vec3	origin;
-
-	scene = get_scene();
-	forward = scene->cam->dir;
-
-	right = new_vector(0, 0, 1);
-	up = new_vector(0, 1, 0);
-	origin = new_vector(0, 0, 0);
-	return (new_matrix(origin, forward, right, up));
-}
-
-t_matrix	matrix_rot_y(double degrees)
-{
-	t_matrix		rotate;
-	double		radians;
-
-	radians = degrees * M_PI / 180;
-	rotate = matrix_identity();
-	rotate.d[0][0] = cos(radians);
-	rotate.d[0][2] = sin(radians);
-	rotate.d[2][0] = -sin(radians);
-	rotate.d[2][2] = cos(radians);
-	return (rotate);
-}
-
-t_matrix	matrix_rot_x(double degrees)
-{
-	t_matrix		rotate;
-	double		radians;
-
-	radians = degrees * M_PI / 180;
-	rotate = matrix_identity();
-	rotate.d[1][1] = cos(radians);
-	rotate.d[1][2] = -sin(radians);
-	rotate.d[2][1] = sin(radians);
-	rotate.d[2][2] = cos(radians);
-	return (rotate);
-}
-
-t_matrix	matrix_multi(t_matrix src, t_matrix mult)
-{
-	static t_matrix		out;
-	int			i;
-	int			j;
-
-	i = 0;
-	while (i < 4)
-	{
-		j = 0;
-		while (j < 4)
-		{
-			out.d[i][j] = src.d[i][0] * mult.d[0][j] + src.d[i][1] * mult.d[1][j] + src.d[i][2] * mult.d[2][j] + src.d[i][3] * mult.d[3][j];
-			j++;
-		}
-		i++;
-	}
-	return (out);
-}
-
-void remake_scene(t_scene *scene, t_mlx *mlx)
-{
-	mlx_destroy_image(mlx->mlx, mlx->img);
-	mlx->img = mlx_new_image(mlx->mlx, mlx->width, mlx->height);
-	ray_tracing(scene);
-	mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->img, 0, 0);
 }
 
 
@@ -272,8 +172,6 @@ void	key_translation_rt(int keycode, t_scene *scene, t_vec3 *origin)
 	remake_scene(scene, mlx);
 }
 
-
-
 void	move_cam(int keycode, t_scene *scene)
 {
 	t_mlx *mlx;
@@ -291,34 +189,40 @@ void	move_cam(int keycode, t_scene *scene)
 		scene->screen.is_selected = 0;
 		printf("spotlight is deselected\n");
 	}
-	
-
 	if (keycode == KEY_A || keycode == KEY_D)
 	{
 		if (scene->screen.is_selected == 0)
 			key_translation_ad(keycode, scene, &scene->cam->origin);
+		else if (scene->screen.is_selected == 1)
+			key_translation_ad(keycode, scene, &((t_sp *)scene->select->shape)->origin);	
+		else if (scene->screen.is_selected == 3)
+			key_translation_ad(keycode, scene, &((t_pl *)scene->select->shape)->origin);
+			
 		else if (scene->screen.is_selected == 37)
 			key_translation_ad(keycode, scene, &scene->lit->origin);
-		else
-			key_translation_ad(keycode, scene, &((t_sp *)scene->select->shape)->origin);
 	}
 	else if (keycode == KEY_W || keycode == KEY_S)
 	{
 		if (scene->screen.is_selected == 0)
 			key_translation_ws(keycode, scene, &scene->cam->origin);
+		else if (scene->screen.is_selected == 1)
+			key_translation_ws(keycode, scene, &((t_sp *)scene->select->shape)->origin);
+		else if (scene->screen.is_selected == 3)
+			key_translation_ws(keycode, scene, &((t_pl *)scene->select->shape)->origin);
 		else if (scene->screen.is_selected == 37)
 			key_translation_ws(keycode, scene, &scene->lit->origin);
-		else
-			key_translation_ws(keycode, scene, &((t_sp *)scene->select->shape)->origin);
 	}
 	else if (keycode == KEY_T || keycode == KEY_R)
 	{
 		if (scene->screen.is_selected == 0)
 			key_translation_rt(keycode, scene, &scene->cam->origin);
+		else if (scene->screen.is_selected == 1)
+			key_translation_rt(keycode, scene, &((t_sp *)scene->select->shape)->origin);
+		else if (scene->screen.is_selected == 3)
+			key_translation_rt(keycode, scene, &((t_pl *)scene->select->shape)->origin);
+
 		else if (scene->screen.is_selected == 37)
 			key_translation_rt(keycode, scene, &scene->lit->origin);
-		else
-			key_translation_rt(keycode, scene, &((t_sp *)scene->select->shape)->origin);
 	}
 
 	// else if (keycode == KEY_UP)

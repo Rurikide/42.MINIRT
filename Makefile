@@ -27,7 +27,7 @@ PARSE= parse.c check_ambcamlit.c check_syntaxe.c check_valid_file.c parse_ambcam
 VEC3D= vector_new.c vector_tool.c
 SHAPES= sphere.c plane.c
 RAY = intersection.c get_color.c
-MOV = move_cam.c
+MOV = move_cam.c matrix.c
 MLX = mlx_utils.c
 
 OBJS= $(SRCS:.c=.o) $(ARRAY:.c=.o) $(VEC3D:.c=.o) $(COLOR:.c=.o) $(SHAPES:.c=.o) $(RAY:.c=.o) $(PARSE:.c=.o) $(MOV:.c=.o) $(MLX:.c=.o)
