@@ -21,10 +21,8 @@ void	parse_sphere(t_scene *scene, char *line, int i)
 	new->shape = (void *)sp;
 	new->type = SP;
 	new->origin = sp->origin;
-	//
-	new->dir = new_vector(0,0,0);
+	new->dir = new_vector(0, 0, 0);
 	new->color = sp->color;
-	//
 	vector_add_back_element(scene->objs, (void *)new);
 }
 

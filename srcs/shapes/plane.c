@@ -6,7 +6,6 @@ double hit_plane(void *plan, t_vec3 ray_origin, t_vec3 ray_direction)
 	double	lo_po;
 	double	ldotn;
 	double	t;
-	double	d;
 	
 	pl = (t_pl *)plan;
 	lo_po = (vec_dot(vec_sub(pl->origin, ray_origin), vec_normalize(pl->dir)));

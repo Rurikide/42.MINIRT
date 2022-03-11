@@ -14,6 +14,15 @@
 
 # include "../libx/mlx.h"
 
+# define YES 1
+# define NO 0
+
+# define MOUSE_LEFT 1
+# define MOUSE_RIGHT 2
+# define MOUSE_ROULETTE 3
+# define ROULETTE_FORWARD 5
+# define ROULETTE_BACKWARD 4
+
 # define KEY_ESC 53 //ESCAPE
 # define KEY_Q 12 // Q
 
@@ -47,6 +56,9 @@
 
 # define WIDTH	1080
 # define HEIGHT 720
+
+# define M_EPSILON 1e-8
+# define M_INFINITY 1.0e30f
 
 typedef struct s_mlx
 {

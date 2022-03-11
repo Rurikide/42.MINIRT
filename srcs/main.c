@@ -16,8 +16,7 @@ void remake_scene(t_scene *scene, t_mlx *mlx)
 
 int get_hit_color(t_scene *scene, t_ray ray)
 {
-	// aka intersection
-	int	i;
+	size_t	i;
 	double distance;
 	double closer;
 	int		color;	
@@ -40,41 +39,39 @@ int get_hit_color(t_scene *scene, t_ray ray)
 	return (color);
 }
 
-t_ray		ray_settings(t_vec3 origin, t_vec3 direction)
+t_ray	ray_settings(t_vec3 origin, t_vec3 direction)
 {
-	t_ray result;
+	t_ray	ray;
 
-	result.origin = origin;
-	result.direction = direction;
-	return (result);
+	ray.origin = origin;
+	ray.direction = direction;
+	return (ray);
 }
 
-t_vec3		ray_to_pixel(t_scene *scene, int x, int y)
+t_vec3	ray_pixel_to_world(t_scene *scene, int x, int y)
 {
-	double fov_coeff;
-	double aspect_ratio;
-	double p_x;
-	double p_y;
+	double	aspect_ratio;
+	double	fov;
+	double	p_x;
+	double	p_y;
 
-	fov_coeff = tanf((double)scene->cam->fov / 2 * M_PI / 180);
+	fov = tanf((double)scene->cam->fov / 2 * M_PI / 180);
 	aspect_ratio = (double)get_mlx()->width / (double)get_mlx()->height;
-	p_x = (2 * (x + 0.5) / (double)get_mlx()->width - 1) * aspect_ratio * fov_coeff;
-	p_y = (1 - 2 * (y + 0.5) / (double)get_mlx()->height) * fov_coeff;
-
-	// jai mis -p_x
+	p_x = (2 * (x + 0.5) / (double)get_mlx()->width - 1) * aspect_ratio * fov;
+	p_y = (1 - 2 * (y + 0.5) / (double)get_mlx()->height) * fov;
 	return (new_vector(-p_x, p_y, 1));
 }
 
 t_ray	ray_generator(t_scene *scene, int x, int y)
 {
-	t_ray ray;
-	t_vec3 dir;
+	t_vec3	shooting_direction;
+	t_ray	ray;
 
-	dir = ray_to_pixel(scene, x, y);
-	dir = multiply_by_matrix(dir, scene->cam->m);
-	dir = vec_sub(dir, scene->cam->origin);
-	dir = vec_normalize(dir);
-	ray = ray_settings(scene->cam->origin, dir);
+	shooting_direction = ray_pixel_to_world(scene, x, y);
+	shooting_direction = multiply_by_matrix(shooting_direction, scene->cam->m);
+	shooting_direction = vec_sub(shooting_direction, scene->cam->origin);
+	shooting_direction = vec_normalize(shooting_direction);
+	ray = ray_settings(scene->cam->origin, shooting_direction);
 	return(ray);
 }
 
@@ -85,7 +82,7 @@ void	ray_tracing(t_scene *scene, int x, int y)
 	int		color;
 
 	mlx = get_mlx();
-	scene->cam->m = matrix_look_at(scene->cam->origin, scene->cam->dir);
+	matrix_look_at(scene);
 	while (y < mlx->height)
 	{
 		x = 0;
@@ -100,7 +97,6 @@ void	ray_tracing(t_scene *scene, int x, int y)
 	}
 }
 
-
 void	make_scene(t_scene *scene)
 {
 	t_mlx	*mlx;
@@ -112,9 +108,9 @@ void	make_scene(t_scene *scene)
 	mlx_loop(mlx->mlx);
 }
 
-int main (int argc, char **argv)
+int	main (int argc, char **argv)
  {
- 	t_scene *scene;
+ 	t_scene	*scene;
 
  	if (argc != 2)
  	{

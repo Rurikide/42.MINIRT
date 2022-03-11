@@ -2,8 +2,7 @@
 
 t_shape *get_hit_shape(t_scene *scene, t_ray ray)
 {
-	// aka intersection
-	int	i;
+	size_t	i;
 	double distance;
 	double closer;
 	t_shape *shape;
@@ -44,33 +43,33 @@ int	mouse_event(int	button, int x, int y, t_scene *scene)
 		printf("the ray didn't hit any object\n");
 		return (0);
 	}
-	else if (button == 2)
+	else if (button == MOUSE_RIGHT)
 	{
-		scene->screen.is_selected = 0;
+		scene->screen.is_selected = NO;
 		printf("selection cleared\n");
 		return (0);
 	}
-	if (clicked_on->type == 1)
+	if (clicked_on->type == SP)
 	{
-		scene->screen.is_selected = 1;
+		scene->screen.is_selected = YES;
 		scene->select = clicked_on;
 		t_sp *sphere = (t_sp *)clicked_on->shape;
 		printf("the object is a sphere and its origin coord = (%.2f;%.2f;%.2f)\n", sphere->origin.x, sphere->origin.y, sphere->origin.z);
-		if (button == 5)
+		if (button == ROULETTE_FORWARD)
 		{
 			sphere->rad += 0.5;
 			remake_scene(scene, mlx);
 		}
-		if (button == 4)
+		if (button == ROULETTE_BACKWARD)
 		{
 			if (sphere->rad > 0.5)
-			sphere->rad -=0.5;
+				sphere->rad -=0.5;
 			remake_scene(scene, mlx);
 		}
 	}
-	if (clicked_on->type == 3)
+	if (clicked_on->type == PL)
 	{
-		scene->screen.is_selected = 3;
+		scene->screen.is_selected = PL;
 		scene->select = clicked_on;
 		t_pl *plan = (t_pl *)clicked_on->shape;
 		printf("the object is a plan and its origin coord = (%.2f;%.2f;%.2f)\n", plan->origin.x, plan->origin.y, plan->origin.z);
@@ -105,7 +104,7 @@ void	key_translation_ad(int keycode, t_scene *scene, t_vec3 *origin)
 		origin->z -= move.z;
 	}
 	//
-	if (scene->screen.is_selected == 37)
+	if (scene->screen.is_selected == KEY_L)
 		printf("spotlight coord = (%.2f;%.2f;%.2f)\n", origin->x, origin->y, origin->z);
 	remake_scene(scene, mlx);
 }
@@ -175,53 +174,50 @@ void	key_translation_rt(int keycode, t_scene *scene, t_vec3 *origin)
 void	move_cam(int keycode, t_scene *scene)
 {
 	t_mlx *mlx;
-	t_vec3 move;
 	double angle = 3.5;
 
 	mlx = get_mlx();
-	if (keycode == 37 && scene->screen.is_selected != 37)
+	if (keycode == KEY_L && scene->screen.is_selected == NO)
 	{
 		scene->screen.is_selected = 37;
 		printf("spotlight is selected\n");
 	}
-	else if ((keycode == 37 && scene->screen.is_selected == 37))
+	else if ((keycode == KEY_L && scene->screen.is_selected == KEY_L))
 	{
-		scene->screen.is_selected = 0;
+		scene->screen.is_selected = NO;
 		printf("spotlight is deselected\n");
 	}
 	if (keycode == KEY_A || keycode == KEY_D)
 	{
 		if (scene->screen.is_selected == 0)
 			key_translation_ad(keycode, scene, &scene->cam->origin);
-		else if (scene->screen.is_selected == 1)
+		else if (scene->screen.is_selected == SP)
 			key_translation_ad(keycode, scene, &((t_sp *)scene->select->shape)->origin);	
-		else if (scene->screen.is_selected == 3)
+		else if (scene->screen.is_selected == PL)
 			key_translation_ad(keycode, scene, &((t_pl *)scene->select->shape)->origin);
-			
-		else if (scene->screen.is_selected == 37)
+		else if (scene->screen.is_selected == KEY_L)
 			key_translation_ad(keycode, scene, &scene->lit->origin);
 	}
 	else if (keycode == KEY_W || keycode == KEY_S)
 	{
 		if (scene->screen.is_selected == 0)
 			key_translation_ws(keycode, scene, &scene->cam->origin);
-		else if (scene->screen.is_selected == 1)
+		else if (scene->screen.is_selected == SP)
 			key_translation_ws(keycode, scene, &((t_sp *)scene->select->shape)->origin);
-		else if (scene->screen.is_selected == 3)
+		else if (scene->screen.is_selected == PL)
 			key_translation_ws(keycode, scene, &((t_pl *)scene->select->shape)->origin);
-		else if (scene->screen.is_selected == 37)
+		else if (scene->screen.is_selected == KEY_L)
 			key_translation_ws(keycode, scene, &scene->lit->origin);
 	}
 	else if (keycode == KEY_T || keycode == KEY_R)
 	{
 		if (scene->screen.is_selected == 0)
 			key_translation_rt(keycode, scene, &scene->cam->origin);
-		else if (scene->screen.is_selected == 1)
+		else if (scene->screen.is_selected == SP)
 			key_translation_rt(keycode, scene, &((t_sp *)scene->select->shape)->origin);
-		else if (scene->screen.is_selected == 3)
+		else if (scene->screen.is_selected == PL)
 			key_translation_rt(keycode, scene, &((t_pl *)scene->select->shape)->origin);
-
-		else if (scene->screen.is_selected == 37)
+		else if (scene->screen.is_selected == KEY_L)
 			key_translation_rt(keycode, scene, &scene->lit->origin);
 	}
 
@@ -290,11 +286,8 @@ void	move_cam(int keycode, t_scene *scene)
 		t_scene *s;
 		t_matrix rotated;
 		t_matrix multiplied;
-		t_vec3 new;
 
 		s = get_scene();
-
-
 		rotated = matrix_rot_y(-angle);
 		multiplied = matrix_multi(rotated, s->cam->m);
 		s->cam->m = multiplied;
@@ -315,7 +308,6 @@ void	move_cam(int keycode, t_scene *scene)
 		t_scene *s;
 		t_matrix rotated;
 		t_matrix multiplied;
-		t_vec3 new;
 
 		s = get_scene();
 

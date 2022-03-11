@@ -4,6 +4,7 @@ t_vec3	get_hit_point(t_scene *scene, t_ray ray, double distance)
 {
 	t_vec3	hit_p;
 
+	(void)scene;
 	hit_p = vec_add(vec_multiply(ray.direction, distance), ray.origin);
 	return (hit_p);
 }

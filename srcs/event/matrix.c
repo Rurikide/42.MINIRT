@@ -91,52 +91,39 @@ t_matrix	matrix_multi(t_matrix src, t_matrix mult)
 
 t_vec3		multiply_by_matrix(t_vec3 p, t_matrix m)
  {
- 	t_vec3 res;
- 	//	p = position d'origine actuelle de la camera. m = matrice [0]Right [1]Up [2]CamDir [3]CamOrigin
+ 	t_vec3	res;
+
  	res.x = p.x * m.d[0][0] + p.y * m.d[1][0] + p.z * m.d[2][0] + m.d[3][0];
  	res.y = p.x * m.d[0][1] + p.y * m.d[1][1] + p.z * m.d[2][1] + m.d[3][1];
  	res.z = p.x * m.d[0][2] + p.y * m.d[1][2] + p.z * m.d[2][2] + m.d[3][2];
  	return (res);
 }
 
-t_matrix	matrix_look_at(t_vec3 cam_ori, t_vec3 cam_dir)
+void	matrix_look_at(t_scene *s)
 {
-	t_matrix	m;
 	t_vec3		random;
 	t_vec3		right;
 	t_vec3		up;
-	t_vec3 forward;
-	if (cam_dir.y == 1)
-	{
-		if (cam_dir.x == 0 && cam_dir.z == 0 )
-			cam_dir.x = 0.000001;
-	}
-	else if (cam_dir.y == -1)
-	{
-		if (cam_dir.x == 0 && cam_dir.z == 0)
-			cam_dir.x = -0.000001;
-	}
+
 	random = new_vector(0, 1, 0);
-	random = vec_normalize(random);
-	right = vec_cross(random, cam_dir);
+	right = vec_cross(random, s->cam->dir);
 	right = vec_normalize(right);
-	up = vec_cross(cam_dir, right);
+	up = vec_cross(s->cam->dir, right);
 	up = vec_normalize(up);
-	m.d[0][0] = right.x;
-	m.d[0][1] = right.y;
-	m.d[0][2] = right.z;
-	m.d[0][3] = 0;
-	m.d[1][0] = up.x;
-	m.d[1][1] = up.y;
-	m.d[1][2] = up.z;
-	m.d[1][3] = 0;
-	m.d[2][0] = cam_dir.x;
-	m.d[2][1] = cam_dir.y;
-	m.d[2][2] = cam_dir.z;
-	m.d[2][3] = 0;
-	m.d[3][0] = cam_ori.x;
-	m.d[3][1] = cam_ori.y;
-	m.d[3][2] = cam_ori.z;
-	m.d[3][3] = 1;
-	return (m);
+	s->cam->m.d[0][0] = right.x;
+	s->cam->m.d[0][1] = right.y;
+	s->cam->m.d[0][2] = right.z;
+	s->cam->m.d[0][3] = 0;
+	s->cam->m.d[1][0] = up.x;
+	s->cam->m.d[1][1] = up.y;
+	s->cam->m.d[1][2] = up.z;
+	s->cam->m.d[1][3] = 0;
+	s->cam->m.d[2][0] = s->cam->dir.x;
+	s->cam->m.d[2][1] = s->cam->dir.y;
+	s->cam->m.d[2][2] = s->cam->dir.z;
+	s->cam->m.d[2][3] = 0;
+	s->cam->m.d[3][0] = s->cam->origin.x;
+	s->cam->m.d[3][1] = s->cam->origin.y;
+	s->cam->m.d[3][2] = s->cam->origin.z;
+	s->cam->m.d[3][3] = 1;
 }

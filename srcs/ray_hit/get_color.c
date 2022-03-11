@@ -106,6 +106,8 @@ double	shadow_ray(t_vec3 hit_point, t_scene *scene, t_vec3 ray_dir)
 	t_vec3 dir_lit;
 	double distance;
 	t_shape *obj;
+	
+	(void)ray_dir;
 
 	dir_lit = vec_normalize(vec_sub(scene->lit->origin, hit_point));
 	i = 0;
@@ -154,7 +156,6 @@ Spot_light se situe entre -1 et 1, sachant que 0 est l'angle qui donne la lumiè
 la plus intense car directement face au point d'intersection*/
 double	spot_light(t_vec3 hit_point, t_scene *scene, t_vec3 norm)
 {
-	t_vec3	spot;
 	t_vec3	lit_dir;
 	double	spot_light;
 
