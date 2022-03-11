@@ -4,6 +4,14 @@
 # include "vector_3d.h"
 # include "vector_array.h"
 
+typedef struct s_quaternion
+{
+	double w;
+	double x;
+	double y;
+	double z;
+}t_quaternion;
+
 typedef struct	s_matrix
 {
 	double d[4][4];

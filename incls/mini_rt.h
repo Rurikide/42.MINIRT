@@ -4,8 +4,9 @@
 # include "color.h"
 # include "matrix.h"
 # include "parsing.h"
-# include "vector_3d.h"
+# include "quaternion.h"
 # include "scene.h"
+# include "vector_3d.h"
 # include "vector_array.h"
 
 # include "../libft/libsrcs/libft.h"
