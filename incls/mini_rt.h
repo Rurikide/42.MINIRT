@@ -85,6 +85,7 @@ double	hit_sphere(void *sphere, t_vec3 cam, t_vec3 direction);
 /*PLANE_C*/
 double hit_plane(void *plan, t_vec3 ray_origin, t_vec3 ray_direction);
 double	hit_cylinder(void *cylinder, t_vec3 ray_origin, t_vec3 ray_direction);
+t_vec3	get_cyl_norm(t_vec3 hit_p, t_shape *cyl);
 
 
 

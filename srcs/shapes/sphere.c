@@ -17,8 +17,8 @@ double	get_root(double disc, double b)
   double	max;
 	
 
-	t1 = (-b + disc) / 2;
-	t2 = (-b - disc) / 2;
+	t1 = (-b + disc) * 0.5;
+	t2 = (-b - disc) * 0.5;
 	min = fmin(t1, t2);
 	max = fmax(t1, t2);
 	if (min >= 0)
@@ -42,7 +42,7 @@ double hit_sphere(void *sphere, t_vec3 ray_origin, t_vec3 ray_direction)
 	c = vec_dot(v, v) - sp->rad * sp->rad;
 	disc = b * b - 4*c;
 	if (disc >= 0)
-		return (get_root(sqrt(disc), b));
+		return (get_root(sqrtf(disc), b)); //je mets sqrtf, à retester
 	else
 		return (0);
 }
