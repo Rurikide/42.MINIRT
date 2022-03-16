@@ -174,7 +174,7 @@ void	key_translation_rt(int keycode, t_scene *scene, t_vec3 *origin)
 void	move_cam(int keycode, t_scene *scene)
 {
 	t_mlx *mlx;
-	double angle = 3.5;
+	double angle = 3.6;
 
 	mlx = get_mlx();
 	if (keycode == KEY_L && scene->screen.is_selected == NO)
@@ -220,67 +220,74 @@ void	move_cam(int keycode, t_scene *scene)
 		else if (scene->screen.is_selected == KEY_L)
 			key_translation_rt(keycode, scene, &scene->lit->origin);
 	}
+	else if (keycode == KEY_UP)
+	{
+		t_scene *s;
+		t_matrix rotated;
+		t_matrix multiplied;
+		t_vec3 new;
 
-	// else if (keycode == KEY_UP)
-	// {
-	// 	t_scene *s;
-	// 	t_matrix rotated;
-	// 	t_matrix multiplied;
-	// 	t_vec3 new;
+			s = get_scene();
+			rotated = matrix_rot_x(-angle);
+			multiplied = matrix_multi(rotated, s->cam->m);
+			
+			s->cam->m = multiplied;
+			
+			printf("cam dir x =%.6f \n", s->cam->dir.x);
+			printf("cam dir y =%.6f \n", s->cam->dir.y);
+			printf("cam dir z =%.6f \n", s->cam->dir.z);
+			printf("-------------------\n");
+			printf("next dir x =%.6f \n", s->cam->m.d[2][0]);
+			printf("next dir y =%.6f \n", s->cam->m.d[2][1]);
+			printf("next  dir z =%.6f \n\n", s->cam->m.d[2][2]);
 
-	// 	s = get_scene();
-	// 	// printf("Amatrix [2][0] = %f\n", s->cam->m.d[2][0]);
-	// 	// printf("Amatrix [2][1] = %f\n", s->cam->m.d[2][1]);
-	// 	// printf("Amatrix [2][2] = %f\n", s->cam->m.d[2][2]);
+			if ((s->cam->m.d[2][1] >= 0.92 && s->cam->m.d[2][1] <= 1.08) || (s->cam->m.d[2][1] <= -0.92 && s->cam->m.d[2][1] >= -1.08))
+			{
+				if ((multiplied.d[2][2]) >= -0.10 && (multiplied.d[2][2]) <= 0.10 && (multiplied.d[2][0]) >= -0.10 && (multiplied.d[2][0]) <= 0.10)
+				{
+					printf("\ngimbal lock!\n");
+					remake_scene(scene, mlx);
+					return;
+				}
+			}
+			s->cam->dir.x = s->cam->m.d[2][0];
+			s->cam->dir.y = s->cam->m.d[2][1];
+			s->cam->dir.z = s->cam->m.d[2][2];
 
-	// 	rotated = matrix_rot_x(-angle);
-	// 	multiplied = matrix_multi(rotated, s->cam->m);
-	// 	s->cam->m = multiplied;
-	// 	// printf("\v");
-	// 	// printf("Bmatrix [2][0] = %f\n", s->cam->m.d[2][0]);
-	// 	// printf("Bmatrix [2][1] = %f\n", s->cam->m.d[2][1]);
-	// 	// printf("Bmatrix [2][2] = %f\n", s->cam->m.d[2][2]);
-	// 	// new = multiply_by_matrix(s->cam->origin, s->cam->m);
+	}
+	else if (keycode == KEY_DOWN)
+	{
+		t_scene *s;
+		t_matrix rotated;
+		t_matrix multiplied;
+		t_vec3 new;
 
-	// 	// printf("new.x = %f\n", new.x);
-	// 	// printf("new.y = %f\n", new.y);
-	// 	// printf("new.z = %f\n", new.z);
-
-	// 	s->cam->dir.x = s->cam->m.d[2][0];
-	// 	s->cam->dir.y = s->cam->m.d[2][1];
-	// 	s->cam->dir.z = s->cam->m.d[2][2];
-	// 	printf("PITCH LOOKING DOWN\n");
-	// }
-	// else if (keycode == KEY_DOWN)
-	// {
-	// 	t_scene *s;
-	// 	t_matrix rotated;
-	// 	t_matrix multiplied;
-	// 	t_vec3 new;
-
-	// 	s = get_scene();
-	// 	// printf("Amatrix [2][0] = %f\n", s->cam->m.d[2][0]);
-	// 	// printf("Amatrix [2][1] = %f\n", s->cam->m.d[2][1]);
-	// 	// printf("Amatrix [2][2] = %f\n", s->cam->m.d[2][2]);
-
-	// 	rotated = matrix_rot_x(angle);
-	// 	multiplied = matrix_multi(rotated, s->cam->m);
-	// 	s->cam->m = multiplied;
-	// 	// printf("\v");
-	// 	// printf("Bmatrix [2][0] = %f\n", s->cam->m.d[2][0]);
-	// 	// printf("Bmatrix [2][1] = %f\n", s->cam->m.d[2][1]);
-	// 	// printf("Bmatrix [2][2] = %f\n", s->cam->m.d[2][2]);
-	// 	// new = multiply_by_matrix(s->cam->origin, s->cam->m);
-
-	// 	// printf("new.x = %f\n", new.x);
-	// 	// printf("new.y = %f\n", new.y);
-	// 	// printf("new.z = %f\n", new.z);
-
-	// 	s->cam->dir.x = s->cam->m.d[2][0];
-	// 	s->cam->dir.y = s->cam->m.d[2][1];
-	// 	s->cam->dir.z = s->cam->m.d[2][2];
-	// 	printf("PITCH LOOKING UP\n");
-	// }
+			s = get_scene();
+			rotated = matrix_rot_x(angle);
+			multiplied = matrix_multi(rotated, s->cam->m);
+			
+			s->cam->m = multiplied;
+			
+			printf("cam dir x =%.6f \n", s->cam->dir.x);
+			printf("cam dir y =%.6f \n", s->cam->dir.y);
+			printf("cam dir z =%.6f \n", s->cam->dir.z);
+			printf("-------------------\n");
+			printf("next dir x =%.6f \n", s->cam->m.d[2][0]);
+			printf("next dir y =%.6f \n", s->cam->m.d[2][1]);
+			printf("next dir z =%.6f \n\n", s->cam->m.d[2][2]);
+			if ((s->cam->m.d[2][1] >= 0.92 && s->cam->m.d[2][1] <= 1.08) || (s->cam->m.d[2][1] <= -0.92 && s->cam->m.d[2][1] >= -1.08))
+			{
+				if ((multiplied.d[2][2]) >= -0.10 && (multiplied.d[2][2]) <= 0.10 && (multiplied.d[2][0]) >= -0.10 && (multiplied.d[2][0]) <= 0.10)
+				{
+					printf("\ngimbal lock!\n");
+					remake_scene(scene, mlx);
+					return;
+				}
+			}
+			s->cam->dir.x = s->cam->m.d[2][0];
+			s->cam->dir.y = s->cam->m.d[2][1];
+			s->cam->dir.z = s->cam->m.d[2][2];
+	}
 		else if (keycode == KEY_LEFT)
 	{
 		t_scene *s;
@@ -292,16 +299,9 @@ void	move_cam(int keycode, t_scene *scene)
 		multiplied = matrix_multi(rotated, s->cam->m);
 		s->cam->m = multiplied;
 
-		// new = multiply_by_matrix(s->cam->origin, s->cam->m);
-
-		// printf("new.x = %f\n", new.x);
-		// printf("new.y = %f\n", new.y);
-		// printf("new.z = %f\n", new.z);
-
 		s->cam->dir.x = s->cam->m.d[2][0];
 		s->cam->dir.y = s->cam->m.d[2][1];
 		s->cam->dir.z = s->cam->m.d[2][2];
-		printf("YAW TO THE RIGHT\n");
 	}
 		else if (keycode == KEY_RIGHT)
 	{
@@ -314,16 +314,10 @@ void	move_cam(int keycode, t_scene *scene)
 		rotated = matrix_rot_y(angle);
 		multiplied = matrix_multi(rotated, s->cam->m);
 		s->cam->m = multiplied;
-		// new = multiply_by_matrix(s->cam->origin, s->cam->m);
-
-		// printf("new.x = %f\n", new.x);
-		// printf("new.y = %f\n", new.y);
-		// printf("new.z = %f\n", new.z);
 
 		s->cam->dir.x = s->cam->m.d[2][0];
 		s->cam->dir.y = s->cam->m.d[2][1];
 		s->cam->dir.z = s->cam->m.d[2][2];
-		printf("YAW TO THE LEFT\n");
 	}
 	remake_scene(scene, mlx);
 }

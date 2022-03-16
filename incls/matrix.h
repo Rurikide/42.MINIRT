@@ -4,6 +4,9 @@
 # include "vector_3d.h"
 # include "scene.h"
 
+#  define SHAPE_MOVE 0.5
+#  define SHAPE_ROT 18
+
 t_ray		ray_settings(t_vec3 origin, t_vec3 direction);
 t_vec3		ray_pixel_to_world(t_scene *scene, int x, int y);
 t_ray		ray_generator(t_scene *scene, int x, int y);

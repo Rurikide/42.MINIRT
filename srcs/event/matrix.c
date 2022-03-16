@@ -33,7 +33,7 @@ t_matrix	matrix_identity(void)
 	t_vec3	origin;
 
 	scene = get_scene();
-	forward = scene->cam->dir;
+	forward = new_vector(0, 0, 1);
 
 	right = new_vector(0, 0, 1);
 	up = new_vector(0, 1, 0);
