@@ -27,7 +27,9 @@ EVENT= click_event.c event_cylinder.c event_plane.c event_sphere.c matrix_creati
 PARSE= parse.c check_ambcamlit.c check_syntaxe.c check_valid_file.c parse_ambcamlit.c parse_rgb.c parse_settings.c parse_shape.c parse_utils.c parse_xyz.c
 RAY= intersection.c get_color.c
 SHAPES= sphere.c plane.c
-MLX= mlx_utils.c scene_utils.c
+RAY = get_color.c light.c
+MOV = move_cam.c
+MLX = mlx_utils.c scene_utils.c
 VEC3D= vector_new.c vector_tool.c
 
 OBJS= $(SRCS:.c=.o) $(ARRAY:.c=.o) $(COLOR:.c=.o) $(EVENT:.c=.o) $(PARSE:.c=.o) $(RAY:.c=.o) $(SHAPES:.c=.o) $(MLX:.c=.o) $(VEC3D:.c=.o)

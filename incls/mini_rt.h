@@ -87,19 +87,28 @@ double	get_root(double disc, double b);
 double	hit_sphere(void *sphere, t_vec3 cam, t_vec3 direction);
 /*PLANE_C*/
 double hit_plane(void *plan, t_vec3 ray_origin, t_vec3 ray_direction);
+double	hit_cylinder(void *cylinder, t_vec3 ray_origin, t_vec3 ray_direction);
+t_vec3	get_cyl_norm(t_vec3 hit_p, void *cyl);
+double	check_cyl_root(t_vec3 ray_origin, t_vec3 ray_direction, t_shape *cyl, double disc, double b);
+
 
 /*RAY_HIT
-INTERSECTION_C*/
-int		intersection(t_scene *scene, t_vec3 direction);
-/*GET_COLOR_C*/
-int	get_color(t_shape *obj, t_ray ray, t_scene *scene, double distance);
-double	shadowing(t_vec3 hit_point, t_scene *scene, t_vec3 ray_dir);
+GET_COLOR_C*/
+int		get_color(t_shape *obj, t_ray ray, t_scene *scene, double distance);
+double	shadow_ray(t_vec3 hit_point, t_scene *scene, t_vec3 ray_dir);
+t_vec3 get_reflect(t_vec3 norm, t_vec3 ray_dir);
 double	spot_light(t_vec3 hit_point, t_scene *scene, t_vec3 norm);
 double	spec_light(t_vec3 norm, t_vec3 dir, t_vec3 hit_point, t_scene *scene);
+/*LIGHT_C*/
+t_rgb	get_diffuse_lit(t_rgb obj, t_scene *scene);
+t_rgb	get_spec_lit(t_rgb obj,	double ks);
+t_rgb	get_ambient_lit(t_scene *scene, t_rgb obj);
 
 /*MAIN_C*/
 void	ray_tracing(t_scene *scene, int x, int y);
 t_vec3	get_ray_dir(t_scene *scene, t_mlx *mlx, double u, double v);
 void	make_scene(t_scene *scene);
+
+
 
 #endif

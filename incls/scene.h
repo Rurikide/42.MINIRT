@@ -106,4 +106,22 @@ typedef struct s_scene
 	// t_ray		ray;
 }	t_scene;
 
+typedef struct	s_mix_lit
+{
+	double shadow;
+	double	kd;
+	int	ambient_lit;
+	int	diffuse_lit;
+	int	spec_lit;
+}				t_mix_lit;
+
+typedef	struct	s_quadra
+{
+	double	a;
+	double	b;
+	double	c;
+	double	disc;
+	double	t;
+}				t_quadra;
+
 #endif

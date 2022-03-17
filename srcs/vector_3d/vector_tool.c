@@ -26,15 +26,6 @@ t_vec3	vec_normalize(t_vec3 v)
 	return (resultante);
 }
 
-// retourne la grandeur/longueur d'un vecteur
-double	vec_squared(t_vec3 v)
-{
-	double	grandeur;
-
-	grandeur = (v.x * v.x + v.y * v.y + v.z * v.z);
-	return (grandeur);
-}
-
 double	vec_len(t_vec3 v)
 {
 	double	grandeur;
