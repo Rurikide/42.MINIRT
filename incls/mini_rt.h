@@ -2,19 +2,18 @@
 # define MINI_RT_H
 
 # include "color.h"
-# include "matrix.h"
+# include "event.h"
 # include "parsing.h"
-# include "quaternion.h"
 # include "scene.h"
 # include "vector_3d.h"
 # include "vector_array.h"
-
 # include "../libft/libsrcs/libft.h"
 # include "../libft/libsrcs/ft_printf.h"
 # include "../libft/libsrcs/get_next_line.h"
-
 # include "../libx/mlx.h"
 
+# define ANGLE 3.6
+# define STEP 0.5
 # define YES 1
 # define NO 0
 
@@ -24,40 +23,33 @@
 # define ROULETTE_FORWARD 5
 # define ROULETTE_BACKWARD 4
 
-# define KEY_ESC 53 //ESCAPE
-# define KEY_Q 12 // Q
-
+# define KEY_ESC 53
+# define KEY_Q 12
 # define KEY_A 0
 # define KEY_S 1
 # define KEY_D 2
 # define KEY_W 13
 # define KEY_R 15
 # define KEY_T 17
-
 # define KEY_UP 126
 # define KEY_DOWN 125
 # define KEY_LEFT 123
 # define KEY_RIGHT 124
-
 # define KEY_PLUS 24
 # define KEY_MINUS 27
 # define KEY_PLUS_PETIT 43
 # define KEY_PLUS_GRAND 47
-
 # define KEY_O 31
 # define KEY_U 32
 # define KEY_I 34
 # define KEY_L 37
 # define KEY_J 38
 # define KEY_K 40
-
 # define X_AXIS 7
 # define Y_AXIS 16
 # define Z_AXIS 6
-
 # define WIDTH	1080
 # define HEIGHT 720
-
 # define M_EPSILON 1e-8
 # define M_INFINITY 1.0e30f
 

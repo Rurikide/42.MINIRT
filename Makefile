@@ -23,7 +23,7 @@ SRCS=	main.c
 
 ARRAY= vector_array.c vector_utils.c
 COLOR= color.c color_rgb.c
-EVENT= move_cam.c matrix.c
+EVENT= click_event.c event_cylinder.c event_plane.c event_sphere.c matrix_creation.c matrix_manipulation.c rotation.c translation.c
 PARSE= parse.c check_ambcamlit.c check_syntaxe.c check_valid_file.c parse_ambcamlit.c parse_rgb.c parse_settings.c parse_shape.c parse_utils.c parse_xyz.c
 RAY= intersection.c get_color.c
 SHAPES= sphere.c plane.c

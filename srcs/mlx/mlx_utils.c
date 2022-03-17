@@ -11,20 +11,22 @@ int	key_event(int keycode, t_scene *scene)
 		mlx_destroy_window(mlx->mlx, mlx->win);
 		exit(0);
 	}
-	else if (keycode == KEY_A || keycode == KEY_S || keycode == KEY_D || \
-	keycode == KEY_W || keycode == KEY_R || keycode == KEY_T || \
-	keycode == KEY_UP || keycode == KEY_DOWN || keycode == KEY_LEFT || \
-	keycode == KEY_RIGHT || keycode == KEY_I || keycode == KEY_J || \
-	keycode == KEY_K || keycode == KEY_L || keycode == KEY_U || \
-	keycode == KEY_O)
+	else if (keycode == KEY_A || keycode == KEY_S || keycode == KEY_D || keycode == KEY_W || keycode == KEY_R || keycode == KEY_T || keycode == KEY_L)
 		move_cam(keycode, scene);
+	else if (keycode == KEY_UP || keycode == KEY_DOWN)
+		pitch_cam(keycode, scene);
+	else if (keycode == KEY_LEFT || keycode == KEY_RIGHT)
+		yaw_cam(keycode, scene);
 	return (0);
 }
 
 int	click_close_window(void)
 {
-//	mlx_destroy_image(mlx, img);
-//	mlx_destroy_window(mlx, win);
+	// t_mlx	*mlx;
+
+	// mlx = get_mlx();
+	// mlx_destroy_image(mlx->mlx, mlx->img);
+	// mlx_destroy_window(mlx->mlx, mlx->win);
 	printf("clicked the red (x)\n");
 	exit(0);
 }
