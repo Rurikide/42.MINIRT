@@ -11,17 +11,17 @@ t_rgb	new_color(int r, int g, int b)
 	return (rgb);
 }
 
-int multiply_color(int color, double ratio)
-{
-    int r;
-    int g;
-    int b;
+// int multiply_color(int color, double ratio)
+// {
+//     int r;
+//     int g;
+//     int b;
 
-	r = check_rgb(get_r(color) * ratio);
-	g = check_rgb(get_g(color) * ratio);
-	b = check_rgb(get_b(color) * ratio);
-    return (rgb_to_int(new_color(r, g, b)));
-}
+// 	r = check_rgb(get_r(color) * ratio);
+// 	g = check_rgb(get_g(color) * ratio);
+// 	b = check_rgb(get_b(color) * ratio);
+//     return (rgb_to_int(new_color(r, g, b)));
+// }
 
 int add_color(int color, double ratio)
 {

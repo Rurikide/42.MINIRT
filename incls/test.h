@@ -1,44 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   vector_3d.h                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: tshimoda <tshimoda@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/06 16:30:59 by tshimoda          #+#    #+#             */
-/*   Updated: 2022/02/24 18:04:40 by tshimoda         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-#ifndef VECTOR_3D_H
-# define VECTOR_3D_H
-
-# include <math.h>
-# include <unistd.h>
-
-typedef struct s_vec3
-{
-	double	x;
-	double	y;
-	double	z;
-}	t_vec3;
-
-typedef struct s_ray
-{
-	t_vec3	origin;
-	t_vec3	direction;	
-}				t_ray;
-
-
-// t_vec3	new_vector(double x, double y, double z);
-// t_vec3	vec_add(t_vec3 u, t_vec3 v);
-// t_vec3	vec_sub(t_vec3 u, t_vec3 v);
-// t_vec3	vec_multiply(t_vec3 u, double scalar);
-// t_vec3	vec_normalize(t_vec3 u);
-// t_vec3	vec_cross(t_vec3 u, t_vec3 v);
-// double	vec_len(t_vec3 v);
-// double	vec_dot(t_vec3 u, t_vec3 v);
-// double	vec_squared(t_vec3 v);
 
 static inline t_vec3	new_vector(double x, double y, double z)
 {
@@ -95,7 +54,7 @@ static inline t_vec3	vec_cross(t_vec3 u, t_vec3 v)
 
 // reçoit le pointeur du vecteur v et modifie ses composantes (x;y;z) 
 // afin de le normaliser ainsi simplifier les prochains calculs
-static inline t_vec3	vec_normalize(t_vec3 v)
+t_vec3	vec_normalize(t_vec3 v)
 {
 	double	grandeur;
 	t_vec3	resultante;
@@ -107,7 +66,7 @@ static inline t_vec3	vec_normalize(t_vec3 v)
 	return (resultante);
 }
 
-static inline double	vec_len(t_vec3 v)
+double	vec_len(t_vec3 v)
 {
 	double	grandeur;
 
@@ -117,7 +76,7 @@ static inline double	vec_len(t_vec3 v)
 
 // retourne le produit croisé de deux vecteurs qui est une 
 // distance/nombre par rapport au point d'origine d'un vecteur 
-static inline double	vec_dot(t_vec3 u, t_vec3 v)
+double	vec_dot(t_vec3 u, t_vec3 v)
 {
 	double	distance;
 
@@ -125,7 +84,7 @@ static inline double	vec_dot(t_vec3 u, t_vec3 v)
 	return (distance);
 }
 
-static inline t_vec3	multiply_2_vec(t_vec3 u, t_vec3 v)
+t_vec3	multiply_2_vec(t_vec3 u, t_vec3 v)
 {
 	t_vec3	resultante;
 
@@ -134,6 +93,3 @@ static inline t_vec3	multiply_2_vec(t_vec3 u, t_vec3 v)
 	resultante.z = (u.z * v.z);
 	return (resultante);
 }
-
-
-#endif

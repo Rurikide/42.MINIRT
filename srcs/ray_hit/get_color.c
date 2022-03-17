@@ -83,7 +83,7 @@ int	get_color(t_shape *obj, t_ray ray, t_scene *scene, double distance)
 	if (obj->type == 1)
 		norm = vec_normalize(vec_sub(hit_p, obj->origin));
 	if (obj->type == 2)
-		norm = get_cyl_norm(hit_p, (void*)obj);
+		norm = get_cyl_norm(hit_p, obj);
 	if (obj->type == 3)
 		norm = vec_normalize(obj->dir);
 	lit_ray.origin = scene->lit->origin;
