@@ -22,24 +22,26 @@ void	plane_yaw(int keycode, t_scene *s, t_vec3 *plane_dir)
 {
 	t_matrix	rotated;
 	t_matrix	prod;
+	double		rot_step;
 
-	static int count;
-	count++;
-	printf("inside plane_yaw_func; count = %d\n", count);
-	// if (keycode == KEY_LEFT)
-	// 	rotated = matrix_rot_y(-ANGLE);
-	// else
-	// 	rotated = matrix_rot_y(ANGLE);
-	// prod = matrix_product(rotated, s->cam->m);
+	rot_step = 0.1;
 	if (keycode == KEY_PLUS_GRAND)
 	{
-		plane_dir->x += 0.1;
-		plane_dir->y += 0.1;
-	}
+		if (s->screen.obj_rot_axis == X_AXIS && plane_dir->x <= 0.8)
+			plane_dir->x += rot_step;
+		else if (s->screen.obj_rot_axis == Y_AXIS && plane_dir->y <= 0.8)
+			plane_dir->y += rot_step;
+		else if (s->screen.obj_rot_axis == Z_AXIS && plane_dir->z <= 0.8)
+			plane_dir->z += rot_step;
+	}	
 	else if (keycode == KEY_PLUS_PETIT)
 	{
-		plane_dir->x -= 0.1;
-		plane_dir->y -= 0.1;
+		if (s->screen.obj_rot_axis == X_AXIS && plane_dir->x >= -0.8)
+			plane_dir->x -= rot_step;
+		else if (s->screen.obj_rot_axis == Y_AXIS && plane_dir->y >= -0.8)
+			plane_dir->y -= rot_step;
+		else if (s->screen.obj_rot_axis == Z_AXIS && plane_dir->z >= -0.8)
+			plane_dir->z -= rot_step;
 	}
 	remake_scene(s, get_mlx());
 }

@@ -27,32 +27,34 @@ t_shape	*get_hit_shape(t_scene *scene, t_ray ray)
 	return (shape);
 }
 
-int	mouse_event(int button, int x, int y, t_scene *scene)
+int	click_event(int button, int x, int y, t_scene *scene)
 {
 	t_shape	*clic;
 	t_ray	ray;
 
 	ray = ray_generator(scene, x, y);
 	clic = get_hit_shape(scene, ray);
-	if (clic == NULL)
+	if (clic == NULL || button == MOUSE_RIGHT)
 	{
-		scene->screen.is_selected = 0;
+		scene->screen.is_selected = NONE;
 		scene->select = NULL;
-		printf("the ray didn't hit any object\n");
+		printf("Nothing selected\n");
 		return (0);
 	}
-	else if (button == MOUSE_RIGHT)
+	else if (clic->type == SP)
 	{
-		scene->screen.is_selected = NO;
-		printf("selection cleared\n");
-		return (0);
-	}
-	if (clic->type == SP)
+		printf("Sphere selected\n");
         sphere_resize(button, scene, clic);
-	if (clic->type == PL)
+	}
+	else if (clic->type == PL)
 	{
-		printf("PLANE SELECTED\n");
+		printf("Plane selected\n");
 		plane_event(button, scene, clic);
+	}
+	else if (clic->type == PL)
+	{
+		printf("Cylinder selected\n");
+		// cylinder_event(button, scene, clic);
 	}
 	return (0);
 }

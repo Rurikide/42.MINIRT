@@ -52,6 +52,7 @@ typedef struct s_screen
 	int x;
 	int	y;
 	int is_selected;
+	int	obj_rot_axis;
 }	t_screen;
 
 typedef struct s_shape
