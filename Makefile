@@ -26,7 +26,7 @@ COLOR= color.c color_rgb.c
 PARSE= parse.c check_ambcamlit.c check_syntaxe.c check_valid_file.c parse_ambcamlit.c parse_rgb.c parse_settings.c parse_shape.c parse_utils.c parse_xyz.c scene_utils.c
 VEC3D= vector_new.c vector_tool.c
 SHAPES= sphere.c plane.c
-RAY = intersection.c get_color.c
+RAY = get_color.c light.c
 MOV = move_cam.c
 MLX = mlx_utils.c
 

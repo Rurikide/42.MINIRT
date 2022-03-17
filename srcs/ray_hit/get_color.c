@@ -1,102 +1,5 @@
 #include "../../incls/mini_rt.h"
 
-
-t_rgb	multiply_rgb_rgb(t_rgb c1, t_rgb c2)
-{
-	t_rgb color;
-
-	color.r = (c1.r * c2.r) / 255;
-	color.g = (c1.g * c2.g) / 255;
-	color.b = (c1.b * c2.b) / 255;
-
-	return (color);
-}
-
-t_rgb	multiply_rgb_double(t_rgb c, double d)
-{
-	t_rgb color;
-
-	color.r = (c.r * d);
-	if (c.r > 255)
-		c.r = 255;
-	color.g = (c.g * d);
-	if (c.g > 255)
-		c.g = 255;
-	color.b = (c.b * d);
-	if (c.b > 255)
-		c.b = 255;
-
-	return (color);
-}
-
-t_rgb	add_rgb_double(t_rgb c1, double d)
-{
-	t_rgb color;
-
-	color.r = (c1.r + d);
-		if (color.r > 255)
-		color.r = 255;
-	color.g = (c1.g + d);
-	if (color.g > 255)
-		color.g = 255;
-	color.b = (c1.b + d);
-	if (color.b > 255)
-		color.b = 255;
-
-	return (color);
-}
-
-t_rgb	add_rgb(t_rgb c1,t_rgb c2)
-{
-	t_rgb color;
-
-	color.r = (c1.r + c2.r);
-		if (color.r > 255)
-		color.r = 255;
-	color.g = (c1.g + c2.g);
-	if (color.g > 255)
-		color.g = 255;
-	color.b = (c1.b + c2.b);
-	if (color.b > 255)
-		color.b = 255;
-
-	return (color);
-}
-
-t_rgb	get_obj_color(t_shape* obj)
-{
-	void *elem;
-
-	elem = obj;
-	if (obj->type == 1)
-	{
-		//printf("R = %d \n", ((t_sp *)elem)->color.r);
-		return (((t_sp *)elem)->color);
-	}
-	else	
-		return (new_color(0,0,0));
-}
-
-t_rgb	get_diffuse_lit(t_rgb obj, t_scene *scene)
-{
-	t_rgb	color;
-
-	color.r = (scene->lit->ratio * 255 * obj.r) / 255;
-	color.g = (scene->lit->ratio * 255 * obj.g) / 255;
-	color.b = (scene->lit->ratio * 255 * obj.b) / 255;
-	return (color);
-}
-
-t_rgb	get_spec_lit(t_rgb obj,	double ks)
-{
-	t_rgb	color;
-
-	color.r = (ks * 255 * obj.r) / 255;
-	color.g = (ks * 255 * obj.g) / 255;
-	color.b = (ks * 255 * obj.b) / 255;
-	return (color);
-}
-
 /*si la distance est > 0 c'est que ca hit devant la cam mais 
 si elle est inférieure à la len du vecteur, c'est qu'on intercepte
 un autre objet en chemin donc il va y avoir une ombre sur l'objet*/
@@ -166,28 +69,14 @@ double	spot_light(t_vec3 hit_point, t_scene *scene, t_vec3 norm)
 	return (spot_light);
 }
 
-t_rgb	get_ambient_lit(t_scene *scene, t_rgb obj)
-{
-	t_rgb	color;
-
-	color.r = (scene->amb->ratio * scene->amb->color.r * obj.r) / 255;
-	color.g = (scene->amb->ratio * scene->amb->color.g * obj.g) / 255;
-	color.b = (scene->amb->ratio * scene->amb->color.b * obj.b) / 255;
-	return (color);
-}
-
 /*Shading at P = diffuse * kd + specular * ks*/
 int	get_color(t_shape *obj, t_ray ray, t_scene *scene, double distance)
 {
 	int color;
-	double shadow;
-	double	kd;
 	t_vec3	hit_p;
 	t_vec3	norm;
 	t_ray	lit_ray;
-	int	ambient_lit;
-	int	diffuse_lit;
-	int	spec_lit;
+	t_mix_lit	mix;
 
 	hit_p = get_hit_point(scene, ray, distance);
 	if (obj->type == 1)
@@ -200,20 +89,19 @@ int	get_color(t_shape *obj, t_ray ray, t_scene *scene, double distance)
 	lit_ray.direction = vec_normalize(vec_sub(lit_ray.origin, hit_p));
 	
 	//ambient light
-	ambient_lit = rgb_to_int(get_ambient_lit(scene, obj->color));
+	mix.ambient_lit = rgb_to_int(get_ambient_lit(scene, obj->color));
 
 	//diffuse light
-	kd = spot_light(hit_p, scene, norm);
-	diffuse_lit = multiply_color(rgb_to_int(get_diffuse_lit(obj->color, scene)), kd * 2);
+	mix.kd = spot_light(hit_p, scene, norm);
+	mix.diffuse_lit = multiply_color(rgb_to_int(get_diffuse_lit(obj->color, scene)), mix.kd * 2);
 
 	//specular light
-	spec_lit = multiply_color(rgb_to_int(obj->color), spec_light(norm, ray.direction, hit_p, scene));
+	mix.spec_lit = multiply_color(rgb_to_int(obj->color), spec_light(norm, ray.direction, hit_p, scene));
 
-	shadow = shadow_ray(vec_add(hit_p, lit_ray.direction), scene, lit_ray.direction);
-	if (shadow == 0)
-		color = add_3_colors(ambient_lit, diffuse_lit, spec_lit);
+	mix.shadow = shadow_ray(vec_add(hit_p, lit_ray.direction), scene, lit_ray.direction);
+	if (mix.shadow == 0)
+		color = add_3_colors(mix.ambient_lit, mix.diffuse_lit, mix.spec_lit);
 	else 
-		color = add_2_colors(ambient_lit, rgb_to_int(new_color(0,0,0)));
-		//add_2_colors(ambient_lit, multiply_color(diffuse_lit, -0.1)); // ou on ajoute du noir et l'ambiant light seulement ... ?
+		color = add_2_colors(mix.ambient_lit, rgb_to_int(new_color(0,0,0)));
 	return (color);
 }

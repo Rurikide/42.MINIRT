@@ -1,8 +1,5 @@
 #include "../../incls/mini_rt.h"
 
-double	check_cyl_root(t_vec3 ray_origin, t_vec3 ray_direction, t_shape *cyl, double disc, double b);
-
-
 double hit_plane(void *plan, t_vec3 ray_origin, t_vec3 ray_direction)
 {
 	t_pl	*pl;
@@ -12,13 +9,12 @@ double hit_plane(void *plan, t_vec3 ray_origin, t_vec3 ray_direction)
 	double	d;
 	
 	pl = (t_pl *)plan;
-	lo_po = (vec_dot(vec_sub(pl->origin, ray_origin), vec_normalize(pl->dir)));
+	lo_po = vec_dot(vec_sub(pl->origin, ray_origin), vec_normalize(pl->dir));
 	ldotn = vec_dot(ray_direction, vec_normalize(pl->dir));
 	t = lo_po / ldotn;
-	if ( t == 0.0)
+	if (t == 0.0)
 		t = M_EPSILON;
 	return (t);
-
 }
 
 t_vec3	get_cyl_norm(t_vec3 hit_p, t_shape *cyl)
@@ -30,18 +26,7 @@ t_vec3	get_cyl_norm(t_vec3 hit_p, t_shape *cyl)
 	d = vec_dot(vec_sub(hit_p, cyl->origin), cyl->dir);
 	sum = vec_add(cyl->origin, vec_multiply(cyl->origin, d));
 	norm = vec_normalize(vec_sub(hit_p, sum));
-
 	return (norm);
-}
-
-t_vec3	vec_divide(t_vec3 u, double scalar)
-{
-	t_vec3	resultante;
-
-	resultante.x = u.x / scalar;
-	resultante.y = u.y / scalar;
-	resultante.z = u.z / scalar;
-	return (resultante);
 }
 
 double	calc_root(double top_roco, double toprd, double h_2, double t)
@@ -62,8 +47,8 @@ double	hit_cylinder(void *cylinder, t_vec3 ray_origin, t_vec3 ray_direction)
 	double	b;
 	double	c;
 	double	disc;
-	double height = 80.0;
-	double diameter = 20;
+	// double height = 80.0;
+	// double diameter = 20;
 	double t = 0;
 	double h_2;
 	t_vec3	top;
@@ -72,13 +57,13 @@ double	hit_cylinder(void *cylinder, t_vec3 ray_origin, t_vec3 ray_direction)
 	cyl = (t_cy *)cylinder;
 
 
-	top = vec_multiply(vec_normalize(vec_multiply(cyl->dir, height)), height);
+	top = vec_multiply(vec_normalize(vec_multiply(cyl->dir, cyl->height)), cyl->height);
 	h_2 = vec_dot(top, top); //le produit scalaire d'un v avec lui meme est égal au carré de sa longueur
 	ro_co = vec_sub(ray_origin, cyl->origin);
 	
 	a = h_2 - vec_dot(top, ray_direction) * vec_dot(top, ray_direction);
 	b = h_2 * vec_dot(ro_co, ray_direction) - vec_dot(top, vec_sub(ray_origin, cyl->origin)) * vec_dot(top, ray_direction);
-	c = h_2 * vec_dot(ro_co, ro_co) - vec_dot(top, ro_co) * vec_dot(top, ro_co) - (diameter / 2) * (diameter / 2) * h_2;
+	c = h_2 * vec_dot(ro_co, ro_co) - vec_dot(top, ro_co) * vec_dot(top, ro_co) - (cyl->rad) * (cyl->rad) * h_2;
 	
 	disc = (b * b - a * c);
 	double t1 = (-b - sqrtf(disc)) / a;
