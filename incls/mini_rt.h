@@ -15,7 +15,7 @@
 # define ANGLE 3.6
 # define STEP 0.5
 # define YES 1
-# define NO 0
+# define NONE 0
 
 # define MOUSE_LEFT 1
 # define MOUSE_RIGHT 2
