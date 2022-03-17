@@ -11,6 +11,8 @@ int	key_event(int keycode, t_scene *scene)
 		mlx_destroy_window(mlx->mlx, mlx->win);
 		exit(0);
 	}
+	else if (scene->screen.is_selected == PL && (keycode == KEY_PLUS_PETIT || keycode == KEY_PLUS_GRAND))
+		plane_rotation(keycode, scene);
 	else if (keycode == KEY_A || keycode == KEY_S || keycode == KEY_D || keycode == KEY_W || keycode == KEY_R || keycode == KEY_T || keycode == KEY_L)
 		move_cam(keycode, scene);
 	else if (keycode == KEY_UP || keycode == KEY_DOWN)

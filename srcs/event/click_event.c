@@ -50,6 +50,9 @@ int	mouse_event(int button, int x, int y, t_scene *scene)
 	if (clic->type == SP)
         sphere_resize(button, scene, clic);
 	if (clic->type == PL)
+	{
+		printf("PLANE SELECTED\n");
 		plane_event(button, scene, clic);
+	}
 	return (0);
 }
