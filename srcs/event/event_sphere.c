@@ -4,7 +4,7 @@ void	sphere_resize(int button, t_scene *scene, t_shape *clic)
 {
 	t_sp	*sphere;
 
-	scene->screen.is_selected = YES;
+	scene->screen.is_selected = SP;
 	scene->select = clic;
 	sphere = (t_sp *)clic->shape;
 	if (button == ROULETTE_FORWARD)

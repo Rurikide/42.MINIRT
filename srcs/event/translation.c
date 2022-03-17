@@ -79,6 +79,8 @@ void	move_cam(int keycode, t_scene *scene)
 			key_translation_ad(keycode, scene, &scene->cam->origin);
 		else if (scene->screen.is_selected == SP)
 			key_translation_ad(keycode, scene, &((t_sp *)scene->select->shape)->origin);
+		else if (scene->screen.is_selected == CY)
+			key_translation_ad(keycode, scene, &((t_cy *)scene->select->shape)->origin);
 		else if (scene->screen.is_selected == PL)
 			key_translation_ad(keycode, scene, &((t_pl *)scene->select->shape)->origin);
 		else if (scene->screen.is_selected == KEY_L)
@@ -90,6 +92,8 @@ void	move_cam(int keycode, t_scene *scene)
 			key_translation_ws(keycode, scene, &scene->cam->origin);
 		else if (scene->screen.is_selected == SP)
 			key_translation_ws(keycode, scene, &((t_sp *)scene->select->shape)->origin);
+		else if (scene->screen.is_selected == CY)
+			key_translation_ws(keycode, scene, &((t_cy *)scene->select->shape)->origin);
 		else if (scene->screen.is_selected == PL)
 			key_translation_ws(keycode, scene, &((t_pl *)scene->select->shape)->origin);
 		else if (scene->screen.is_selected == KEY_L)
@@ -101,6 +105,8 @@ void	move_cam(int keycode, t_scene *scene)
 			key_translation_rt(keycode, scene, &scene->cam->origin);
 		else if (scene->screen.is_selected == SP)
 			key_translation_rt(keycode, scene, &((t_sp *)scene->select->shape)->origin);
+		else if (scene->screen.is_selected == CY)
+			key_translation_rt(keycode, scene, &((t_cy *)scene->select->shape)->origin);
 		else if (scene->screen.is_selected == PL)
 			key_translation_rt(keycode, scene, &((t_pl *)scene->select->shape)->origin);
 		else if (scene->screen.is_selected == KEY_L)

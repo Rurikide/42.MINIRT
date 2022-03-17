@@ -22,7 +22,9 @@ int			get_hit_color(t_scene *scene, t_ray ray);
 void		sphere_resize(int button, t_scene *scene, t_shape *clic);
 void        plane_event(int button, t_scene *scene, t_shape *clic);
 void	plane_rotation(int keycode, t_scene *scene);
-void	plane_yaw(int keycode, t_scene *s, t_vec3 *plane_dir);
+void	cylinder_event(int button, t_scene *scene, t_shape *clic);
+void	cylinder_rotation(int keycode, t_scene *scene);
+// void	plane_yaw(int keycode, t_scene *s, t_vec3 *plane_dir);
 void	screen_mode(int keycode, t_scene *scene);
 
 #endif

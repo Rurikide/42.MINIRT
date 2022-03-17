@@ -39,7 +39,6 @@ int	click_event(int button, int x, int y, t_scene *scene)
 		scene->screen.is_selected = NONE;
 		scene->select = NULL;
 		printf("Nothing selected\n");
-		return (0);
 	}
 	else if (clic->type == SP)
 	{
@@ -51,10 +50,10 @@ int	click_event(int button, int x, int y, t_scene *scene)
 		printf("Plane selected\n");
 		plane_event(button, scene, clic);
 	}
-	else if (clic->type == PL)
+	else if (clic->type == CY)
 	{
 		printf("Cylinder selected\n");
-		// cylinder_event(button, scene, clic);
+		cylinder_event(button, scene, clic);
 	}
 	return (0);
 }
