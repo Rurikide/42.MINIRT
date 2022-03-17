@@ -8,43 +8,45 @@ CFLAGS= -Wall -Wextra -c -g
 MFLAGS= -Llibx -lmlx -framework OpenGL -framework Appkit
 
 SDIR= srcs
+ODIR= objs
 ADIR= srcs/vector_array
 CDIR= srcs/color
+EDIR= srcs/event
 PDIR= srcs/parse
+RDIR= srcs/ray_hit
+SHDIR= srcs/shapes
+MDIR= srcs/mlx
 VDIR= srcs/vector_3d
-SHDIR = srcs/shapes
-RDIR = srcs/ray_hit
-MDIR = srcs/movements
-MLXDIR = srcs/mlx
-ODIR= objs
 
 SRCS=	main.c
 
 
 ARRAY= vector_array.c vector_utils.c
 COLOR= color.c color_rgb.c
-PARSE= parse.c check_ambcamlit.c check_syntaxe.c check_valid_file.c parse_ambcamlit.c parse_rgb.c parse_settings.c parse_shape.c parse_utils.c parse_xyz.c scene_utils.c
-VEC3D= vector_new.c vector_tool.c
+EVENT= click_event.c event_cylinder.c event_plane.c event_sphere.c matrix_creation.c matrix_manipulation.c rotation.c translation.c
+PARSE= parse.c check_ambcamlit.c check_syntaxe.c check_valid_file.c parse_ambcamlit.c parse_rgb.c parse_settings.c parse_shape.c parse_utils.c parse_xyz.c
+RAY= intersection.c get_color.c
 SHAPES= sphere.c plane.c
 RAY = get_color.c light.c
 MOV = move_cam.c
-MLX = mlx_utils.c
+MLX = mlx_utils.c scene_utils.c
+VEC3D= vector_new.c vector_tool.c
 
-OBJS= $(SRCS:.c=.o) $(ARRAY:.c=.o) $(VEC3D:.c=.o) $(COLOR:.c=.o) $(SHAPES:.c=.o) $(RAY:.c=.o) $(PARSE:.c=.o) $(MOV:.c=.o) $(MLX:.c=.o)
+OBJS= $(SRCS:.c=.o) $(ARRAY:.c=.o) $(COLOR:.c=.o) $(EVENT:.c=.o) $(PARSE:.c=.o) $(RAY:.c=.o) $(SHAPES:.c=.o) $(MLX:.c=.o) $(VEC3D:.c=.o)
 
 
 SFIX= $(addprefix $(SDIR)/, $(SRCS))
+OFIX= $(addprefix $(ODIR)/, $(OBJS)) 
 AFIX= $(addprefix $(ADIR)/, $(ARRAY))
 CFIX= $(addprefix $(CDIR)/, $(COLOR))
+EFIX= $(addprefix $(EDIR)/, $(EVENT)) 
 PIX= $(addprefix $(PDIR)/, $(PARSE))
-VFIX= $(addprefix $(VDIR)/, $(VEC3D))
-OFIX= $(addprefix $(ODIR)/, $(OBJS)) 
-SHFIX= $(addprefix $(SHDIR)/, $(SHAPES)) 
 RFIX= $(addprefix $(RDIR)/, $(RAY)) 
-MFIX = $(addprefix $(MDIR)/, $(MOV)) 
-MLXFIX = $(addprefix $(MLXDIR)/, $(MLX)) 
+SHFIX= $(addprefix $(SHDIR)/, $(SHAPES)) 
+MFIX= $(addprefix $(MDIR)/, $(MLX)) 
+VFIX= $(addprefix $(VDIR)/, $(VEC3D))
 
-VPATH= $(SDIR) $(ADIR) $(PDIR) $(VDIR) $(CDIR) $(SHDIR) $(RDIR) $(MDIR) $(MLXDIR)
+VPATH= $(SDIR) $(ADIR) $(CDIR) $(EDIR) $(PDIR) $(RDIR) $(SHDIR) $(MDIR) $(VDIR)
 
 $(NAME): $(ODIR) $(OFIX) 
 	$(MAKE) -C ./libft

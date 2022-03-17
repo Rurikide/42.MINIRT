@@ -21,10 +21,8 @@ void	parse_sphere(t_scene *scene, char *line, int i)
 	new->shape = (void *)sp;
 	new->type = SP;
 	new->origin = sp->origin;
-	//
-	new->dir = new_vector(0,0,0);
+	new->dir = new_vector(0, 0, 0);
 	new->color = sp->color;
-	//
 	vector_add_back_element(scene->objs, (void *)new);
 }
 
@@ -53,12 +51,17 @@ void	parse_cylinder(t_scene *scene, char *line, int i)
 	set_color_rgb(&cy->color, line, &i);
 	ft_skip_space_tab(line, &i);
 	check_surplus_info(scene, line, i);
+	parse_cylinder2(new, cy);
+	vector_add_back_element(scene->objs, (void *)new);
+}
+
+void	parse_cylinder2(t_shape *new, t_cy *cy)
+{
 	new->shape = (void *)cy;
 	new->type = CY;
 	new->origin = cy->origin;
 	new->dir = cy->dir;
 	new->color = cy->color;
-	vector_add_back_element(scene->objs, (void *)new);
 }
 
 void	parse_plane(t_scene *scene, char *line, int i)

@@ -6,7 +6,7 @@
 /*   By: tshimoda <tshimoda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 15:26:59 by tshimoda          #+#    #+#             */
-/*   Updated: 2022/02/26 15:27:00 by tshimoda         ###   ########.fr       */
+/*   Updated: 2022/03/10 20:33:31 by tshimoda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,16 @@ void	check_unit_range(t_vec3 *unit)
 		print_error_exit(get_scene(), "unit range");
 	if (unit->z < -1.0 || unit->z > 1.0)
 		print_error_exit(get_scene(), "unit range");
+	if (unit->y == 1)
+	{
+		if (unit->x == 0 && unit->z == 0)
+			unit->x = 0.000001;
+	}
+	else if (unit->y == -1)
+	{
+		if (unit->x == 0 && unit->z == 0)
+			unit->x = -0.000001;
+	}
 }
 
 double	parse_1coord_xyz(char *line, int *i)

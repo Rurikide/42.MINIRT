@@ -6,7 +6,6 @@ double hit_plane(void *plan, t_vec3 ray_origin, t_vec3 ray_direction)
 	double	lo_po;
 	double	ldotn;
 	double	t;
-	double	d;
 	
 	pl = (t_pl *)plan;
 	lo_po = vec_dot(vec_sub(pl->origin, ray_origin), vec_normalize(pl->dir));
@@ -47,8 +46,6 @@ double	hit_cylinder(void *cylinder, t_vec3 ray_origin, t_vec3 ray_direction)
 	double	b;
 	double	c;
 	double	disc;
-	// double height = 80.0;
-	// double diameter = 20;
 	double t = 0;
 	double h_2;
 	t_vec3	top;

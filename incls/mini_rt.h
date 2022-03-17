@@ -2,53 +2,56 @@
 # define MINI_RT_H
 
 # include "color.h"
-# include "matrix.h"
+# include "event.h"
 # include "parsing.h"
-# include "vector_3d.h"
 # include "scene.h"
+# include "vector_3d.h"
 # include "vector_array.h"
-
 # include "../libft/libsrcs/libft.h"
 # include "../libft/libsrcs/ft_printf.h"
 # include "../libft/libsrcs/get_next_line.h"
-
 # include "../libx/mlx.h"
 
-#define INFINITY 1000
-# define KEY_ESC 53 //ESCAPE
-# define KEY_Q 12 // Q
+# define ANGLE 3.6
+# define STEP 0.5
+# define YES 1
+# define NO 0
 
-# define KEY_A 0x00  //0
-# define KEY_S 0x01  //1
-# define KEY_D 0x02  //2
-# define KEY_W 0x0D  //13
+# define MOUSE_LEFT 1
+# define MOUSE_RIGHT 2
+# define MOUSE_ROULETTE 3
+# define ROULETTE_FORWARD 5
+# define ROULETTE_BACKWARD 4
 
+# define KEY_ESC 53
+# define KEY_Q 12
+# define KEY_A 0
+# define KEY_S 1
+# define KEY_D 2
+# define KEY_W 13
+# define KEY_R 15
+# define KEY_T 17
 # define KEY_UP 126
 # define KEY_DOWN 125
 # define KEY_LEFT 123
 # define KEY_RIGHT 124
-
 # define KEY_PLUS 24
 # define KEY_MINUS 27
-
-# define KEY_R 15
-# define KEY_T 17
-
-# define NUMPAD_2 84
-# define NUMPAD_4 86
-# define NUMPAD_6 88
-# define NUMPAD_8 91
-
-# define NUMPAD_5 87
-
-# define NUMPAD_1 83
-# define NUMPAD_3 85
-# define NUMPAD_7 89
-# define NUMPAD_9 92
-
-
+# define KEY_PLUS_PETIT 43
+# define KEY_PLUS_GRAND 47
+# define KEY_O 31
+# define KEY_U 32
+# define KEY_I 34
+# define KEY_L 37
+# define KEY_J 38
+# define KEY_K 40
+# define X_AXIS 7
+# define Y_AXIS 16
+# define Z_AXIS 6
 # define WIDTH	1080
 # define HEIGHT 720
+# define M_EPSILON 1e-8
+# define M_INFINITY 1.0e30f
 
 typedef struct s_mlx
 {
@@ -89,7 +92,6 @@ t_vec3	get_cyl_norm(t_vec3 hit_p, t_shape *cyl);
 double	check_cyl_root(t_vec3 ray_origin, t_vec3 ray_direction, t_shape *cyl, double disc, double b);
 t_vec3	get_cyl_norm(t_vec3 hit_p, t_shape *cyl);
 
-
 /*RAY_HIT
 /*GET_COLOR_C*/
 int		get_color(t_shape *obj, t_ray ray, t_scene *scene, double distance);
@@ -102,9 +104,8 @@ t_rgb	get_diffuse_lit(t_rgb obj, t_scene *scene);
 t_rgb	get_spec_lit(t_rgb obj,	double ks);
 t_rgb	get_ambient_lit(t_scene *scene, t_rgb obj);
 
-
 /*MAIN_C*/
-void	ray_tracing(t_scene *scene);
+void	ray_tracing(t_scene *scene, int x, int y);
 t_vec3	get_ray_dir(t_scene *scene, t_mlx *mlx, double u, double v);
 void	make_scene(t_scene *scene);
 
