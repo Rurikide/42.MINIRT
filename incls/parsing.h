@@ -37,7 +37,7 @@ double	parse_1coord_xyz(char *line, int *i);
 void	set_coord_xyz(t_vec3 *v, char *line, int *i);
 
 //		check_ambcamlit.c
-void	check_amb_cam(t_scene *scene);
+void	check_amb_cam_lit(t_scene *scene);
 void	check_one_amb(t_scene *scene);
 void	check_one_cam(t_scene *scene);
 void	check_one_lit(t_scene *scene);
