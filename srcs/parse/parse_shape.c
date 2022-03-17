@@ -33,7 +33,7 @@ void	parse_cylinder(t_scene *scene, char *line, int i)
 
 	new = ft_calloc(1, sizeof(t_shape));
 	cy = ft_calloc(1, sizeof(t_cy));
-	//new->hit_obj = &hit_cylinder;
+	new->hit_obj = &hit_cylinder;
 	ft_skip_space_tab(line, &i);
 	set_coord_xyz(&cy->origin, line, &i);
 	check_if_missing_space(line, i);
@@ -51,12 +51,17 @@ void	parse_cylinder(t_scene *scene, char *line, int i)
 	set_color_rgb(&cy->color, line, &i);
 	ft_skip_space_tab(line, &i);
 	check_surplus_info(scene, line, i);
+	parse_cylinder2(new, cy);
+	vector_add_back_element(scene->objs, (void *)new);
+}
+
+void	parse_cylinder2(t_shape *new, t_cy *cy)
+{
 	new->shape = (void *)cy;
 	new->type = CY;
 	new->origin = cy->origin;
 	new->dir = cy->dir;
 	new->color = cy->color;
-	vector_add_back_element(scene->objs, (void *)new);
 }
 
 void	parse_plane(t_scene *scene, char *line, int i)

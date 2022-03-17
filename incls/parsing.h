@@ -56,5 +56,6 @@ void		parse_light(t_scene *scene, char *line, int i);
 //		parse_shape.c
 void	parse_sphere(t_scene *scene, char *line, int i);
 void	parse_cylinder(t_scene *scene, char *line, int i);
+void	parse_cylinder2(t_shape *new, t_cy *cy);
 void	parse_plane(t_scene *scene, char *line, int i);
 #endif
