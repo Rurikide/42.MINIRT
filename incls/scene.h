@@ -114,4 +114,13 @@ typedef struct	s_mix_lit
 	int	spec_lit;
 }				t_mix_lit;
 
+typedef	struct	s_quadra
+{
+	double	a;
+	double	b;
+	double	c;
+	double	disc;
+	double	t;
+}				t_quadra;
+
 #endif

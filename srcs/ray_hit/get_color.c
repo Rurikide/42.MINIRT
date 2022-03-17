@@ -46,11 +46,11 @@ double	spec_light(t_vec3 norm, t_vec3 ray_dir, t_vec3 hit_point, t_scene *scene)
 	double n;
 	double specular;
 
-	n = 45;
+	n = 25;
 	reflect = get_reflect(norm, ray_dir);
 	view_dir = vec_normalize(vec_sub(scene->lit->origin, hit_point));
 	specular = vec_dot(reflect, view_dir);
-	return (pow(fmax(specular, 0.0), n) * scene->lit->ratio * 1.2);
+	return (pow(fmax(specular, 0.0), n) * scene->lit->ratio);
 }
 
 /*Lambert's Cosine Law :
@@ -83,7 +83,7 @@ int	get_color(t_shape *obj, t_ray ray, t_scene *scene, double distance)
 	if (obj->type == 1)
 		norm = vec_normalize(vec_sub(hit_p, obj->origin));
 	if (obj->type == 2)
-		norm = get_cyl_norm(hit_p, obj);
+		norm = get_cyl_norm(hit_p, (void*)obj);
 	if (obj->type == 3)
 		norm = vec_normalize(obj->dir);
 	lit_ray.origin = scene->lit->origin;
@@ -94,7 +94,7 @@ int	get_color(t_shape *obj, t_ray ray, t_scene *scene, double distance)
 
 	//diffuse light
 	mix.kd = spot_light(hit_p, scene, norm);
-	mix.diffuse_lit = multiply_color(rgb_to_int(get_diffuse_lit(obj->color, scene)), mix.kd * 2);
+	mix.diffuse_lit = multiply_color(rgb_to_int(get_diffuse_lit(obj->color, scene)), mix.kd * 1.5);
 
 	//specular light
 	mix.spec_lit = multiply_color(rgb_to_int(obj->color), spec_light(norm, ray.direction, hit_p, scene));
