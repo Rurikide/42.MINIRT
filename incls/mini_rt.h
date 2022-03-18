@@ -16,13 +16,11 @@
 # define STEP 0.5
 # define YES 1
 # define NONE 0
-
 # define MOUSE_LEFT 1
 # define MOUSE_RIGHT 2
 # define MOUSE_ROULETTE 3
 # define ROULETTE_FORWARD 5
 # define ROULETTE_BACKWARD 4
-
 # define KEY_ESC 53
 # define KEY_Q 12
 # define KEY_A 0
@@ -39,12 +37,7 @@
 # define KEY_MINUS 27
 # define KEY_PLUS_PETIT 43
 # define KEY_PLUS_GRAND 47
-# define KEY_O 31
-# define KEY_U 32
-# define KEY_I 34
 # define KEY_L 37
-# define KEY_J 38
-# define KEY_K 40
 # define X_AXIS 7
 # define Y_AXIS 16
 # define Z_AXIS 6
@@ -68,9 +61,9 @@ typedef struct s_mlx
 }			t_mlx;
 
 /*MLX_UTILS_C*/
-int		key_event(int keycode, t_scene *scene);
-int		click_close_window(void);
-void	hook_collection(t_mlx *mlx, t_scene *scene);
+int		key_event(int key, t_scene *scene);
+int	click_close_window(void);
+int	hook_collection(t_mlx *mlx, t_scene *scene);
 void	my_mlx_pixel_put(t_mlx *mlx, int x, int y, int color);
 t_mlx	*get_mlx(void);
 
@@ -108,7 +101,5 @@ t_rgb	get_ambient_lit(t_scene *scene, t_rgb obj);
 void	ray_tracing(t_scene *scene, int x, int y);
 t_vec3	get_ray_dir(t_scene *scene, t_mlx *mlx, double u, double v);
 void	make_scene(t_scene *scene);
-
-
 
 #endif

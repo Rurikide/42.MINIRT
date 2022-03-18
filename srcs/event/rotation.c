@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   rotation.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tshimoda <tshimoda@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/03/18 17:08:22 by tshimoda          #+#    #+#             */
+/*   Updated: 2022/03/18 17:08:26 by tshimoda         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../incls/mini_rt.h"
 
 void	pitch_cam(int keycode, t_scene *s)
@@ -27,6 +39,7 @@ void	pitch_cam(int keycode, t_scene *s)
 	s->cam->dir.z = s->cam->m.d[2][2];
 	remake_scene(s, get_mlx());
 }
+
 void	yaw_cam(int keycode, t_scene *s)
 {
 	t_matrix	rotated;
@@ -43,11 +56,3 @@ void	yaw_cam(int keycode, t_scene *s)
 	s->cam->dir.z = s->cam->m.d[2][2];
 	remake_scene(s, get_mlx());
 }
-
-	// printf("cam dir x =%.6f \n", s->cam->dir.x);
-	// printf("cam dir y =%.6f \n", s->cam->dir.y);
-	// printf("cam dir z =%.6f \n", s->cam->dir.z);
-	// printf("-------------------\n");
-	// printf("next dir x =%.6f \n", s->cam->m.d[2][0]);
-	// printf("next dir y =%.6f \n", s->cam->m.d[2][1]);
-	// printf("next  dir z =%.6f \n\n", s->cam->m.d[2][2]);

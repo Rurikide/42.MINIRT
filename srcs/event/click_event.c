@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   click_event.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tshimoda <tshimoda@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/03/18 17:04:39 by tshimoda          #+#    #+#             */
+/*   Updated: 2022/03/18 18:08:17 by tshimoda         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../incls/mini_rt.h"
 
 t_shape	*get_hit_shape(t_scene *scene, t_ray ray)
@@ -38,12 +50,11 @@ int	click_event(int button, int x, int y, t_scene *scene)
 	{
 		scene->screen.is_selected = NONE;
 		scene->select = NULL;
-		printf("Nothing selected\n");
 	}
 	else if (clic->type == SP)
 	{
 		printf("Sphere selected\n");
-        sphere_resize(button, scene, clic);
+		sphere_resize(button, scene, clic);
 	}
 	else if (clic->type == PL)
 	{

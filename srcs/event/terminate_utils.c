@@ -1,16 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   scene_utils.c                                      :+:      :+:    :+:   */
+/*   terminate_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tshimoda <tshimoda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/26 15:27:08 by tshimoda          #+#    #+#             */
-/*   Updated: 2022/03/18 14:32:50 by tshimoda         ###   ########.fr       */
+/*   Created: 2022/03/18 17:31:49 by tshimoda          #+#    #+#             */
+/*   Updated: 2022/03/18 18:09:25 by tshimoda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incls/mini_rt.h"
+
+void	free_shape(void *object)
+{
+	t_shape	*sh;
+
+	if (object == NULL)
+		return ;
+	sh = (t_shape *)object;
+	free(sh->shape);
+}
 
 void	free_scene(t_scene *scene)
 {
@@ -24,33 +34,29 @@ void	free_scene(t_scene *scene)
 		vector_free_elements(scene->objs, free_shape);
 }
 
-t_scene	*get_scene(void)
+void	close_minirt(void)
 {
-	static t_scene	scene;
+	t_mlx	*mlx;
 
-	if (scene.init != 1)
-	{
-		scene.init = 1;
-		scene.amb = NULL;
-		scene.cam = NULL;
-		scene.lit = NULL;
-		scene.select = NULL;
-		scene.screen.x = 0;
-		scene.screen.y = 0;
-		scene.screen.is_selected = 0;
-		scene.screen.obj_rot_axis = X_AXIS;
-		scene.objs = ft_calloc(1, sizeof(t_vector));
-		vector_init_array(scene.objs);
-	}
-	return (&scene);
+	mlx = get_mlx();
+	mlx_destroy_image(mlx->mlx, mlx->img);
+	mlx_destroy_window(mlx->mlx, mlx->win);
+	free_scene(get_scene());
+	exit(0);
 }
 
-void	free_shape(void * object)
+int	click_close_window(void)
 {
-	t_shape *sh;
+	printf("clicked the red (x)\n");
+	close_minirt();
+	return (0);
+}
 
-	if (object == NULL)
-		return;
-	sh = (t_shape *)object;
-	free(sh->shape);
+void	print_error_exit(t_scene *scene, char *msg)
+{
+	ft_putendl_fd("Error", 1);
+	ft_putendl_fd(msg, 1);
+	if (scene != NULL)
+		free_scene(scene);
+	exit(EXIT_FAILURE);
 }

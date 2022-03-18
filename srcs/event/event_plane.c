@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   event_plane.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tshimoda <tshimoda@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/03/18 17:06:46 by tshimoda          #+#    #+#             */
+/*   Updated: 2022/03/18 17:07:19 by tshimoda         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../incls/mini_rt.h"
 
 void	plane_event(int button, t_scene *scene, t_shape *clic)
@@ -10,22 +22,12 @@ void	plane_event(int button, t_scene *scene, t_shape *clic)
 	remake_scene(scene, get_mlx());
 }
 
-// void	plane_rotation(int keycode, t_scene *scene)
-// {
-// 	if (keycode == KEY_PLUS_PETIT || keycode == KEY_PLUS_GRAND)
-// 		plane_yaw(keycode, scene, &((t_pl *)scene->select->shape)->dir);
-// }
-
-
-
-// void	plane_yaw(int keycode, t_scene *s, t_vec3 *plane_dir)
 void	plane_rotation(int keycode, t_scene *scene)
 {
 	t_vec3	*plane_dir;
-	double		rot_step;
+	double	rot_step;
 
-	plane_dir =  &((t_pl *)scene->select->shape)->dir;
-
+	plane_dir = &((t_pl *)scene->select->shape)->dir;
 	rot_step = 0.09;
 	if (keycode == KEY_PLUS_GRAND)
 	{
@@ -44,6 +46,6 @@ void	plane_rotation(int keycode, t_scene *scene)
 			plane_dir->y -= rot_step;
 		else if (scene->screen.obj_rot_axis == Z_AXIS && plane_dir->z >= -0.9)
 			plane_dir->z -= rot_step;
-	} 
+	}
 	remake_scene(scene, get_mlx());
 }

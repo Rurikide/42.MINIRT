@@ -6,7 +6,7 @@
 /*   By: tshimoda <tshimoda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/06 16:30:59 by tshimoda          #+#    #+#             */
-/*   Updated: 2022/02/24 18:04:40 by tshimoda         ###   ########.fr       */
+/*   Updated: 2022/03/18 16:00:58 by tshimoda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,5 @@ double	vec_squared(t_vec3 v);
 // 	resultante.z = (u.x * v.y) - (u.y * v.x);
 // 	return (resultante);
 // }
-
-
 
 #endif

@@ -123,28 +123,3 @@ int	main (int argc, char **argv)
  	make_scene(scene);
 	 return (0);
  }
-
-
-	// int sample = 0;
-	// while (sample < 1)
-	// {
-	// 	printf("-----------------------------------------\n");
-	// 	// printf("cam ori x = %f\n", scene->cam->origin.x);
-	// 	// printf("cam ori y = %f\n", scene->cam->origin.y);
-	// 	// printf("cam ori z = %f\n", scene->cam->origin.z);
-	// 	// printf("Fichier .rt cam dir x = %f\n", scene->cam->dir.x);
-	// 	// printf("Fichier .rt cam dir y = %f\n", scene->cam->dir.y);
-	// 	// printf("Fichier .rt cam dir z = %f\n", scene->cam->dir.z);
-		
-	// 	// printf("\v");
-
-	// 	// printf("ray direction x = %f\n", ray.direction.x);
-	// 	// printf("ray direction y = %f\n", ray.direction.y);
-	// 	// printf("ray direction z = %f\n", ray.direction.z);
-	// 	// printf("\v");
-	// 	// printf("ray origin x = %f\n", ray.origin.x);
-	// 	// printf("ray origin y = %f\n", ray.origin.y);
-	// 	// printf("ray origin z = %f\n", ray.origin.z);
-	// 	printf("-----------------------------------------\n");
-	// 	sample++;
-	// }

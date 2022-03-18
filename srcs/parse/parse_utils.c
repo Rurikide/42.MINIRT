@@ -6,20 +6,11 @@
 /*   By: tshimoda <tshimoda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 15:26:53 by tshimoda          #+#    #+#             */
-/*   Updated: 2022/02/26 15:26:54 by tshimoda         ###   ########.fr       */
+/*   Updated: 2022/03/18 17:33:38 by tshimoda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incls/mini_rt.h"
-
-void	print_error_exit(t_scene *scene, char *msg)
-{
-	ft_putendl_fd("Error", 1);
-	ft_putendl_fd(msg, 1);
-	if (scene != NULL)
-		free_scene(scene);
-	exit(EXIT_FAILURE);
-}
 
 int	get_int_len(char *line, int i)
 {

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_shape.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tshimoda <tshimoda@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/03/18 16:59:16 by tshimoda          #+#    #+#             */
+/*   Updated: 2022/03/18 16:59:18 by tshimoda         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../incls/mini_rt.h"
 
 void	parse_sphere(t_scene *scene, char *line, int i)
@@ -90,23 +102,3 @@ void	parse_plane(t_scene *scene, char *line, int i)
 	new->color = pl->color;
 	vector_add_back_element(scene->objs, (void *)new);
 }
-
-// while (scene->objs->total > 0)
-// {
-// 	printf("nb of shapes in the vector array = %zu\n",
-// scene->objs->total);
-// 	printf("sphere %d\n",
-// ((t_sp *)((t_shape *)scene->objs->elements[0])->shape)->color.r);
-// 	printf("sphere %d\n",
-// ((t_sp *)((t_shape *)scene->objs->elements[0])->shape)->color.g);
-// 	printf("sphere %d\n",
-// ((t_sp *)((t_shape *)scene->objs->elements[0])->shape)->color.b);
-// 	scene->objs->total--;
-// }
-	// res = s2->hit_obj(s2->shape, cam, dir);
-	// if (s2->type == 1)
-	//     printf("object type  %d\n", s2->type);
-// t_shape *s2;
-// s2 = (t_shape *)scene->objs->elements[0];
-// if (s2->type == 1)
-// double res;
