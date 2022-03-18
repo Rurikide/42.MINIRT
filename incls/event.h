@@ -26,5 +26,6 @@ void	cylinder_event(int button, t_scene *scene, t_shape *clic);
 void	cylinder_rotation(int keycode, t_scene *scene);
 void	screen_mode(int keycode, t_scene *scene);
 void	cylinder_height(int keycode, t_scene *scene);
+void	free_shape(void * object);
 
 #endif

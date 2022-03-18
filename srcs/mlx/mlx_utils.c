@@ -9,6 +9,7 @@ int	key_event(int keycode, t_scene *scene)
 	{
 		mlx_destroy_image(mlx->mlx, mlx->img);
 		mlx_destroy_window(mlx->mlx, mlx->win);
+		free_scene(scene);
 		exit(0);
 	}
 	else if ((keycode == KEY_PLUS_PETIT || keycode == KEY_PLUS_GRAND))
@@ -63,11 +64,12 @@ void	screen_mode(int keycode, t_scene *scene)
 
 int	click_close_window(void)
 {
-	// t_mlx	*mlx;
+	t_mlx	*mlx;
 
-	// mlx = get_mlx();
-	// mlx_destroy_image(mlx->mlx, mlx->img);
-	// mlx_destroy_window(mlx->mlx, mlx->win);
+	mlx = get_mlx();
+	mlx_destroy_image(mlx->mlx, mlx->img);
+	mlx_destroy_window(mlx->mlx, mlx->win);
+	free_scene(get_scene());
 	printf("clicked the red (x)\n");
 	exit(0);
 }

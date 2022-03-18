@@ -6,7 +6,7 @@
 /*   By: tshimoda <tshimoda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 15:27:08 by tshimoda          #+#    #+#             */
-/*   Updated: 2022/03/17 22:40:38 by tshimoda         ###   ########.fr       */
+/*   Updated: 2022/03/18 14:32:50 by tshimoda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	free_scene(t_scene *scene)
 	if (scene->lit != NULL)
 		free(scene->lit);
 	if (scene->objs != NULL)
-		vector_free_elements(scene->objs);
+		vector_free_elements(scene->objs, free_shape);
 }
 
 t_scene	*get_scene(void)
@@ -43,4 +43,14 @@ t_scene	*get_scene(void)
 		vector_init_array(scene.objs);
 	}
 	return (&scene);
+}
+
+void	free_shape(void * object)
+{
+	t_shape *sh;
+
+	if (object == NULL)
+		return;
+	sh = (t_shape *)object;
+	free(sh->shape);
 }
