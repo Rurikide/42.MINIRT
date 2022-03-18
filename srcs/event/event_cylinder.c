@@ -22,14 +22,26 @@ void	cylinder_event(int button, t_scene *scene, t_shape *clic)
 	}
 }
 
+void	cylinder_height(int keycode, t_scene *scene)
+{
+	t_cy *cylinder;
+	printf("allo\n");
+	if (scene->screen.is_selected == CY)
+		cylinder = ((t_cy *)scene->select->shape);
+	else
+		return;
+	if (keycode == KEY_PLUS)
+			cylinder->height += 1;
+	else if (keycode == KEY_MINUS && cylinder->height > 1)
+			cylinder->height -= 1;
+	remake_scene(scene, get_mlx());
+}
 void	cylinder_rotation(int keycode, t_scene *scene)
 {
-	t_matrix	rotated;
-	t_matrix	prod;
-	t_vec3	*cylinder_dir;
+	t_vec3		*cylinder_dir;
 	double		rot_step;
 
-	cylinder_dir =  &((t_pl *)scene->select->shape)->dir;
+	cylinder_dir =  &((t_cy *)scene->select->shape)->dir;
 
 	rot_step = 0.09;
 	if (keycode == KEY_PLUS_GRAND)

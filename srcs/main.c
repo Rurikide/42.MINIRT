@@ -23,7 +23,7 @@ int get_hit_color(t_scene *scene, t_ray ray)
 	t_shape *obj;
 
 	closer = M_INFINITY;
-	color = 0xFFFFFF;
+	color = 0x000000;
 	i = 0;
 	while (i < scene->objs->total)
 	{

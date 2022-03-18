@@ -21,8 +21,6 @@ void	plane_event(int button, t_scene *scene, t_shape *clic)
 // void	plane_yaw(int keycode, t_scene *s, t_vec3 *plane_dir)
 void	plane_rotation(int keycode, t_scene *scene)
 {
-	t_matrix	rotated;
-	t_matrix	prod;
 	t_vec3	*plane_dir;
 	double		rot_step;
 

@@ -18,13 +18,8 @@ int	key_event(int keycode, t_scene *scene)
 		if (scene->screen.is_selected == PL)
 			plane_rotation(keycode, scene);
 	}
-	// else if ((keycode == KEY_PLUS || keycode == KEY_MINUS))
-	// {
-	// 	if (scene->screen.is_selected == CY)
-	// 		cylinder_rotation(keycode, scene);
-	// 	if (scene->screen.is_selected == PL)
-	// 		plane_rotation(keycode, scene);
-	// }
+	else if (keycode == KEY_PLUS || keycode == KEY_MINUS)
+			cylinder_height(keycode, scene);
 	else if ((keycode == X_AXIS || keycode == Y_AXIS || keycode == Z_AXIS || keycode == KEY_L))
 		screen_mode(keycode, scene);
 	else if (keycode == KEY_A || keycode == KEY_S || keycode == KEY_D || keycode == KEY_W || keycode == KEY_R || keycode == KEY_T)
