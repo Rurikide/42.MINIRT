@@ -3,12 +3,12 @@
 
 # include "color.h"
 # include "event.h"
+# include "matrix.h"
 # include "parsing.h"
 # include "scene.h"
 # include "vector_3d.h"
 # include "vector_array.h"
 # include "../libft/libsrcs/libft.h"
-# include "../libft/libsrcs/ft_printf.h"
 # include "../libft/libsrcs/get_next_line.h"
 # include "../libx/mlx.h"
 
@@ -62,15 +62,10 @@ typedef struct s_mlx
 
 /*MLX_UTILS_C*/
 int		key_event(int key, t_scene *scene);
-int	click_close_window(void);
-int	hook_collection(t_mlx *mlx, t_scene *scene);
+int		click_close_window(void);
+int		hook_collection(t_mlx *mlx, t_scene *scene);
 void	my_mlx_pixel_put(t_mlx *mlx, int x, int y, int color);
 t_mlx	*get_mlx(void);
-
-/*MOVEMENTS
-MOVE_CAM_C*/
-void	move_cam(int keycode, t_scene *scene);
-void	remake_scene(t_scene *scene, t_mlx *mlx);
 
 /*SHAPES
 SPHERE_C*/
@@ -79,17 +74,16 @@ t_vec3	get_hit_point(t_scene *scene, t_ray ray, double distance);
 double	get_root(double disc, double b);
 double	hit_sphere(void *sphere, t_vec3 cam, t_vec3 direction);
 /*PLANE_C*/
-double hit_plane(void *plan, t_vec3 ray_origin, t_vec3 ray_direction);
+double	hit_plane(void *plan, t_vec3 ray_origin, t_vec3 ray_direction);
 double	hit_cylinder(void *cylinder, t_vec3 ray_origin, t_vec3 ray_direction);
 t_vec3	get_cyl_norm(t_vec3 hit_p, void *cyl);
 double	check_cyl_root(t_vec3 ray_origin, t_vec3 ray_direction, t_shape *cyl, double disc, double b);
-
 
 /*RAY_HIT
 GET_COLOR_C*/
 int		get_color(t_shape *obj, t_ray ray, t_scene *scene, double distance);
 double	shadow_ray(t_vec3 hit_point, t_scene *scene, t_vec3 ray_dir);
-t_vec3 get_reflect(t_vec3 norm, t_vec3 ray_dir);
+t_vec3	get_reflect(t_vec3 norm, t_vec3 ray_dir);
 double	spot_light(t_vec3 hit_point, t_scene *scene, t_vec3 norm);
 double	spec_light(t_vec3 norm, t_vec3 dir, t_vec3 hit_point, t_scene *scene);
 /*LIGHT_C*/
@@ -97,9 +91,15 @@ t_rgb	get_diffuse_lit(t_rgb obj, t_scene *scene);
 t_rgb	get_spec_lit(t_rgb obj,	double ks);
 t_rgb	get_ambient_lit(t_scene *scene, t_rgb obj);
 
-/*MAIN_C*/
+/*RAY.C */
+int		get_hit_color(t_scene *scene, t_ray ray);
+t_ray	ray_settings(t_vec3 origin, t_vec3 direction);
+t_vec3	ray_pixel_to_world(t_scene *scene, int x, int y);
+t_ray	ray_generator(t_scene *scene, int x, int y);
 void	ray_tracing(t_scene *scene, int x, int y);
-t_vec3	get_ray_dir(t_scene *scene, t_mlx *mlx, double u, double v);
+
+/*MAIN_C*/
+void	remake_scene(t_scene *scene, t_mlx *mlx);
 void	make_scene(t_scene *scene);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: tshimoda <tshimoda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 15:27:08 by tshimoda          #+#    #+#             */
-/*   Updated: 2022/03/18 18:07:14 by tshimoda         ###   ########.fr       */
+/*   Updated: 2022/03/21 13:58:03 by tshimoda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	key_event(int key, t_scene *scene)
 	return (0);
 }
 
-int	screen_mode(int keycode, t_scene *scene)
+void	screen_mode(int keycode, t_scene *scene)
 {
 	if (keycode == KEY_L && scene->screen.is_selected == NONE)
 	{
@@ -64,7 +64,6 @@ int	screen_mode(int keycode, t_scene *scene)
 		scene->screen.obj_rot_axis = Z_AXIS;
 		printf("Object rotation Z_AXIS selected\n");
 	}
-	return (0);
 }
 
 int	hook_collection(t_mlx *mlx, t_scene *scene)

@@ -6,7 +6,7 @@
 /*   By: tshimoda <tshimoda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 17:04:39 by tshimoda          #+#    #+#             */
-/*   Updated: 2022/03/18 18:08:17 by tshimoda         ###   ########.fr       */
+/*   Updated: 2022/03/21 13:59:37 by tshimoda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ t_shape	*get_hit_shape(t_scene *scene, t_ray ray)
 	return (shape);
 }
 
-int	click_event(int button, int x, int y, t_scene *scene)
+void	click_event(int button, int x, int y, t_scene *scene)
 {
 	t_shape	*clic;
 	t_ray	ray;
@@ -66,5 +66,4 @@ int	click_event(int button, int x, int y, t_scene *scene)
 		printf("Cylinder selected\n");
 		cylinder_event(button, scene, clic);
 	}
-	return (0);
 }

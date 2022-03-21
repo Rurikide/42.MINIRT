@@ -6,7 +6,7 @@
 /*   By: tshimoda <tshimoda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 17:53:14 by tshimoda          #+#    #+#             */
-/*   Updated: 2022/03/18 18:05:00 by tshimoda         ###   ########.fr       */
+/*   Updated: 2022/03/21 14:05:19 by tshimoda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ void	key_translation_rt(int keycode, t_scene *scene, t_vec3 *origin)
 	move.y = scene->cam->m.d[1][1];
 	move.z = scene->cam->m.d[1][2];
 	move = vec_multiply(move, STEP);
-
 	if (keycode == KEY_T)
 	{
 		origin->x += move.x;

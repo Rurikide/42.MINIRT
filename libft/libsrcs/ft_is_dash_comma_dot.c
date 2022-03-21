@@ -6,7 +6,7 @@
 /*   By: tshimoda <tshimoda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 22:16:07 by tshimoda          #+#    #+#             */
-/*   Updated: 2022/02/24 22:17:22 by tshimoda         ###   ########.fr       */
+/*   Updated: 2022/03/21 12:37:30 by tshimoda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,4 +18,3 @@ int	ft_is_dash_comma_dot(char c)
 		return (1);
 	return (0);
 }
-
