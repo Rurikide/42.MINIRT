@@ -103,6 +103,7 @@ typedef struct s_scene
 	t_shape		*select;
 	t_screen	screen;
 	int			init;
+	int			shad;
 	// t_ray		ray;
 }	t_scene;
 
@@ -122,6 +123,7 @@ typedef	struct	s_quadra
 	double	c;
 	double	disc;
 	double	t;
+	double t1;
 }				t_quadra;
 
 #endif

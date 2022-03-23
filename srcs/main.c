@@ -29,7 +29,7 @@ int get_hit_color(t_scene *scene, t_ray ray)
 	{
 		obj = (t_shape *)scene->objs->elements[i];
 		distance = obj->hit_obj(obj->shape, ray.origin, ray.direction);
-		if (distance >= M_EPSILON && distance < closer)
+		if (distance > 0 && distance < closer)
 		{
 			closer = distance;
 			color = get_color(obj, ray, scene, distance);

@@ -67,6 +67,7 @@ typedef struct s_mlx
 	int		w_len;
 }			t_mlx;
 
+
 /*MLX_UTILS_C*/
 int		key_event(int keycode, t_scene *scene);
 int		click_close_window(void);
@@ -99,15 +100,15 @@ static inline double hit_sphere(void *sphere, t_vec3 ray_origin, t_vec3 ray_dire
 	c = vec_dot(v, v) - sp->rad * sp->rad;
 	disc = b * b - 4*c;
 	if (disc >= 0)
-		return (get_root(sqrtf(disc), b)); //je mets sqrtf, à retester
+		return (get_root(sqrtf(disc), b));
 	else
-		return (0);
+		return (-1);
 }
 
 /*PLANE_C*/
 double hit_plane(void *plan, t_vec3 ray_origin, t_vec3 ray_direction);
 double	hit_cylinder(void *cylinder, t_vec3 ray_origin, t_vec3 ray_direction);
-t_vec3	get_cyl_norm(t_vec3 hit_p, void *cyl);
+t_vec3	get_cyl_norm(t_vec3 hit_p, t_cy *cyl);
 double	check_cyl_root(t_vec3 ray_origin, t_vec3 ray_direction, t_shape *cyl, double disc, double b);
 
 

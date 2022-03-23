@@ -10,18 +10,21 @@ double	shadow_ray(t_vec3 hit_point, t_scene *scene, t_vec3 ray_dir)
 	double distance;
 	t_shape *obj;
 	
-	(void)ray_dir;
 
-	dir_lit = vec_normalize(vec_sub(scene->lit->origin, hit_point));
+	distance = 0;
 	i = 0;
+	scene->shad = 1;
 	while (i < scene->objs->total)
 	{
 		obj = (t_shape *)scene->objs->elements[i];
-		distance = obj->hit_obj(obj->shape, hit_point,dir_lit);
-		if (distance > 0 && distance < vec_len(vec_sub(scene->lit->origin, hit_point))
-			&& scene->objs->elements[i - 1] != i) 
+		if (scene->shad == 1 && obj->type == 2)
+			hit_point = vec_sub(hit_point, ray_dir);
+		dir_lit = vec_normalize(vec_sub(scene->lit->origin, hit_point));
+		distance = obj->hit_obj(obj->shape, hit_point, dir_lit);
+		if (distance > 0 && distance < vec_len(vec_sub(scene->lit->origin, hit_point)))
 			return (-1);
 		i++;
+		scene->shad = 0;
 	}
 	return (0);
 }
@@ -56,7 +59,9 @@ double	spec_light(t_vec3 norm, t_vec3 ray_dir, t_vec3 hit_point, t_scene *scene)
 /*Lambert's Cosine Law :
 Calcul l'angle formé par le vecteur du spot_light et le vecteur du hit_point
 Spot_light se situe entre -1 et 1, sachant que 0 est l'angle qui donne la lumière
-la plus intense car directement face au point d'intersection*/
+la plus intense car directement face au point d'intersection - Si le spotlight
+est inférieur à 0, that would mean the light is behind the normal surface,
+so ne devrait pas éclairer*/
 double	spot_light(t_vec3 hit_point, t_scene *scene, t_vec3 norm)
 {
 	t_vec3	lit_dir;
@@ -65,7 +70,7 @@ double	spot_light(t_vec3 hit_point, t_scene *scene, t_vec3 norm)
 	lit_dir = vec_normalize(vec_sub(scene->lit->origin, hit_point));
 	spot_light = vec_dot(norm, lit_dir); 
 	spot_light *= scene->lit->ratio;
-	if (spot_light < 0.0) // if < 0 that would mean the light is behind the normal surface, so ne devrait pas éclairer
+	if (spot_light < 0.0)
 		spot_light = 0.0;
 	return (spot_light);
 }
@@ -79,11 +84,12 @@ int	get_color(t_shape *obj, t_ray ray, t_scene *scene, double distance)
 	t_ray	lit_ray;
 	t_mix_lit	mix;
 
-	hit_p = get_hit_point(scene, ray, distance);
+	//hit_p = get_hit_point(scene, ray, distance);
+	hit_p = vec_add(vec_multiply(ray.direction, distance), ray.origin);
 	if (obj->type == 1)
 		norm = vec_normalize(vec_sub(hit_p, obj->origin));
 	if (obj->type == 2)
-		norm = get_cyl_norm(hit_p, obj);
+		norm = get_cyl_norm(hit_p, (t_cy *)obj);
 	if (obj->type == 3)
 		norm = vec_normalize(obj->dir);
 	lit_ray.origin = scene->lit->origin;

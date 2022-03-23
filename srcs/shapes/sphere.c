@@ -6,6 +6,7 @@ t_vec3	get_hit_point(t_scene *scene, t_ray ray, double distance)
 
 	(void)scene;
 	hit_p = vec_add(vec_multiply(ray.direction, distance), ray.origin);
+	//printf("hit point = %f\n");
 	return (hit_p);
 }
 
@@ -17,7 +18,7 @@ double	get_root(double disc, double b)
   double	min;
   double	max;
 	
-
+ 
 	t1 = (-b + disc) * 0.5;
 	t2 = (-b - disc) * 0.5;
 	min = fmin(t1, t2);
