@@ -11,8 +11,6 @@
 # include "../libft/libsrcs/ft_printf.h"
 # include "../libft/libsrcs/get_next_line.h"
 # include "../libx/mlx.h"
-#include <stdbool.h>
-
 
 # define ANGLE 3.6
 # define STEP 0.5
@@ -69,7 +67,6 @@ typedef struct s_mlx
 	int		w_len;
 }			t_mlx;
 
-
 /*MLX_UTILS_C*/
 int		key_event(int keycode, t_scene *scene);
 int		click_close_window(void);
@@ -109,15 +106,9 @@ static inline double hit_sphere(void *sphere, t_vec3 ray_origin, t_vec3 ray_dire
 
 /*PLANE_C*/
 double hit_plane(void *plan, t_vec3 ray_origin, t_vec3 ray_direction);
-
-/*CYLINDRE_C*/
-t_vec3	get_cyl_norm(t_vec3 hit_p, t_cy *cyl);
-bool	quad_cyl(t_quadra param, double *t0, double *t1);
-bool get_cyl_root(double *t0, double *t1, t_cy *cyl, t_vec3 ray_origin, t_vec3 ray_direction);
-void	check_t(double *t, t_cy *cyl, t_vec3 ray_origin, t_vec3 ray_direction);
 double	hit_cylinder(void *cylinder, t_vec3 ray_origin, t_vec3 ray_direction);
-
-
+t_vec3	get_cyl_norm(t_vec3 hit_p, t_cy *cyl);
+double	check_cyl_root(t_vec3 ray_origin, t_vec3 ray_direction, t_shape *cyl, double disc, double b);
 
 
 /*RAY_HIT
