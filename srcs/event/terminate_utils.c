@@ -3,23 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   terminate_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tshimoda <tshimoda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jbadia <jbadia@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 17:31:49 by tshimoda          #+#    #+#             */
-/*   Updated: 2022/03/18 18:09:25 by tshimoda         ###   ########.fr       */
+/*   Updated: 2022/03/24 15:49:54 by jbadia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incls/mini_rt.h"
 
-void	free_shape(void *object)
+void	*free_shape(void *object)
 {
 	t_shape	*sh;
 
 	if (object == NULL)
-		return ;
+		return (NULL);
 	sh = (t_shape *)object;
 	free(sh->shape);
+	return (NULL);
 }
 
 void	free_scene(t_scene *scene)

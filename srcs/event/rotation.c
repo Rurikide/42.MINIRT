@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rotation.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tshimoda <tshimoda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jbadia <jbadia@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 17:08:22 by tshimoda          #+#    #+#             */
-/*   Updated: 2022/03/18 17:08:26 by tshimoda         ###   ########.fr       */
+/*   Updated: 2022/03/24 15:42:11 by jbadia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ void	pitch_cam(int keycode, t_scene *s)
 {
 	t_matrix	rotated;
 	t_matrix	prod;
-	t_vec3		new;
 
 	if (keycode == KEY_UP)
 		rotated = matrix_rot_x(-ANGLE);

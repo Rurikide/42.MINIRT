@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   click_event.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tshimoda <tshimoda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jbadia <jbadia@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 17:04:39 by tshimoda          #+#    #+#             */
-/*   Updated: 2022/03/21 13:59:37 by tshimoda         ###   ########.fr       */
+/*   Updated: 2022/03/24 15:45:21 by jbadia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ t_shape	*get_hit_shape(t_scene *scene, t_ray ray)
 	return (shape);
 }
 
-void	click_event(int button, int x, int y, t_scene *scene)
+int	click_event(int button, int x, int y, t_scene *scene)
 {
 	t_shape	*clic;
 	t_ray	ray;
@@ -47,10 +47,9 @@ void	click_event(int button, int x, int y, t_scene *scene)
 	ray = ray_generator(scene, x, y);
 	clic = get_hit_shape(scene, ray);
 	if (clic == NULL || button == MOUSE_RIGHT)
-	{
 		scene->screen.is_selected = NONE;
+	if (clic == NULL || button == MOUSE_RIGHT)
 		scene->select = NULL;
-	}
 	else if (clic->type == SP)
 	{
 		printf("Sphere selected\n");
@@ -59,11 +58,12 @@ void	click_event(int button, int x, int y, t_scene *scene)
 	else if (clic->type == PL)
 	{
 		printf("Plane selected\n");
-		plane_event(button, scene, clic);
+		plane_event(scene, clic);
 	}
 	else if (clic->type == CY)
 	{
 		printf("Cylinder selected\n");
 		cylinder_event(button, scene, clic);
 	}
+	return (0);
 }
