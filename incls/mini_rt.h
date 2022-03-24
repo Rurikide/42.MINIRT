@@ -72,11 +72,30 @@ SPHERE_C*/
 t_vec3	get_norm_sphere(t_scene *scene, t_vec3	hit_p);
 t_vec3	get_hit_point(t_scene *scene, t_ray ray, double distance);
 double	get_root(double disc, double b);
-double	hit_sphere(void *sphere, t_vec3 cam, t_vec3 direction);
+
+static inline double hit_sphere(void *sphere, t_vec3 ray_origin, t_vec3 ray_direction)
+{
+	double	b;
+	double	c;
+	double	disc;
+	t_vec3	v;
+	t_sp *sp;
+
+	sp = (t_sp *)sphere;
+	v = vec_sub(ray_origin, sp->origin);
+	b = 2 * vec_dot(ray_direction, v);
+	c = vec_dot(v, v) - sp->rad * sp->rad;
+	disc = b * b - 4*c;
+	if (disc >= 0)
+		return (get_root(sqrtf(disc), b));
+	else
+		return (0);
+}
+
 /*PLANE_C*/
 double	hit_plane(void *plan, t_vec3 ray_origin, t_vec3 ray_direction);
 double	hit_cylinder(void *cylinder, t_vec3 ray_origin, t_vec3 ray_direction);
-t_vec3	get_cyl_norm(t_vec3 hit_p, void *cyl);
+t_vec3	get_cyl_norm(t_vec3 hit_p, t_cy *cyl);
 double	check_cyl_root(t_vec3 ray_origin, t_vec3 ray_direction, t_shape *cyl, double disc, double b);
 
 /*RAY_HIT

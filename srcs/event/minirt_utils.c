@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   minirt_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tshimoda <tshimoda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jbadia <jbadia@student.42quebec.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 17:14:49 by tshimoda          #+#    #+#             */
 /*   Updated: 2022/03/18 17:37:53 by tshimoda         ###   ########.fr       */

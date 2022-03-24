@@ -6,6 +6,7 @@ t_vec3	get_hit_point(t_scene *scene, t_ray ray, double distance)
 
 	(void)scene;
 	hit_p = vec_add(vec_multiply(ray.direction, distance), ray.origin);
+	//printf("hit point = %f\n");
 	return (hit_p);
 }
 
@@ -17,7 +18,7 @@ double	get_root(double disc, double b)
   double	min;
   double	max;
 	
-
+ 
 	t1 = (-b + disc) * 0.5;
 	t2 = (-b - disc) * 0.5;
 	min = fmin(t1, t2);
@@ -29,21 +30,21 @@ double	get_root(double disc, double b)
 	return (t);
 }
 
-double hit_sphere(void *sphere, t_vec3 ray_origin, t_vec3 ray_direction)
-{
-	double	b;
-	double	c;
-	double	disc;
-	t_vec3	v;
-	t_sp *sp;
+// double hit_sphere(void *sphere, t_vec3 ray_origin, t_vec3 ray_direction)
+// {
+// 	double	b;
+// 	double	c;
+// 	double	disc;
+// 	t_vec3	v;
+// 	t_sp *sp;
 
-	sp = (t_sp *)sphere;
-	v = vec_sub(ray_origin, sp->origin);
-	b = 2 * vec_dot(ray_direction, v);
-	c = vec_dot(v, v) - sp->rad * sp->rad;
-	disc = b * b - 4*c;
-	if (disc >= 0)
-		return (get_root(sqrtf(disc), b)); //je mets sqrtf, à retester
-	else
-		return (0);
-}
+// 	sp = (t_sp *)sphere;
+// 	v = vec_sub(ray_origin, sp->origin);
+// 	b = 2 * vec_dot(ray_direction, v);
+// 	c = vec_dot(v, v) - sp->rad * sp->rad;
+// 	disc = b * b - 4*c;
+// 	if (disc >= 0)
+// 		return (get_root(sqrtf(disc), b)); //je mets sqrtf, à retester
+// 	else
+// 		return (0);
+// }

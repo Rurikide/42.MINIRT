@@ -119,6 +119,7 @@ typedef struct s_quadra
 	double	c;
 	double	disc;
 	double	t;
+	double t1;
 }				t_quadra;
 
 #endif

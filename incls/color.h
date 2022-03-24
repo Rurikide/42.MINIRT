@@ -19,9 +19,20 @@ int		rgb_to_int(t_rgb rgb);
 t_rgb	new_color(int r, int g, int b);
 int add_color(int color, double ratio);
 t_rgb    color_multiply_rgb(t_rgb obj, t_rgb amb_lit, double ratio);
-int multiply_color(int color, double ratio);
 int	add_3_colors(int a, int b, int c);
 int	add_2_colors(int a, int c);
+
+static inline int multiply_color(int color, double ratio)
+{
+    int r;
+    int g;
+    int b;
+
+	r = check_rgb(get_r(color) * ratio);
+	g = check_rgb(get_g(color) * ratio);
+	b = check_rgb(get_b(color) * ratio);
+    return (rgb_to_int(new_color(r, g, b)));
+}
 
 
 #endif
