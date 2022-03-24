@@ -6,7 +6,7 @@
 /*   By: jbadia <jbadia@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 13:53:50 by tshimoda          #+#    #+#             */
-/*   Updated: 2022/03/24 14:55:12 by jbadia           ###   ########.fr       */
+/*   Updated: 2022/03/24 15:38:58 by jbadia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ typedef struct s_quadra
 	double	b;
 	double	c;
 	double	t;
-	double t1;
+	double	t1;
 }				t_quadra;
 
 #endif

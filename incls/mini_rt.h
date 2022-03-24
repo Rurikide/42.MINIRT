@@ -6,7 +6,7 @@
 /*   By: jbadia <jbadia@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 15:33:58 by jbadia            #+#    #+#             */
-/*   Updated: 2022/03/24 15:35:18 by jbadia           ###   ########.fr       */
+/*   Updated: 2022/03/24 15:38:52 by jbadia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include "parsing.h"
 # include "scene.h"
 # include "vector_3d.h"
+# include "vector_3d2.h"
 # include "vector_array.h"
 # include "../libft/libsrcs/libft.h"
 # include "../libft/libsrcs/get_next_line.h"
