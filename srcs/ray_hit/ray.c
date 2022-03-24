@@ -3,39 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ray.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tshimoda <tshimoda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jbadia <jbadia@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 12:24:46 by tshimoda          #+#    #+#             */
-/*   Updated: 2022/03/21 13:47:47 by tshimoda         ###   ########.fr       */
+/*   Updated: 2022/03/24 15:10:04 by jbadia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incls/mini_rt.h"
-
-int	get_hit_color(t_scene *scene, t_ray ray)
-{
-	size_t	i;
-	double	distance;
-	double	closer;
-	int		color;	
-	t_shape	*obj;
-
-	closer = M_INFINITY;
-	color = 0x000000;
-	i = 0;
-	while (i < scene->objs->total)
-	{
-		obj = (t_shape *)scene->objs->elements[i];
-		distance = obj->hit_obj(obj->shape, ray.origin, ray.direction);
-		if (distance >= M_EPSILON && distance < closer)
-		{
-			closer = distance;
-			color = get_color(obj, ray, scene, distance);
-		}
-		i++;
-	}
-	return (color);
-}
 
 t_ray	ray_settings(t_vec3 origin, t_vec3 direction)
 {
