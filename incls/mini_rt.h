@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   mini_rt.h                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jbadia <jbadia@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/03/24 15:33:58 by jbadia            #+#    #+#             */
+/*   Updated: 2022/03/24 15:35:18 by jbadia           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MINI_RT_H
 # define MINI_RT_H
 
@@ -66,42 +78,106 @@ int		click_close_window(void);
 int		hook_collection(t_mlx *mlx, t_scene *scene);
 void	my_mlx_pixel_put(t_mlx *mlx, int x, int y, int color);
 t_mlx	*get_mlx(void);
+void	make_scene(t_scene *scene);
+void	remake_scene(t_scene *scene, t_mlx *mlx);
 
-/*SHAPES
-SPHERE_C*/
-t_vec3	get_norm_sphere(t_scene *scene, t_vec3	hit_p);
-t_vec3	get_hit_point(t_scene *scene, t_ray ray, double distance);
+/*ROOTS_C*/
+double	calc_root(double top_roco, double toprd, double h_2, double t);
 double	get_root(double disc, double b);
 
-static inline double hit_sphere(void *sphere, t_vec3 ray_origin, t_vec3 ray_direction)
+static inline double	hit_sphere(void *sphere, t_vec3 ro, t_vec3 rd)
 {
 	double	b;
 	double	c;
 	double	disc;
 	t_vec3	v;
-	t_sp *sp;
+	t_sp	*sp;
 
 	sp = (t_sp *)sphere;
-	v = vec_sub(ray_origin, sp->origin);
-	b = 2 * vec_dot(ray_direction, v);
+	v = vec_sub(ro, sp->origin);
+	b = 2 * vec_dot(rd, v);
 	c = vec_dot(v, v) - sp->rad * sp->rad;
-	disc = b * b - 4*c;
+	disc = b * b - 4 * c;
 	if (disc >= 0)
 		return (get_root(sqrtf(disc), b));
 	else
-		return (0);
+		return (-1);
 }
 
-/*PLANE_C*/
-double	hit_plane(void *plan, t_vec3 ray_origin, t_vec3 ray_direction);
-double	hit_cylinder(void *cylinder, t_vec3 ray_origin, t_vec3 ray_direction);
-t_vec3	get_cyl_norm(t_vec3 hit_p, t_cy *cyl);
-double	check_cyl_root(t_vec3 ray_origin, t_vec3 ray_direction, t_shape *cyl, double disc, double b);
+/*Si le discriminant est inférieur à 0, il n'y a pas 
+d'intersection. Si p.t est supérieur à 0 mais 
+inférieur à la H, le rayon touche le corps du cylindre
+Sinon je vérifie si je suis dans les caps*/
+static inline double	hit_cylinder(void *cylinder, t_vec3 r_o, t_vec3 rd)
+{
+	t_cy		*cyl;
+	t_quadra	p;
+	t_vec3		top;
+	t_vec3		roco;
+	double		h_2;
+
+	cyl = (t_cy *)cylinder;
+	top = vec_multiply(vec_normalize(vec_multiply(cyl->dir, cyl->height)),
+			cyl->height);
+	h_2 = vec_dot(top, top);
+	roco = vec_sub(r_o, cyl->origin);
+	p.a = h_2 - vec_dot(top, rd) * vec_dot(top, rd);
+	p.b = h_2 * vec_dot(roco, rd) - vec_dot(top, roco) * vec_dot(top, rd);
+	p.c = h_2 * vec_dot(roco, roco) - vec_dot(top, roco)
+		* vec_dot(top, roco) - (cyl->rad) * (cyl->rad) * h_2;
+	if ((p.b * p.b - p.a * p.c) < 0)
+		return (-1);
+	p.t1 = (-p.b - sqrtf((p.b * p.b - p.a * p.c))) / p.a;
+	p.t = vec_dot(top, roco) + (p.t1) * vec_dot(top, rd);
+	if (p.t > 0 && p.t < h_2)
+		return (p.t1);
+	p.t = calc_root(vec_dot(top, roco), vec_dot(top, rd), h_2, p.t);
+	if (fabs(p.b + p.a * p.t) < sqrtf((p.b * p.b - p.a * p.c)))
+		return (p.t);
+	return (-1);
+}
+
+/*((origin_pl - origin_ray) ° norm_pl) / (ray_dir ° norm_pl)*/
+static inline double	hit_plane(void *plan, t_vec3 r_o, t_vec3 rd)
+{
+	t_pl	*pl;
+	double	a;
+	double	b;
+	double	t;
+
+	pl = (t_pl *)plan;
+	a = vec_dot(vec_sub(pl->origin, r_o), vec_normalize(pl->dir));
+	b = vec_dot(rd, vec_normalize(pl->dir));
+	t = a / b;
+	return (t);
+}
+
+static inline t_vec3	get_cyl_norm(t_vec3 hit_p, t_cy *cyl)
+{
+	double	d;
+	t_vec3	sum;
+	t_vec3	norm;
+	t_vec3	top;
+
+	top = vec_add(cyl->origin, vec_multiply(vec_normalize(cyl->dir),
+				cyl->height));
+	if (vec_len(vec_sub(hit_p, cyl->origin)) < cyl->rad)
+		norm = vec_multiply(cyl->dir, -1);
+	else if (vec_len(vec_sub(hit_p, top)) < cyl->rad)
+		norm = cyl->dir;
+	else
+	{
+		d = vec_dot(vec_sub(hit_p, cyl->origin), vec_normalize(cyl->dir));
+		sum = vec_add(cyl->origin, vec_multiply(cyl->dir, d));
+		norm = vec_normalize(vec_sub(hit_p, sum));
+	}
+	return (norm);
+}
 
 /*RAY_HIT
 GET_COLOR_C*/
 int		get_color(t_shape *obj, t_ray ray, t_scene *scene, double distance);
-double	shadow_ray(t_vec3 hit_point, t_scene *scene, t_vec3 ray_dir);
+double	shadow_ray(t_vec3 hit_point, t_scene *scene);
 t_vec3	get_reflect(t_vec3 norm, t_vec3 ray_dir);
 double	spot_light(t_vec3 hit_point, t_scene *scene, t_vec3 norm);
 double	spec_light(t_vec3 norm, t_vec3 dir, t_vec3 hit_point, t_scene *scene);

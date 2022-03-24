@@ -8,8 +8,8 @@
             "type": "lldb",
             "request": "launch",
             "name": "Debug",
-            "program": "/Users/justine/Documents/dev/42.MINIRT/miniRT",
-            "args": ["cy_into_pl.rt"],
+            "program": "/Users/jbadia/Documents/42_Cursus/42.MINIRT/miniRT",
+            "args": ["rt_files/column.rt"],
             "cwd": "${workspaceFolder}"
         }
     ]

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbadia <jbadia@student.42quebec.com>       +#+  +:+       +#+        */
+/*   By: jbadia <jbadia@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 17:14:49 by tshimoda          #+#    #+#             */
-/*   Updated: 2022/03/18 17:37:53 by tshimoda         ###   ########.fr       */
+/*   Updated: 2022/03/24 15:09:53 by jbadia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,4 +59,23 @@ t_mlx	*get_mlx(void)
 		mlx.init = 1;
 	}
 	return (&mlx);
+}
+
+void	remake_scene(t_scene *scene, t_mlx *mlx)
+{
+	mlx_destroy_image(mlx->mlx, mlx->img);
+	mlx->img = mlx_new_image(mlx->mlx, mlx->width, mlx->height);
+	ray_tracing(scene, 0, 0);
+	mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->img, 0, 0);
+}
+
+void	make_scene(t_scene *scene)
+{
+	t_mlx	*mlx;
+
+	mlx = get_mlx();
+	ray_tracing(scene, 0, 0);
+	hook_collection(mlx, scene);
+	mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->img, 0, 0);
+	mlx_loop(mlx->mlx);
 }
