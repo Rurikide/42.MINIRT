@@ -17,15 +17,15 @@ double	shadow_ray(t_vec3 hit_point, t_scene *scene, t_vec3 ray_dir)
 	while (i < scene->objs->total)
 	{
 		obj = (t_shape *)scene->objs->elements[i];
-		if (scene->shad == 1 && obj->type == 2)
-			hit_point = vec_sub(hit_point, ray_dir);
+		// if (scene->shad == 1 && obj->type == 2)
+		// 	hit_point = vec_sub(hit_point, ray_dir);
 		dir_lit = vec_normalize(vec_sub(scene->lit->origin, hit_point));
 		distance = obj->hit_obj(obj->shape, hit_point, dir_lit);
 		if (distance > 0 && distance < vec_len(vec_sub(scene->lit->origin, hit_point)))
 			return (-1);
 		i++;
-		scene->shad = 0;
 	}
+	scene->shad = 0;
 	return (0);
 }
 
