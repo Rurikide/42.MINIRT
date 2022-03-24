@@ -6,7 +6,7 @@
 /*   By: tshimoda <tshimoda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 13:53:50 by tshimoda          #+#    #+#             */
-/*   Updated: 2022/03/21 13:53:51 by tshimoda         ###   ########.fr       */
+/*   Updated: 2022/03/24 15:09:30 by tshimoda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ typedef struct s_quadra
 	double	c;
 	double	disc;
 	double	t;
-	double t1;
+	double	t1;
 }				t_quadra;
 
 #endif

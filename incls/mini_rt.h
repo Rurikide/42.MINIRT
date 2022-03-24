@@ -7,6 +7,7 @@
 # include "parsing.h"
 # include "scene.h"
 # include "vector_3d.h"
+# include "vector_3d2.h"
 # include "vector_array.h"
 # include "../libft/libsrcs/libft.h"
 # include "../libft/libsrcs/get_next_line.h"
@@ -96,7 +97,6 @@ static inline double hit_sphere(void *sphere, t_vec3 ray_origin, t_vec3 ray_dire
 double	hit_plane(void *plan, t_vec3 ray_origin, t_vec3 ray_direction);
 double	hit_cylinder(void *cylinder, t_vec3 ray_origin, t_vec3 ray_direction);
 t_vec3	get_cyl_norm(t_vec3 hit_p, t_cy *cyl);
-double	check_cyl_root(t_vec3 ray_origin, t_vec3 ray_direction, t_shape *cyl, double disc, double b);
 
 /*RAY_HIT
 GET_COLOR_C*/
