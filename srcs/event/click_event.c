@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   click_event.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tshimoda <tshimoda@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/03/18 17:04:39 by tshimoda          #+#    #+#             */
+/*   Updated: 2022/03/21 13:59:37 by tshimoda         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../incls/mini_rt.h"
 
 t_shape	*get_hit_shape(t_scene *scene, t_ray ray)
@@ -27,7 +39,7 @@ t_shape	*get_hit_shape(t_scene *scene, t_ray ray)
 	return (shape);
 }
 
-int	click_event(int button, int x, int y, t_scene *scene)
+void	click_event(int button, int x, int y, t_scene *scene)
 {
 	t_shape	*clic;
 	t_ray	ray;
@@ -38,23 +50,20 @@ int	click_event(int button, int x, int y, t_scene *scene)
 	{
 		scene->screen.is_selected = NONE;
 		scene->select = NULL;
-		printf("Nothing selected\n");
-		return (0);
 	}
 	else if (clic->type == SP)
 	{
 		printf("Sphere selected\n");
-        sphere_resize(button, scene, clic);
+		sphere_resize(button, scene, clic);
 	}
 	else if (clic->type == PL)
 	{
 		printf("Plane selected\n");
 		plane_event(button, scene, clic);
 	}
-	else if (clic->type == PL)
+	else if (clic->type == CY)
 	{
 		printf("Cylinder selected\n");
-		// cylinder_event(button, scene, clic);
+		cylinder_event(button, scene, clic);
 	}
-	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: tshimoda <tshimoda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 22:12:53 by tshimoda          #+#    #+#             */
-/*   Updated: 2022/02/24 22:13:05 by tshimoda         ###   ########.fr       */
+/*   Updated: 2022/03/21 12:38:02 by tshimoda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ft_skip_space_tab(char *line, int *i)
 {
-	int move_forward;
+	int	move_forward;
 	int	index;
 
 	move_forward = 0;

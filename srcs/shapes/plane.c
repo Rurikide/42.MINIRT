@@ -65,19 +65,12 @@ double	hit_cylinder(void *cylinder, t_vec3 ray_origin, t_vec3 ray_direction)
 	t_vec3		ro_co;
 
 	cyl = (t_cy *)cylinder;
-		//top = vec_add(cyl->origin, vec_multiply(vec_normalize(cyl->dir), cyl->height));
-
 	top = vec_multiply(vec_normalize(vec_multiply(cyl->dir, cyl->height)), cyl->height);
-	//printf("TOP = x = %f y= %f z= %f \n", top.x, top.y, top.z);
 	h_2 = vec_dot(top, top);
 	ro_co = vec_sub(ray_origin, cyl->origin);
-
 	param.a = h_2 - vec_dot(top, ray_direction) * vec_dot(top, ray_direction);
-
 	param.b = h_2 * vec_dot(ro_co, ray_direction) - vec_dot(top, ro_co) * vec_dot(top, ray_direction);
-
 	param.c = h_2 * vec_dot(ro_co, ro_co) - vec_dot(top, ro_co) * vec_dot(top, ro_co) - (cyl->rad) * (cyl->rad) * h_2;
-
 	param.disc = (param.b * param.b - param.a * param.c);
 	if (param.disc < 0) 
 		return (0);

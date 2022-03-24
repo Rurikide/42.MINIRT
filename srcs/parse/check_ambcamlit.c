@@ -6,16 +6,16 @@
 /*   By: tshimoda <tshimoda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 15:20:50 by tshimoda          #+#    #+#             */
-/*   Updated: 2022/02/26 15:20:52 by tshimoda         ###   ########.fr       */
+/*   Updated: 2022/03/17 15:18:42 by tshimoda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incls/mini_rt.h"
 
-void	check_amb_cam(t_scene *scene)
+void	check_amb_cam_lit(t_scene *scene)
 {
-	if (scene->amb == NULL || scene->cam == NULL)
-		print_error_exit(scene, "Missing Ambiant or Camera");
+	if (scene->amb == NULL || scene->cam == NULL || scene->lit == NULL)
+		print_error_exit(scene, "Missing Ambiant, Camera or Light");
 }
 
 void	check_one_amb(t_scene *scene)

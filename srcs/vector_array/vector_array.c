@@ -6,7 +6,7 @@
 /*   By: tshimoda <tshimoda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/29 12:04:47 by tshimoda          #+#    #+#             */
-/*   Updated: 2022/03/10 20:40:20 by tshimoda         ###   ########.fr       */
+/*   Updated: 2022/03/17 15:14:14 by tshimoda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	vector_resize_capacity(t_vector *v, size_t new_capacity)
 	void	**temp;
 
 	temp = v->elements;
-	v->elements = malloc(sizeof(void *) * new_capacity);
+	v->elements = ft_calloc(new_capacity, sizeof(void *));
 	ft_memcpy(v->elements, temp, sizeof(void *) * v->total);
 	free(temp);
 	v->capacity = new_capacity;

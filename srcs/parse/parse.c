@@ -6,7 +6,7 @@
 /*   By: tshimoda <tshimoda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 15:22:35 by tshimoda          #+#    #+#             */
-/*   Updated: 2022/02/26 15:22:50 by tshimoda         ###   ########.fr       */
+/*   Updated: 2022/03/17 15:20:45 by tshimoda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,5 +61,5 @@ void	parse_machine(t_scene *scene, char *file)
 	if (check_rt_file(file) == -1)
 		print_error_exit(scene, "invalid rt file");
 	gnl_preparsing(scene, file);
-	check_amb_cam(scene);
+	check_amb_cam_lit(scene);
 }

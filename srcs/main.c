@@ -1,12 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tshimoda <tshimoda@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/03/21 12:29:32 by tshimoda          #+#    #+#             */
+/*   Updated: 2022/03/21 13:48:36 by tshimoda         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../incls/mini_rt.h"
 #include "../libft/libsrcs/libft.h"
-#include "../libft/libsrcs/ft_printf.h"
-#include "../libft/libsrcs/get_next_line.h"
 #include "../libx/mlx.h"
 
 #include <stdio.h>
 
-void remake_scene(t_scene *scene, t_mlx *mlx)
+void	remake_scene(t_scene *scene, t_mlx *mlx)
 {
 	mlx_destroy_image(mlx->mlx, mlx->img);
 	mlx->img = mlx_new_image(mlx->mlx, mlx->width, mlx->height);
@@ -14,16 +24,27 @@ void remake_scene(t_scene *scene, t_mlx *mlx)
 	mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->img, 0, 0);
 }
 
-int get_hit_color(t_scene *scene, t_ray ray)
+void	make_scene(t_scene *scene)
+{
+	t_mlx	*mlx;
+
+	mlx = get_mlx();
+	ray_tracing(scene, 0, 0);
+	hook_collection(mlx, scene);
+	mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->img, 0, 0);
+	mlx_loop(mlx->mlx);
+}
+
+int	get_hit_color(t_scene *scene, t_ray ray)
 {
 	size_t	i;
-	double distance;
-	double closer;
+	double	distance;
+	double	closer;
 	int		color;	
-	t_shape *obj;
+	t_shape	*obj;
 
 	closer = M_INFINITY;
-	color = 0xFFFFFF;
+	color = 0x000000;
 	i = 0;
 	while (i < scene->objs->total)
 	{
@@ -72,7 +93,7 @@ t_ray	ray_generator(t_scene *scene, int x, int y)
 	shooting_direction = vec_sub(shooting_direction, scene->cam->origin);
 	shooting_direction = vec_normalize(shooting_direction);
 	ray = ray_settings(scene->cam->origin, shooting_direction);
-	return(ray);
+	return (ray);
 }
 
 void	ray_tracing(t_scene *scene, int x, int y)
@@ -97,54 +118,18 @@ void	ray_tracing(t_scene *scene, int x, int y)
 	}
 }
 
-void	make_scene(t_scene *scene)
+int	main(int argc, char **argv)
 {
-	t_mlx	*mlx;
+	t_scene	*scene;
 
-	mlx = get_mlx();
-	ray_tracing(scene, 0, 0);
-	hook_collection(mlx, scene);
-	mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->img, 0, 0);
-	mlx_loop(mlx->mlx);
+	if (argc != 2)
+	{
+		printf("Error\n");
+		printf("Please select onr .rt file\n");
+		exit(EXIT_FAILURE);
+	}
+	scene = get_scene();
+	parse_machine(scene, argv[1]);
+	make_scene(scene);
+	return (0);
 }
-
-int	main (int argc, char **argv)
- {
- 	t_scene	*scene;
-
- 	if (argc != 2)
- 	{
- 		printf("Error\n");
- 		printf("Please select onr .rt file\n");
- 		exit(EXIT_FAILURE);
- 	}
- 	scene = get_scene();
- 	parse_machine(scene, argv[1]);
- 	make_scene(scene);
-	 return (0);
- }
-
-
-	// int sample = 0;
-	// while (sample < 1)
-	// {
-	// 	printf("-----------------------------------------\n");
-	// 	// printf("cam ori x = %f\n", scene->cam->origin.x);
-	// 	// printf("cam ori y = %f\n", scene->cam->origin.y);
-	// 	// printf("cam ori z = %f\n", scene->cam->origin.z);
-	// 	// printf("Fichier .rt cam dir x = %f\n", scene->cam->dir.x);
-	// 	// printf("Fichier .rt cam dir y = %f\n", scene->cam->dir.y);
-	// 	// printf("Fichier .rt cam dir z = %f\n", scene->cam->dir.z);
-		
-	// 	// printf("\v");
-
-	// 	// printf("ray direction x = %f\n", ray.direction.x);
-	// 	// printf("ray direction y = %f\n", ray.direction.y);
-	// 	// printf("ray direction z = %f\n", ray.direction.z);
-	// 	// printf("\v");
-	// 	// printf("ray origin x = %f\n", ray.origin.x);
-	// 	// printf("ray origin y = %f\n", ray.origin.y);
-	// 	// printf("ray origin z = %f\n", ray.origin.z);
-	// 	printf("-----------------------------------------\n");
-	// 	sample++;
-	// }

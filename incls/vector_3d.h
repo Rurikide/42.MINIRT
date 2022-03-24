@@ -6,7 +6,7 @@
 /*   By: tshimoda <tshimoda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/06 16:30:59 by tshimoda          #+#    #+#             */
-/*   Updated: 2022/02/24 18:04:40 by tshimoda         ###   ########.fr       */
+/*   Updated: 2022/03/21 12:38:50 by tshimoda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,16 +29,6 @@ typedef struct s_ray
 	t_vec3	direction;	
 }				t_ray;
 
-
-// t_vec3	new_vector(double x, double y, double z);
-// t_vec3	vec_add(t_vec3 u, t_vec3 v);
-// t_vec3	vec_sub(t_vec3 u, t_vec3 v);
-// t_vec3	vec_multiply(t_vec3 u, double scalar);
-// t_vec3	vec_normalize(t_vec3 u);
-// t_vec3	vec_cross(t_vec3 u, t_vec3 v);
-// double	vec_len(t_vec3 v);
-// double	vec_dot(t_vec3 u, t_vec3 v);
-// double	vec_squared(t_vec3 v);
 
 static inline t_vec3	new_vector(double x, double y, double z)
 {
@@ -134,6 +124,5 @@ static inline t_vec3	multiply_2_vec(t_vec3 u, t_vec3 v)
 	resultante.z = (u.z * v.z);
 	return (resultante);
 }
-
 
 #endif

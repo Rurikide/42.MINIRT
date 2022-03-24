@@ -20,7 +20,6 @@ t_rgb	get_spec_lit(t_rgb obj,	double ks)
 	return (color);
 }
 
-
 t_rgb	get_ambient_lit(t_scene *scene, t_rgb obj)
 {
 	t_rgb	color;
