@@ -21,8 +21,13 @@ double	shadow_ray(t_vec3 hit_point, t_scene *scene, t_vec3 ray_dir)
 		// 	hit_point = vec_sub(hit_point, ray_dir);
 		dir_lit = vec_normalize(vec_sub(scene->lit->origin, hit_point));
 		distance = obj->hit_obj(obj->shape, hit_point, dir_lit);
-		if (distance > 0 && distance < vec_len(vec_sub(scene->lit->origin, hit_point)))
+		if ((distance > 0 && distance < vec_len(vec_sub(scene->lit->origin, hit_point))) || fabs(distance - vec_len(vec_sub(scene->lit->origin, hit_point))) <= 0.001)
+			{
+
+			// printf("DISTANCE = %f\n", distance);
+			// printf("LEN = %f\n", vec_len(vec_sub(scene->lit->origin, hit_point)));
 			return (-1);
+			}
 		i++;
 	}
 	scene->shad = 0;
@@ -89,7 +94,7 @@ int	get_color(t_shape *obj, t_ray ray, t_scene *scene, double distance)
 	if (obj->type == 1)
 		norm = vec_normalize(vec_sub(hit_p, obj->origin));
 	if (obj->type == 2)
-		norm = get_cyl_norm(hit_p, (t_cy *)obj);
+		norm = get_cyl_norm(hit_p, (t_cy *)obj->shape);
 	if (obj->type == 3)
 		norm = vec_normalize(obj->dir);
 	lit_ray.origin = scene->lit->origin;

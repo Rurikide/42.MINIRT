@@ -101,7 +101,7 @@ static inline double hit_sphere(void *sphere, t_vec3 ray_origin, t_vec3 ray_dire
 	if (disc >= 0)
 		return (get_root(sqrtf(disc), b));
 	else
-		return (-1);
+		return (0);
 }
 
 /*PLANE_C*/

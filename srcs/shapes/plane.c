@@ -22,23 +22,17 @@ t_vec3	get_cyl_norm(t_vec3 hit_p, t_cy *cyl)
 	t_vec3	norm;
 	t_vec3	top;
 
-	// top = vec_multiply(vec_normalize(vec_multiply(cyl->dir, cyl->height)), cyl->height);
-	//top = vec_add(cyl->origin, vec_multiply(cyl->dir, cyl->height));
-	top = vec_add(cyl->origin, vec_multiply(cyl->dir, cyl->height));
-
+		
+	top = vec_add(cyl->origin, vec_multiply(vec_normalize(cyl->dir), cyl->height));
 	if (vec_len(vec_sub(hit_p, cyl->origin)) < cyl->rad)
-	{
 		norm = vec_multiply(cyl->dir, -1);
-		printf("dir \n");
-	}
+		
 	else if (vec_len(vec_sub(hit_p, top)) < cyl->rad)
-	{
 		norm = cyl->dir;
-		printf("- dir \n");
-	}
+		
 	else
 	{
-		d = vec_dot(vec_sub(hit_p, cyl->origin), cyl->dir);
+		d = vec_dot(vec_sub(hit_p, cyl->origin), vec_normalize(cyl->dir));
 		sum = vec_add(cyl->origin, vec_multiply(cyl->dir, d));; // origin ou dir ??
 		norm = vec_normalize(vec_sub(hit_p, sum));
 	}
@@ -71,8 +65,10 @@ double	hit_cylinder(void *cylinder, t_vec3 ray_origin, t_vec3 ray_direction)
 	t_vec3		ro_co;
 
 	cyl = (t_cy *)cylinder;
+		//top = vec_add(cyl->origin, vec_multiply(vec_normalize(cyl->dir), cyl->height));
+
 	top = vec_multiply(vec_normalize(vec_multiply(cyl->dir, cyl->height)), cyl->height);
-	//top = vec_add(cyl->origin, vec_multiply(cyl->dir, cyl->height));
+	//printf("TOP = x = %f y= %f z= %f \n", top.x, top.y, top.z);
 	h_2 = vec_dot(top, top);
 	ro_co = vec_sub(ray_origin, cyl->origin);
 
