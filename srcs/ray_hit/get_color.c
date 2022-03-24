@@ -6,7 +6,7 @@
 /*   By: jbadia <jbadia@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 14:20:26 by jbadia            #+#    #+#             */
-/*   Updated: 2022/03/24 15:30:12 by jbadia           ###   ########.fr       */
+/*   Updated: 2022/03/24 15:52:05 by jbadia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ double	shadow_ray(t_vec3 hit_point, t_scene *scene)
 	{
 		obj = (t_shape *)scene->objs->elements[i];
 		distance = obj->hit_obj(obj->shape, hit_point, dir_lit);
-		if ((distance > -0.99 && distance < len) || fabs(distance - len) < 0.001)
+		if ((distance > -0.99 && distance < len)
+			|| fabs(distance - len) < 0.001)
 			return (-1);
 		i++;
 	}

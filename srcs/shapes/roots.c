@@ -6,12 +6,11 @@
 /*   By: jbadia <jbadia@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 14:37:18 by jbadia            #+#    #+#             */
-/*   Updated: 2022/03/24 15:17:37 by jbadia           ###   ########.fr       */
+/*   Updated: 2022/03/24 15:52:31 by jbadia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incls/mini_rt.h"
-
 
 /*Les cap du cylindre sont comme un plan:
 Si le rayon rencontre la face supérieure: t = H - ray_ori/ray_dir

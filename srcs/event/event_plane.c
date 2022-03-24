@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   event_plane.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tshimoda <tshimoda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jbadia <jbadia@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 17:06:46 by tshimoda          #+#    #+#             */
-/*   Updated: 2022/03/18 17:07:19 by tshimoda         ###   ########.fr       */
+/*   Updated: 2022/03/24 15:41:15 by jbadia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incls/mini_rt.h"
 
-void	plane_event(int button, t_scene *scene, t_shape *clic)
+void	plane_event(t_scene *scene, t_shape *clic)
 {
 	t_pl	*plane;
 
