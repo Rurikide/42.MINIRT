@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_color.c                                        :+:      :+:    :+:   */
+/*   get_color_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jbadia <jbadia@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 14:20:26 by jbadia            #+#    #+#             */
-/*   Updated: 2022/03/25 10:59:12 by jbadia           ###   ########.fr       */
+/*   Updated: 2022/03/25 11:11:46 by jbadia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,8 +105,10 @@ int	get_color(t_shape *obj, t_ray ray, t_scene *scene, double distance)
 	mix.kd = spot_light(hit_p, scene, norm);
 	mix.diffuse_lit = multiply_color(rgb_to_int
 			(get_diffuse_lit(obj->color, scene)), mix.kd * 1.5);
+	mix.spec_lit = multiply_color(rgb_to_int(obj->color),
+			spec_light(norm, ray.direction, hit_p, scene));
 	if (shadow_ray(vec_add(hit_p, lit_ray.direction), scene) == 0)
-		color = add_2_colors(mix.ambient_lit, mix.diffuse_lit);
+		color = add_3_colors(mix.ambient_lit, mix.diffuse_lit, mix.spec_lit);
 	else
 		color = add_2_colors(mix.ambient_lit, rgb_to_int(new_color(0, 0, 0)));
 	return (color);
