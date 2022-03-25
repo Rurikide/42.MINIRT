@@ -111,7 +111,7 @@ $(BNAME): $(ODIR_B) $(OFIX_B)
 
 clean:
 	$(MAKE) clean -C ./libft
-	$(RM) $(NAME) $(ODIR) $(ODIR_B)
+	$(RM) $(NAME) $(BNAME) $(ODIR) $(ODIR_B)
 
 fclean: clean
 	$(MAKE) fclean -C ./libft
