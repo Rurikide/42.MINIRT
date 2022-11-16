@@ -3,9 +3,6 @@
 
 ## *OVERVIEW*
 
-
-| _________________ Sans réflexion _________________ | _________________ Avec réflexion _________________ |
-|-----------------------------------------------------|---------------------------------------------|
 <img width="905" alt="Capture d’écran, le 2022-11-16 à 18 14 52" src="https://user-images.githubusercontent.com/79991066/202315056-e18063e5-3a15-4387-9d2b-ad1d09305e41.png">
 
 <img width="905" alt="Capture d’écran, le 2022-11-16 à 18 23 35" src="https://user-images.githubusercontent.com/79991066/202316403-cf7046fb-16d6-461d-86f5-cbf0663b2485.png">
