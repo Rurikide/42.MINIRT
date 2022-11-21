@@ -33,7 +33,7 @@ Do `make`and then run :
 ### Let's play!
 
 | Key |  |
-| :-------------: | :-------------: |
+| :-------------: | :------------- |
 | left click on the object | select the object |
 | right click anywhere | unselect the object  |
 | [L] | select the light |
