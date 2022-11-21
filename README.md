@@ -8,8 +8,6 @@
 </p>
 
 
-
-
 <details><summary> More examples with Phong reflection </summary>
 
 
@@ -32,5 +30,18 @@ Do `make`and then run :
 ./miniRT /rt_files/file.rt
 ```
 
+### Let's play!
 
+| Key |  |
+| :-------------: | :-------------: |
+| left click on the object | select the object |
+| right click anywhere | unselect the object  |
+| [L] | select the light |
+|[W][S] | front/back translation of the selected object, if nothing is selected it applies to the camera|
+|[A][D] | left/right translation of the selected object, if nothing is selected it applies to the camera|
+|[R][T] | up/down translation of the selected object, if nothing is selected it applies to the camera|
+|wheel| to change the diameter of a **cylinder or a sphere**, if selected|
+|[+][-]| **only for cylinders** - to change its height|
+|[X][Y][Z]| choose a rotation axis after selecting an object|
+|[<][>]| move the object along the chosen axis|
 
